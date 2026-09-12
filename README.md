@@ -9,5 +9,6 @@ Quality gap: `OMEGA_HTML_HUMAN_FACING_ARTIFACT_QUALITY_GAP`
 
 Primary principle: **More human. More beautiful. Never less true.**
 
-This Gate 1 package is foundation-only. Rendering, authoring workers, external
-skills, and promotion are intentionally not implemented.
+Gate 1 foundation is complete and Gate 2 semantic contracts now exist.
+Rendering, authoring workers, external skills, and promotion remain
+unimplemented pending later approval.

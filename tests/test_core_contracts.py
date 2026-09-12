@@ -1,6 +1,8 @@
 import json
 import unittest
+from copy import deepcopy
 from pathlib import Path
+from jsonschema import Draft202012Validator
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,10 +16,38 @@ class CoreContractsTest(unittest.TestCase):
     def load(self, name):
         return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
 
+    def validate(self, stem, fixture):
+        schema = json.loads((SCHEMAS / f"{stem}.schema.json").read_text())
+        return Draft202012Validator(schema).iter_errors(fixture)
+
     def test_schemas_are_2020_12_json(self):
         for name in self.schema_names:
             data = json.loads((SCHEMAS / f"{name}.schema.json").read_text())
             self.assertEqual(data["$schema"], "https://json-schema.org/draft/2020-12/schema")
+
+    def test_valid_fixtures_validate(self):
+        for stem in self.schema_names:
+            self.assertEqual(list(self.validate(stem, self.load(f"{stem}.json"))), [])
+
+    def test_truth_rejects_presentation_leakage(self):
+        bad = deepcopy(self.load("truth-model.json")); bad["theme"] = "gold"; bad["claims"][0]["card"] = True
+        self.assertTrue(list(self.validate("truth-model", bad)))
+
+    def test_composition_rejects_raw_styling(self):
+        bad = deepcopy(self.load("composition-model.json")); bad["sections"][0]["css"] = "color:red"
+        self.assertTrue(list(self.validate("composition-model", bad)))
+
+    def test_reader_rejects_malformed_language(self):
+        bad = deepcopy(self.load("reader-brief.json")); bad["language"] = {"foo": 123}
+        self.assertTrue(list(self.validate("reader-brief", bad)))
+
+    def test_reference_arrays_reject_non_string_ids(self):
+        bad = deepcopy(self.load("authored-content.json")); bad["blocks"][0]["claim_refs"] = [7]
+        self.assertTrue(list(self.validate("authored-content", bad)))
+
+    def test_unknown_top_level_fields_rejected(self):
+        bad = deepcopy(self.load("document-strategy.json")); bad["surprise"] = True
+        self.assertTrue(list(self.validate("document-strategy", bad)))
 
     def test_truth_has_no_presentation_fields(self):
         raw = json.dumps(self.load("truth-model.json"))
