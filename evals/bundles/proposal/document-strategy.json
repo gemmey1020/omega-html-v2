@@ -1,0 +1,9 @@
+{
+  "document_intent": "proposal",
+  "through_line": "A clear decision follows the evidence.",
+  "reader_journey": [
+    "verdict",
+    "reason",
+    "action"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "blocks": [
+    {
+      "copy_id": "COPY.1",
+      "role": "headline",
+      "text": "مراجعة تقنية قابلة للتدقيق 100",
+      "claim_refs": [
+        "DOC.CLAIM.1"
+      ],
+      "protected_spans": [
+        "100"
+      ]
+    },
+    {
+      "copy_id": "COPY.SUBHEAD",
+      "role": "subheadline",
+      "text": "المسارات والنسخ والحالة التشغيلية كما تظهر في الدليل.",
+      "claim_refs": [
+        "DOC.CLAIM.1"
+      ],
+      "protected_spans": []
+    }
+  ]
+}

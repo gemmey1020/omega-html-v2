@@ -1,0 +1,26 @@
+{
+  "sources": [
+    {
+      "source_id": "SOURCE.DOCUMENT",
+      "description": "Approved synthetic source",
+      "locator": "synthetic://wave-5"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "DOC.CLAIM.1",
+      "meaning": "المسار `/srv/app` يستخدم `PostgreSQL` والنسخة v2.1.",
+      "value": "100",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "medium",
+      "source_refs": [
+        "SOURCE.DOCUMENT"
+      ],
+      "protected_tokens": [
+        "100"
+      ],
+      "materiality": "material"
+    }
+  ]
+}

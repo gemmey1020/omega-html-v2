@@ -1,0 +1,371 @@
+{
+  "sources": [
+    {
+      "source_id": "SOURCE.AHS.OBSERVATION",
+      "description": "AHS read-only observation",
+      "locator": "local evidence package"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "AHS.REQUIREMENT.01",
+      "meaning": "01 · Users Search Returns 403 Forbidden",
+      "value": "1",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "1"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.02",
+      "meaning": "04 · Existing AHS Members Cannot Sign In",
+      "value": "2",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "2"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.03",
+      "meaning": "05 · Sign-Up Does Not Work Consistently",
+      "value": "3",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "3"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.04",
+      "meaning": "06 · Login by Membership Number or Card Serial",
+      "value": "4",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "4"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.05",
+      "meaning": "13 · Existing User Activation / Migration Access",
+      "value": "5",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "5"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.06",
+      "meaning": "15 · Membership Number in User Profile",
+      "value": "6",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "6"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.07",
+      "meaning": "16 · Forgot Password",
+      "value": "7",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "7"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.08",
+      "meaning": "17 · Blacklist Management",
+      "value": "8",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "8"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.09",
+      "meaning": "02 · QR Code Export",
+      "value": "9",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "9"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.10",
+      "meaning": "09 · Requests Missing from Dashboard",
+      "value": "10",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "10"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.11",
+      "meaning": "10 · Full Request Workflow",
+      "value": "11",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "11"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.12",
+      "meaning": "19 · Pending Queue Cards / Navigation 403",
+      "value": "12",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "12"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.13",
+      "meaning": "20 · Users Export to Excel",
+      "value": "13",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "13"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.14",
+      "meaning": "03 · News Stops Appearing",
+      "value": "14",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "14"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.15",
+      "meaning": "07 · Store / Marketplace Dashboard",
+      "value": "15",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "15"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.16",
+      "meaning": "11 · Academy / Branch Link",
+      "value": "16",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "16"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.17",
+      "meaning": "14 · Terms and Conditions",
+      "value": "17",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "17"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.18",
+      "meaning": "18 · Dashboard Assets and Icons",
+      "value": "18",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "18"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.19",
+      "meaning": "21 · Marketing / Application Sliders",
+      "value": "19",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "19"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.20",
+      "meaning": "08 · Push Notifications",
+      "value": "20",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "20"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.21",
+      "meaning": "12 · Full Backup and Migration",
+      "value": "21",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "21"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.22",
+      "meaning": "22 · Old vs Current Dashboard Comparison",
+      "value": "22",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "22"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.23",
+      "meaning": "23 · Full App / Dashboard / API / Infrastructure Review",
+      "value": "23",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "23"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.REQUIREMENT.24",
+      "meaning": "24 · Completion Report and Handover",
+      "value": "24",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "24"
+      ],
+      "materiality": "material"
+    }
+  ]
+}

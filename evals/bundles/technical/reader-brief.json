@@ -1,0 +1,11 @@
+{
+  "audience": "decision maker",
+  "document_intent": "technical",
+  "surface_profile": "omega-hud",
+  "primary_question": "What should the reader decide?",
+  "language": {
+    "primary": "ar",
+    "direction": "rtl",
+    "technical_english": "when_earned"
+  }
+}

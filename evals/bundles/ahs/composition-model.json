@@ -1,0 +1,37 @@
+{
+  "sections": [
+    {
+      "section_id": "requirements",
+      "purpose": "متطلبات تحتاج إغلاقًا قائمًا على الدليل",
+      "copy_refs": [
+        "COPY.AHS.01",
+        "COPY.SUBHEAD",
+        "COPY.AHS.02",
+        "COPY.AHS.03",
+        "COPY.AHS.04",
+        "COPY.AHS.05",
+        "COPY.AHS.06",
+        "COPY.AHS.07",
+        "COPY.AHS.08",
+        "COPY.AHS.09",
+        "COPY.AHS.10",
+        "COPY.AHS.11",
+        "COPY.AHS.12",
+        "COPY.AHS.13",
+        "COPY.AHS.14",
+        "COPY.AHS.15",
+        "COPY.AHS.16",
+        "COPY.AHS.17",
+        "COPY.AHS.18",
+        "COPY.AHS.19",
+        "COPY.AHS.20",
+        "COPY.AHS.21",
+        "COPY.AHS.22",
+        "COPY.AHS.23",
+        "COPY.AHS.24"
+      ],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix"
+    }
+  ]
+}

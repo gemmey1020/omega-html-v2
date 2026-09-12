@@ -1,0 +1,11 @@
+{
+  "audience": "executive reader",
+  "document_intent": "audit_report",
+  "surface_profile": "omega-editorial",
+  "primary_question": "What is proven and what remains open?",
+  "language": {
+    "primary": "ar",
+    "direction": "rtl",
+    "technical_english": "when_earned"
+  }
+}

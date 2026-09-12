@@ -1,0 +1,9 @@
+{
+  "document_intent": "audit_report",
+  "through_line": "The evidence separates what is known from what remains open.",
+  "reader_journey": [
+    "verdict",
+    "evidence",
+    "open items"
+  ]
+}

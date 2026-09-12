@@ -24,5 +24,8 @@ Gate 4 freezes a candidate human-authoring layer with Arabic-first policy,
 role-based copy routing, optional evidence-backed voice adaptation, and a
 conservative final prose pass. Truth Lock remains authoritative before and
 after authoring.
+Wave 5 adds semantic information architecture, tokenized surface profiles,
+standalone HTML rendering, artifact checks, responsive/print CSS, and local
+browser screenshot QA. It remains a non-promoted candidate.
 The final authoring and rendering pipeline is not implemented yet. The installed `/home/jemy/.codex/skills/omega-html/` remains the live
 v1 skill and is not modified by this candidate.

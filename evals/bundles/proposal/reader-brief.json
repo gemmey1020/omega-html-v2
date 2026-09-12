@@ -1,0 +1,11 @@
+{
+  "audience": "decision maker",
+  "document_intent": "proposal",
+  "surface_profile": "omega-minimal",
+  "primary_question": "What should the reader decide?",
+  "language": {
+    "primary": "en",
+    "direction": "ltr",
+    "technical_english": "when_earned"
+  }
+}

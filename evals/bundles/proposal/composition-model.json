@@ -1,0 +1,14 @@
+{
+  "sections": [
+    {
+      "section_id": "main",
+      "purpose": "The decision and its basis",
+      "copy_refs": [
+        "COPY.1",
+        "COPY.SUBHEAD"
+      ],
+      "claim_refs": [],
+      "presentation_intent": "verdict"
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "blocks": [
+    {
+      "copy_id": "COPY.AHS.01",
+      "role": "headline",
+      "text": "الحقيقة التشغيلية لمشروع AHS 1",
+      "claim_refs": [
+        "AHS.REQUIREMENT.01"
+      ],
+      "protected_spans": [
+        "1"
+      ]
+    },
+    {
+      "copy_id": "COPY.SUBHEAD",
+      "role": "subheadline",
+      "text": "ما الذي أثبته الدليل، وما الذي ما زال مفتوحًا؟",
+      "claim_refs": [
+        "AHS.REQUIREMENT.01"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.AHS.02",
+      "role": "paragraph",
+      "text": "04 · Existing AHS Members Cannot Sign In — requirement 2",
+      "claim_refs": [
+        "AHS.REQUIREMENT.02"
+      ],
+      "protected_spans": [
+        "2"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.03",
+      "role": "paragraph",
+      "text": "05 · Sign-Up Does Not Work Consistently — requirement 3",
+      "claim_refs": [
+        "AHS.REQUIREMENT.03"
+      ],
+      "protected_spans": [
+        "3"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.04",
+      "role": "paragraph",
+      "text": "06 · Login by Membership Number or Card Serial — requirement 4",
+      "claim_refs": [
+        "AHS.REQUIREMENT.04"
+      ],
+      "protected_spans": [
+        "4"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.05",
+      "role": "paragraph",
+      "text": "13 · Existing User Activation / Migration Access — requirement 5",
+      "claim_refs": [
+        "AHS.REQUIREMENT.05"
+      ],
+      "protected_spans": [
+        "5"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.06",
+      "role": "paragraph",
+      "text": "15 · Membership Number in User Profile — requirement 6",
+      "claim_refs": [
+        "AHS.REQUIREMENT.06"
+      ],
+      "protected_spans": [
+        "6"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.07",
+      "role": "paragraph",
+      "text": "16 · Forgot Password — requirement 7",
+      "claim_refs": [
+        "AHS.REQUIREMENT.07"
+      ],
+      "protected_spans": [
+        "7"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.08",
+      "role": "paragraph",
+      "text": "17 · Blacklist Management — requirement 8",
+      "claim_refs": [
+        "AHS.REQUIREMENT.08"
+      ],
+      "protected_spans": [
+        "8"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.09",
+      "role": "paragraph",
+      "text": "02 · QR Code Export — requirement 9",
+      "claim_refs": [
+        "AHS.REQUIREMENT.09"
+      ],
+      "protected_spans": [
+        "9"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.10",
+      "role": "paragraph",
+      "text": "09 · Requests Missing from Dashboard — requirement 10",
+      "claim_refs": [
+        "AHS.REQUIREMENT.10"
+      ],
+      "protected_spans": [
+        "10"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.11",
+      "role": "paragraph",
+      "text": "10 · Full Request Workflow — requirement 11",
+      "claim_refs": [
+        "AHS.REQUIREMENT.11"
+      ],
+      "protected_spans": [
+        "11"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.12",
+      "role": "paragraph",
+      "text": "19 · Pending Queue Cards / Navigation 403 — requirement 12",
+      "claim_refs": [
+        "AHS.REQUIREMENT.12"
+      ],
+      "protected_spans": [
+        "12"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.13",
+      "role": "paragraph",
+      "text": "20 · Users Export to Excel — requirement 13",
+      "claim_refs": [
+        "AHS.REQUIREMENT.13"
+      ],
+      "protected_spans": [
+        "13"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.14",
+      "role": "paragraph",
+      "text": "03 · News Stops Appearing — requirement 14",
+      "claim_refs": [
+        "AHS.REQUIREMENT.14"
+      ],
+      "protected_spans": [
+        "14"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.15",
+      "role": "paragraph",
+      "text": "07 · Store / Marketplace Dashboard — requirement 15",
+      "claim_refs": [
+        "AHS.REQUIREMENT.15"
+      ],
+      "protected_spans": [
+        "15"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.16",
+      "role": "paragraph",
+      "text": "11 · Academy / Branch Link — requirement 16",
+      "claim_refs": [
+        "AHS.REQUIREMENT.16"
+      ],
+      "protected_spans": [
+        "16"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.17",
+      "role": "paragraph",
+      "text": "14 · Terms and Conditions — requirement 17",
+      "claim_refs": [
+        "AHS.REQUIREMENT.17"
+      ],
+      "protected_spans": [
+        "17"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.18",
+      "role": "paragraph",
+      "text": "18 · Dashboard Assets and Icons — requirement 18",
+      "claim_refs": [
+        "AHS.REQUIREMENT.18"
+      ],
+      "protected_spans": [
+        "18"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.19",
+      "role": "paragraph",
+      "text": "21 · Marketing / Application Sliders — requirement 19",
+      "claim_refs": [
+        "AHS.REQUIREMENT.19"
+      ],
+      "protected_spans": [
+        "19"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.20",
+      "role": "paragraph",
+      "text": "08 · Push Notifications — requirement 20",
+      "claim_refs": [
+        "AHS.REQUIREMENT.20"
+      ],
+      "protected_spans": [
+        "20"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.21",
+      "role": "paragraph",
+      "text": "12 · Full Backup and Migration — requirement 21",
+      "claim_refs": [
+        "AHS.REQUIREMENT.21"
+      ],
+      "protected_spans": [
+        "21"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.22",
+      "role": "paragraph",
+      "text": "22 · Old vs Current Dashboard Comparison — requirement 22",
+      "claim_refs": [
+        "AHS.REQUIREMENT.22"
+      ],
+      "protected_spans": [
+        "22"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.23",
+      "role": "paragraph",
+      "text": "23 · Full App / Dashboard / API / Infrastructure Review — requirement 23",
+      "claim_refs": [
+        "AHS.REQUIREMENT.23"
+      ],
+      "protected_spans": [
+        "23"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.24",
+      "role": "paragraph",
+      "text": "24 · Completion Report and Handover — requirement 24",
+      "claim_refs": [
+        "AHS.REQUIREMENT.24"
+      ],
+      "protected_spans": [
+        "24"
+      ]
+    }
+  ]
+}
