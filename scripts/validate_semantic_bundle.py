@@ -30,7 +30,8 @@ def run(paths):
    if s not in x["text"]:out.append(e("PROTECTED_SPAN_MISSING_FROM_COPY",f"authored.blocks[{i}]",s))
    if not any(s in claims[r].get("protected_tokens",[]) for r in x["claim_refs"] if r in claims):out.append(e("UNAUTHORIZED_PROTECTED_SPAN",f"authored.blocks[{i}]",s))
   for p in x.get("state_projections",[]):
-   if p["claim_id"] not in claims or p["claim_id"] not in x["claim_refs"] or p["dimension"] not in ("epistemic_state","closure_state","risk") or claims[p["claim_id"]].get(p["dimension"])!=p["value"]:out.append(e("STATE_PROJECTION_MISMATCH",f"authored.blocks[{i}]",str(p)))
+   if p["claim_id"] not in claims or p["claim_id"] not in x["claim_refs"]:out.append(e("INVALID_STATE_PROJECTION",f"authored.blocks[{i}].state_projections","claim linkage invalid"))
+   elif p["dimension"] not in ("epistemic_state","closure_state","risk") or claims[p["claim_id"]].get(p["dimension"])!=p["value"]:out.append(e("STATE_PROJECTION_MISMATCH",f"authored.blocks[{i}].state_projections","value mismatch"))
  for i,s in enumerate(c["sections"]):
   for r in s.get("claim_refs",[]):
    if r not in claims:out.append(e("UNKNOWN_CLAIM_REF",f"composition.sections[{i}].claim_refs",r))
@@ -49,7 +50,10 @@ def main():
  for n in ("truth","reader","strategy","authored","composition"):p.add_argument("--"+n,required=True)
  a=p.parse_args();paths={"truth":a.truth,"reader":a.reader,"strategy":a.strategy,"authored":a.authored,"composition":a.composition}
  try:
-  errors=run(paths);t=json.loads(Path(a.truth).read_text());material={x["claim_id"] for x in t.get("claims",[]) if x.get("materiality")=="material"}
+  errors=run(paths)
+  if any(x["code"]=="SCHEMA_INVALID" for x in errors):
+   print(json.dumps({"status":"FAIL","errors":errors,"warnings":[]},ensure_ascii=False));return 2
+  t=json.loads(Path(a.truth).read_text());material={x["claim_id"] for x in t.get("claims",[]) if x.get("materiality")=="material"}
  except (OSError,ValueError) as exc:
   print(json.dumps({"status":"FAIL","errors":[e("SCHEMA_INVALID","bundle",str(exc))],"warnings":[]},ensure_ascii=False));return 2
  authored=json.loads(Path(a.authored).read_text());composition=json.loads(Path(a.composition).read_text());authored_ids={r for b in authored.get("blocks",[]) for r in b.get("claim_refs",[])};composed_ids={r for s in composition.get("sections",[]) for r in s.get("claim_refs",[])};composed_ids.update(r for s in composition.get("sections",[]) for c in s.get("copy_refs",[]) for b in authored.get("blocks",[]) if b.get("copy_id")==c for r in b.get("claim_refs",[]));out={"status":"FAIL" if errors else "PASS","errors":errors,"warnings":[],"coverage":{"material_claims":len(material),"authored_material_claims":len(material&authored_ids),"composed_material_claims":len(material&composed_ids)}};print(json.dumps(out,ensure_ascii=False));return 2 if errors else 0

@@ -1,4 +1,4 @@
-import copy, json, subprocess, sys, unittest
+import copy, json, subprocess, sys, unittest, tempfile
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.validate_semantic_bundle import run
@@ -31,5 +31,10 @@ class TruthLockRuntimeTest(unittest.TestCase):
   args=[sys.executable,str(ROOT/"scripts/validate_semantic_bundle.py")]
   for key in ("truth","reader","strategy","authored","composition"): args += ["--"+key,str(F/({"truth":"truth-model","reader":"reader-brief","strategy":"document-strategy","authored":"authored-content","composition":"composition-model"}[key]+".json"))]
   ok=subprocess.run(args,capture_output=True,text=True);self.assertEqual(ok.returncode,0);self.assertEqual(json.loads(ok.stdout)["status"],"PASS");self.assertIn("coverage",ok.stdout)
-  bad=subprocess.run(args[:-2]+[str(F/"missing.json")],capture_output=True,text=True);self.assertNotEqual(bad.returncode,0);self.assertNotIn("Traceback",bad.stderr)
+  bad=bundle();bad["truth"]["claims"][0]["source_refs"]=["UNKNOWN"]
+  with tempfile.TemporaryDirectory() as td:
+   td=Path(td); paths={k:td/f"{k}.json" for k in ("truth","reader","strategy","authored","composition")}
+   for k,v in bad.items(): paths[k].write_text(json.dumps(v))
+   fail=[sys.executable,str(ROOT/"scripts/validate_semantic_bundle.py")]+sum((["--"+k,str(paths[k])] for k in paths),[])
+   result=subprocess.run(fail,capture_output=True,text=True);self.assertEqual(result.returncode,2);self.assertEqual(json.loads(result.stdout)["status"],"FAIL");self.assertIn("UNKNOWN_SOURCE_REF",result.stdout);self.assertNotIn("Traceback",result.stderr)
 if __name__=="__main__":unittest.main()
