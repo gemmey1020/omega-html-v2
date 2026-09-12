@@ -1,0 +1,503 @@
+{
+  "meta": {
+    "source_skill": "omega-html",
+    "generated_at": "2026-09-12T15:38:17Z",
+    "root_path": "/home/jemy/Documents/my_work/x_port_x",
+    "surface": "hud",
+    "handoff_ready": true,
+    "theme_profile": "gold",
+    "theme_source": "the_job_lab/omega_easy_cook_cosmic_prompt.html",
+    "page_intent": "ahs_executive_truth_and_effort_review",
+    "lang": "ar",
+    "dir": "rtl",
+    "title": "AHS Executive Truth Review",
+    "body_class": "ahs-executive-truth-gold",
+    "source_package": [
+      "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_FINAL_READ_ONLY_PRODUCTION_OBSERVATION_2026-09-12.md",
+      "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_Full_Developer_Bug_List_and_Requirements.docx",
+      "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_FINAL_TRUTH_AUDIT_2026-09-12.md",
+      "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_TRIPLE_CHAIN_VALIDATION_2026-09-12.md",
+      "/home/jemy/Documents/my_work/x_port_x/the_job/ahs-app/core",
+      "/home/jemy/Documents/my_work/x_port_x/the_job/ahs-app/core-front/committee_beauty_health",
+      "/opt/ahs/core"
+    ],
+    "evidence_boundary": "Read-only observation and source reconciliation. No production closure, restore proof, device acceptance, or role-matrix acceptance is claimed."
+  },
+  "utility_bar": {
+    "title": "AHS / OMEGA HUD GOLD",
+    "subtitle": "Executive Truth Review • Read-Only Evidence",
+    "metric_strip": [
+      {"label": "DOCX items", "value": "24"},
+      {"label": "Legacy users", "value": "20,789"},
+      {"label": "Current users", "value": "71"},
+      {"label": "Baseline", "value": "120h"}
+    ],
+    "actions": [
+      {"label": "Remote", "value": "Observed"},
+      {"label": "Mode", "value": "Read-only"},
+      {"label": "Closure", "value": "Not closed"},
+      {"label": "Profile", "value": "Gold"}
+    ]
+  },
+  "hero": {
+    "kicker": "AHS PRODUCTION TRUTH / EXECUTIVE REVIEW",
+    "title": "AHS is observable and technically startable — but not production-closed.",
+    "body": "الـobservation الحالية أثبتت live topology، source parity، database boundaries، وruntime state. لكنها لم تثبت بعد identity migration، role acceptance، device delivery، backup restore، أو closure لكل عناصر ملف الـDOCX.",
+    "tags": [
+      "DOCX: 24 requirements",
+      "Read-only observation complete",
+      "Production closure: not proven",
+      "Quality constant across effort modes",
+      "Timeline remains conditional"
+    ]
+  },
+  "poster": {
+    "eyebrow": "Decision Surface",
+    "score_value": "24",
+    "score_label": "requirements requiring evidence closure",
+    "summary": "السرعة قد تغيّر calendar allocation، لكنها لا تلغي identity risk أو device QA أو restore proof. الـGold surface لازم يعرض الحقيقة قبل الفخامة.",
+    "cards": [
+      {"title": "Server", "body": "Observed / read-only"},
+      {"title": "Identity", "body": "20,789 legacy / 71 current"},
+      {"title": "Cross-ID", "body": "28 National_ID overlaps"},
+      {"title": "Rollback", "body": "Restore not proven"},
+      {"title": "APK", "body": "Remote hash differs"},
+      {"title": "Baseline", "body": "120h provisional"}
+    ]
+  },
+  "sections": [
+    {
+      "id": "executive-verdict",
+      "variant": "cards",
+      "kicker": "Executive Verdict",
+      "title": "ما الذي نعرفه فعلًا؟",
+      "body": "هذه الطبقة هي التي يجب أن تظهر أولًا أمام صاحب القرار: verified facts، ثم boundaries، ثم ما يمنع إعلان الإغلاق.",
+      "entries": [
+        {
+          "label": "Observation status",
+          "summary": "REMOTE OBSERVATION COMPLETE / TARGETED EFFORT-RISK PASS COMPLETE / PROJECT NOT CLOSED.",
+          "decision": "NOT CLOSED",
+          "confidence": "evidence-backed",
+          "meta": ["source=AHS_FINAL_READ_ONLY_PRODUCTION_OBSERVATION_2026-09-12.md"]
+        },
+        {
+          "label": "Verified surface",
+          "summary": "Ubuntu host, Docker Compose, PostgreSQL, Redis, Caddy, live project path, deployed web assets, APK artifact, DB aggregate counts, migrations, backup metadata, and focused source parity were observed.",
+          "decision": "VERIFIED",
+          "confidence": "high",
+          "meta": ["remote=srv981087", "project=/opt/ahs/core", "mode=read-only"]
+        },
+        {
+          "label": "Closure boundary",
+          "summary": "Production completion, identity migration safety, device acceptance, role acceptance, push delivery, restoreability, and full end-to-end QA remain not proven.",
+          "decision": "NOT PROVEN",
+          "confidence": "explicit boundary",
+          "blocked_by": ["Dashboard role matrix", "Android/iOS evidence", "isolated restore environment"]
+        }
+      ]
+    },
+    {
+      "id": "identity-and-access",
+      "variant": "cards",
+      "kicker": "Requirements 1 4 5 6 13 15 16 17",
+      "title": "Identity, access, and account safety",
+      "body": "أكبر driver للوقت ليس شكل الـlogin فقط؛ هو reconciliation بين legacy/current، activation، recovery، وbusiness rules.",
+      "entries": [
+        {
+          "label": "01 · Users Search Returns 403 Forbidden",
+          "summary": "Admin/search source and identifier fields exist, but authorized role search and 403 behavior were not tested.",
+          "decision": "OPEN-RUNTIME",
+          "confidence": "source-backed / runtime-open",
+          "meta": ["DOCX=1", "risk=High"]
+        },
+        {
+          "label": "04 · Existing AHS Members Cannot Sign In",
+          "summary": "Production has 20,789 legacy users and 71 CustomUsers. Existing-member mapping, password compatibility, and sign-in acceptance remain untested.",
+          "decision": "OPEN / ULTRA HIGH",
+          "confidence": "verified population / unverified flow",
+          "meta": ["DOCX=4", "risk=Ultra High"],
+          "blocked_by": ["Old identity authority", "Non-PII reconciliation", "Device or API acceptance"]
+        },
+        {
+          "label": "05 · Sign-Up Does Not Work Consistently",
+          "summary": "Local new-user paths and tests exist, but production-safe negative/error behavior is not accepted end-to-end.",
+          "decision": "VERIFIED-LOCAL-SUBSET",
+          "confidence": "local evidence only",
+          "meta": ["DOCX=5", "risk=High"]
+        },
+        {
+          "label": "06 · Login by Membership Number or Card Serial",
+          "summary": "Current auth contract demonstrates mobile/email-style identifiers; Membership Number or Card Serial login is not established.",
+          "decision": "NOT-FOUND-LOCAL",
+          "confidence": "source scan",
+          "meta": ["DOCX=6", "risk=High"]
+        },
+        {
+          "label": "13 · Existing User Activation / Migration Access",
+          "summary": "Activation helper/source exists, but no proof shows safe verification, duplicate prevention, or preservation of the existing membership relationship.",
+          "decision": "OPEN / ULTRA HIGH",
+          "confidence": "source-backed / acceptance-open",
+          "meta": ["DOCX=13", "risk=Ultra High"],
+          "blocked_by": ["Identity reconciliation", "Approved verification rules"]
+        },
+        {
+          "label": "15 · Membership Number in User Profile",
+          "summary": "Serial fields and local profile display code exist; valid-member ownership and cross-user isolation were not tested on a device or authorized API session.",
+          "decision": "SUPPORTED-SUBSET",
+          "confidence": "source-backed / acceptance-open",
+          "meta": ["DOCX=15", "risk=High"]
+        },
+        {
+          "label": "16 · Forgot Password",
+          "summary": "Legacy forgot-password route is disabled; the local Flutter login presents an explicit not-active message and the screen file is absent.",
+          "decision": "NOT-FOUND-LOCAL / OPEN",
+          "confidence": "cross-layer source evidence",
+          "meta": ["DOCX=16", "risk=Ultra High"],
+          "blocked_by": ["Reset contract", "OTP/provider decision", "Device acceptance"]
+        },
+        {
+          "label": "17 · Blacklist Management",
+          "summary": "No blacklist implementation was found in the focused remote/local source scan; rules, audit behavior, and false-positive handling are unapproved.",
+          "decision": "NOT-FOUND-LOCAL",
+          "confidence": "source scan",
+          "meta": ["DOCX=17", "risk=Ultra High"],
+          "blocked_by": ["Approved business rules", "Audit requirements"]
+        }
+      ]
+    },
+    {
+      "id": "operations-and-requests",
+      "variant": "cards",
+      "kicker": "Requirements 2 9 10 19 20",
+      "title": "Operational requests, queues, and exports",
+      "body": "Backend routes and admin workflow helpers exist, but the DOCX acceptance criteria require actual Dashboard role and queue evidence.",
+      "entries": [
+        {
+          "label": "02 · QR Code Export",
+          "summary": "Legacy and current QR populations are verified, but one/many/all export behavior and format/privacy acceptance are not proven.",
+          "decision": "SUPPORTED-SUBSET",
+          "confidence": "data presence only",
+          "meta": ["DOCX=2", "legacy_qr=20,788", "current_qr=71"]
+        },
+        {
+          "label": "09 · Requests Missing from Dashboard",
+          "summary": "Modern request tables contain linked rows in the inspected population, but Dashboard visibility across all request families was not tested.",
+          "decision": "PARTIAL / E2E OPEN",
+          "confidence": "DB/source evidence",
+          "meta": ["DOCX=9", "risk=Ultra High"],
+          "blocked_by": ["Authorized Dashboard session", "Request-family acceptance matrix"]
+        },
+        {
+          "label": "10 · Full Request Workflow",
+          "summary": "RequestWorkflowAdminMixin exposes approve/reject actions and status transitions; exact rejection-reason and app-reflection contract remains open.",
+          "decision": "SUPPORTED-SUBSET",
+          "confidence": "remote/local source parity",
+          "meta": ["DOCX=10", "risk=High"]
+        },
+        {
+          "label": "19 · Pending Queue Cards / Navigation 403",
+          "summary": "Routes and queue-count source exist, but no authorized role/card matrix was executed against the live Dashboard.",
+          "decision": "OPEN-RUNTIME",
+          "confidence": "source-backed / runtime-open",
+          "meta": ["DOCX=19", "risk=High/Critical"],
+          "blocked_by": ["Admin role matrix"]
+        },
+        {
+          "label": "20 · Users Export to Excel",
+          "summary": "Remote source contains Users export actions and matches local source; UI visibility, filters, permissions, and columns remain untested.",
+          "decision": "SUPPORTED-REMOTE-SOURCE",
+          "confidence": "source parity",
+          "meta": ["DOCX=20", "risk=Medium"]
+        }
+      ]
+    },
+    {
+      "id": "content-data-modules",
+      "variant": "cards",
+      "kicker": "Requirements 3 7 11 14 18 21",
+      "title": "Content, data relationships, and modules",
+      "body": "وجود code أو rows لا يساوي اكتمال الـDashboard-to-app flow. الـGold report يعرض هذا الفرق بوضوح.",
+      "entries": [
+        {
+          "label": "03 · News Stops Appearing",
+          "summary": "Production has 62 News rows; global pagination and local load-more code exist, but the dataset-beyond-failure-point acceptance is open.",
+          "decision": "SUPPORTED-SUBSET",
+          "confidence": "source/data evidence",
+          "meta": ["DOCX=3", "news_rows=62", "risk=High"]
+        },
+        {
+          "label": "07 · Store / Marketplace Dashboard",
+          "summary": "Store APIs/admin/source exist, but production vendors, categories, products, and orders are all zero. Scope may be empty-by-decision or missing-data.",
+          "decision": "SUPPORTED-SUBSET / PRODUCTION-EMPTY",
+          "confidence": "remote DB/source evidence",
+          "meta": ["DOCX=7", "risk=High"],
+          "blocked_by": ["Store scope decision", "Seed/migration decision"]
+        },
+        {
+          "label": "11 · Academy / Branch Link",
+          "summary": "227 academies and 24 branches exist. The targeted probe found zero academy-to-branch orphans, but business correctness and cross-surface display remain untested.",
+          "decision": "OPEN-DATA-INTEGRITY",
+          "confidence": "bounded relation check",
+          "meta": ["DOCX=11", "academies=227", "branches=24"]
+        },
+        {
+          "label": "14 · Terms and Conditions",
+          "summary": "Signup terms checkbox/UI exists locally; approved legal content/version and production acceptance were not observed.",
+          "decision": "BUSINESS-OPEN",
+          "confidence": "local source only",
+          "meta": ["DOCX=14", "risk=Medium/legal"],
+          "blocked_by": ["Approved final content"]
+        },
+        {
+          "label": "18 · Dashboard Assets and Icons",
+          "summary": "Live static/media topology, duplicate logos, and remote staticfiles.W004 warning were observed; visual role-based QA remains absent.",
+          "decision": "OPEN-RUNTIME / VERIFIED WARNING",
+          "confidence": "remote observation",
+          "meta": ["DOCX=18", "warning=staticfiles.W004"]
+        },
+        {
+          "label": "21 · Marketing / Application Sliders",
+          "summary": "Marketing models/admin and static slider assets exist, but production slider tables contain zero rows and Dashboard-to-app flow is unproven.",
+          "decision": "PARTIAL / PRODUCTION-EMPTY",
+          "confidence": "remote DB/source evidence",
+          "meta": ["DOCX=21", "risk=High"],
+          "blocked_by": ["Marketing scope decision", "Dashboard acceptance"]
+        }
+      ]
+    },
+    {
+      "id": "integrations-and-release",
+      "variant": "cards",
+      "kicker": "Requirements 8 12 22 23 24",
+      "title": "Integrations, migration, release, and handover",
+      "body": "هذه المجموعة هي التي تمنعنا من تحويل source readiness إلى unconditional deadline.",
+      "entries": [
+        {
+          "label": "08 · Push Notifications",
+          "summary": "Notification records and local notification package exist, but FCM/APNs provider configuration, device tokens, Dashboard send result, and Android/iOS delivery are unproven.",
+          "decision": "NOT-FOUND-LOCAL / OPEN-PROVIDER",
+          "confidence": "source scan / no device proof",
+          "meta": ["DOCX=8", "risk=High"],
+          "blocked_by": ["Provider credentials/config", "Android/iOS devices"]
+        },
+        {
+          "label": "12 · Full Backup and Migration",
+          "summary": "April dump artifacts exist, but freshness, isolated restore, reconciliation, media completeness, and rollback receipt are not proven.",
+          "decision": "BLOCKED / ULTRA HIGH",
+          "confidence": "metadata only",
+          "meta": ["DOCX=12", "backup_date=2026-04-20"],
+          "blocked_by": ["Old-server authority", "Isolated restore environment"]
+        },
+        {
+          "label": "22 · Old vs Current Dashboard Comparison",
+          "summary": "A full signed module/page/action/permission comparison checklist is not yet an acceptance artifact.",
+          "decision": "SCOPE-OPEN",
+          "confidence": "not closed",
+          "meta": ["DOCX=22", "risk=Ultra High"]
+        },
+        {
+          "label": "23 · Full App / Dashboard / API / Infrastructure Review",
+          "summary": "Server and source surfaces were observed, but mobile, roles, push, migration, and full end-to-end acceptance remain open.",
+          "decision": "SCOPE-OPEN",
+          "confidence": "bounded observation",
+          "meta": ["DOCX=23", "risk=Ultra High"]
+        },
+        {
+          "label": "24 · Completion Report and Handover",
+          "summary": "The evidence package now has explicit statuses and dependencies, but closure sign-off cannot be issued before the acceptance gates pass.",
+          "decision": "SUPPORTED-SUBSET",
+          "confidence": "artifact-backed",
+          "meta": ["DOCX=24", "handover=conditional"]
+        }
+      ]
+    },
+    {
+      "id": "effort-and-timeline",
+      "variant": "cards",
+      "kicker": "Effort Model",
+      "title": "Light, Medium, and Hard تغيّر الوقت لا الجودة",
+      "body": "الـbaseline الحالي يظل 120 ساعة هندسية. الاختلاف بين المودات هو daily allocation وcalendar compression، وليس مستوى الجودة أو معايير القبول.",
+      "entries": [
+        {
+          "label": "Light",
+          "summary": "About 6h/day and about 20 working days after access is ready. External waits remain additive.",
+          "decision": "CALENDAR MODEL",
+          "confidence": "provisional",
+          "meta": ["baseline=120h", "daily=6h", "calendar=20 working days"]
+        },
+        {
+          "label": "Medium",
+          "summary": "About 10h/day and about 12 working days after access is ready. Same acceptance quality, tighter coordination.",
+          "decision": "CALENDAR MODEL",
+          "confidence": "provisional",
+          "meta": ["baseline=120h", "daily=10h", "calendar=12 working days"]
+        },
+        {
+          "label": "Hard",
+          "summary": "About 12h/day peak and about 10 working days after access is ready. Fatigue and coordination risk increase; external waits do not disappear.",
+          "decision": "CALENDAR MODEL",
+          "confidence": "provisional",
+          "meta": ["baseline=120h", "daily=12h peak", "calendar=10 working days"]
+        },
+        {
+          "label": "Estimate boundary",
+          "summary": "Do not present 120h or any deadline as guaranteed until identity, roles, devices, restore, and scope decisions have owners and evidence.",
+          "decision": "CONDITIONAL",
+          "confidence": "explicit risk posture",
+          "blocked_by": ["Gates A-E"]
+        }
+      ]
+    },
+    {
+      "id": "verified-evidence",
+      "variant": "file-pack",
+      "kicker": "Evidence Package",
+      "title": "مصادر التقرير التي يجب أن تظل ظاهرة",
+      "body": "كل claim في النسخة Gold لازم يرجع إلى source أو receipt واضح، مع عدم إخفاء حدود التحقق.",
+      "entries": [
+        {
+          "label": "DOCX master requirements",
+          "summary": "The authoritative 24-item request list and acceptance language.",
+          "decision": "SOURCE",
+          "confidence": "read in full",
+          "path": "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_Full_Developer_Bug_List_and_Requirements.docx",
+          "format": "docx"
+        },
+        {
+          "label": "Final read-only production observation",
+          "summary": "Remote receipt, source parity, DB observations, backup metadata, 24-item truth matrix, gates, and targeted effort-risk update.",
+          "decision": "PRIMARY EVIDENCE",
+          "confidence": "current",
+          "path": "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_FINAL_READ_ONLY_PRODUCTION_OBSERVATION_2026-09-12.md",
+          "format": "markdown"
+        },
+        {
+          "label": "Canonical backend source",
+          "summary": "Local canonical backend used for source-side mapping; not replaced by the Mac/iOS copy.",
+          "decision": "SOURCE",
+          "confidence": "local canonical",
+          "path": "/home/jemy/Documents/my_work/x_port_x/the_job/ahs-app/core",
+          "format": "source tree"
+        },
+        {
+          "label": "Production project boundary",
+          "summary": "Observed remote deployment path. The remote tree is not a Git worktree, so no immutable deploy commit is claimed.",
+          "decision": "REMOTE OBSERVATION",
+          "confidence": "SSH receipt",
+          "path": "/opt/ahs/core",
+          "format": "remote source tree"
+        },
+        {
+          "label": "Runtime and release evidence",
+          "summary": "Docker services, PostgreSQL/Redis health, migrations, web metadata, APK identity, backup metadata, and staticfiles warning.",
+          "decision": "OBSERVED",
+          "confidence": "read-only probes",
+          "meta": ["host=srv981087", "observed=2026-09-12T15:19:08Z", "targeted=2026-09-12T15:38:17Z"]
+        }
+      ]
+    },
+    {
+      "id": "acceptance-gates",
+      "variant": "checklist",
+      "kicker": "Closure Gates",
+      "title": "ما الذي يقفل الملف فعليًا؟",
+      "body": "هذه ليست decorative checklist؛ كل gate يحتاج owner وevidence قبل تحويل حالته إلى closed.",
+      "entries": [
+        {
+          "label": "Gate A · Release identity",
+          "summary": "Explain APK hash mismatch, resolve/document staticfiles warning, and bind deployed artifacts to an immutable receipt.",
+          "decision": "OPEN",
+          "confidence": "required",
+          "blocked_by": ["APK provenance", "Static warning disposition"]
+        },
+        {
+          "label": "Gate B · Identity and migration",
+          "summary": "Produce non-PII reconciliation, prove restoreability, test existing-member activation, and prevent duplicates.",
+          "decision": "OPEN / CRITICAL",
+          "confidence": "required",
+          "blocked_by": ["Old identity authority", "Isolated restore"]
+        },
+        {
+          "label": "Gate C · Operations and Dashboard",
+          "summary": "Run authorized role matrix for search, 403 routes, queues, requests, workflows, rejection reason, and exports.",
+          "decision": "OPEN",
+          "confidence": "required",
+          "blocked_by": ["Dashboard accounts and role permissions"]
+        },
+        {
+          "label": "Gate D · Content and integrations",
+          "summary": "Test News beyond the failure point, decide empty Store/Marketing scope, verify slider flow, and test push delivery.",
+          "decision": "OPEN",
+          "confidence": "required",
+          "blocked_by": ["Scope decisions", "Provider/device evidence"]
+        },
+        {
+          "label": "Gate E · Final QA and handover",
+          "summary": "Fresh Android/iOS/Dashboard/API/infrastructure evidence, bounded backend coverage, and owner-linked handover.",
+          "decision": "OPEN",
+          "confidence": "required",
+          "blocked_by": ["Gates A-D"]
+        }
+      ]
+    }
+  ],
+  "final_moves": {
+    "title": "Next Moves",
+    "section_title": "ما الذي سيحدث بعد اختيار الـGold؟",
+    "panel_title": "Safe Build Order",
+    "order_title": "Rendering Boundary",
+    "intro": "في الرسالة التالية يمكن تحويل هذا payload إلى Omega HUD Gold HTML. الـHTML سيعرض evidence وunknowns كما هي، ثم يمكن استخدامه كمصدر بصري للطباعة أو PDF بعد مراجعة العرض.",
+    "moves": [
+      {"label": "Freeze this payload", "body": "اعتبر هذا الملف source payload للنسخة الأولى ولا تضف claim جديدًا من غير evidence."},
+      {"label": "Render Gold HUD", "body": "استخدم Gold theme DNA: warm cosmic palette، framed glass surfaces، contained hero، وArabic-safe RTL."},
+      {"label": "Keep executive first", "body": "اعرض verdict والـdecision surface أولًا، ثم matrix والـgates والـtechnical traceability."},
+      {"label": "Preserve uncertainty", "body": "لا تحوّل OPEN أو BLOCKED أو NOT PROVEN إلى complete لمجرد أن الشكل النهائي elegant."},
+      {"label": "Review before PDF", "body": "بعد HTML فقط نراجع visual hierarchy والـprint intent؛ PDF export/QA مرحلة منفصلة وليست جزءًا من هذا payload."}
+    ],
+    "execution_order": [
+      "Load the frozen JSON payload.",
+      "Render exactly one Omega HUD Gold HTML artifact.",
+      "Verify profile metadata, RTL/LTR handling, and responsive surface.",
+      "Review executive readability against the 24-item evidence boundary.",
+      "Only then consider a separate PDF export and QA pass."
+    ]
+  },
+  "unknowns": [
+    {
+      "label": "Identity reconciliation",
+      "summary": "28 National_ID overlaps are candidate matches, not a proven legacy/current mapping; 71 CustomUsers remain unassigned to Academy/Branch.",
+      "impact": "Can change migration effort, activation design, and acceptance timeline.",
+      "owner_dependency": "Old-server identity authority and non-PII reconciliation approval"
+    },
+    {
+      "label": "Dashboard role acceptance",
+      "summary": "Source routes and admin workflow helpers exist, but live role/card/queue behavior has not been accepted.",
+      "impact": "Can change the effort for items 1, 9, 10, 19, and 20.",
+      "owner_dependency": "Authorized Dashboard accounts and role matrix"
+    },
+    {
+      "label": "Mobile and push evidence",
+      "summary": "Remote APK hash differs from local APK; FCM/APNs delivery and device-token lifecycle remain unproven.",
+      "impact": "Can change release identity, notification, and full-QA scope.",
+      "owner_dependency": "Android/iOS devices, install receipt, provider configuration"
+    },
+    {
+      "label": "Restore and rollback",
+      "summary": "Dumps exist with 2026-04-20 metadata, but no isolated restore receipt exists.",
+      "impact": "Can change migration confidence and deadline; must not be tested destructively on production.",
+      "owner_dependency": "Approved isolated restore environment"
+    },
+    {
+      "label": "Empty Store and Marketing scope",
+      "summary": "Production tables are empty while code/assets exist.",
+      "impact": "Can change whether the work is implementation, data preparation, or approved exclusion.",
+      "owner_dependency": "Business scope decision"
+    },
+    {
+      "label": "Legal and blacklist rules",
+      "summary": "Approved Terms content and blacklist matching/audit rules are not present as closed business inputs.",
+      "impact": "Can change implementation and acceptance criteria for items 14 and 17.",
+      "owner_dependency": "Approved legal/business rules"
+    }
+  ]
+}

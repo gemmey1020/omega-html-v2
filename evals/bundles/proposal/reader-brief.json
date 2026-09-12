@@ -2,7 +2,15 @@
   "audience": "decision maker",
   "document_intent": "proposal",
   "surface_profile": "omega-minimal",
-  "primary_question": "What should the reader decide?",
+  "primary_question": "What should the reader approve?",
+  "desired_action": "Approve the scoped pilot",
+  "technical_depth": "light",
+  "annex_policy": "No annex required",
+  "summary_rail": {
+    "enabled": false,
+    "title": "",
+    "body": ""
+  },
   "language": {
     "primary": "en",
     "direction": "ltr",

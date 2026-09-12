@@ -1,9 +1,26 @@
 {
   "document_intent": "technical",
-  "through_line": "A clear decision follows the evidence.",
-  "reader_journey": [
+  "through_line": "Tie each technical observation to a decision or an owner.",
+  "must_appear_first": [
     "verdict",
-    "reason",
-    "action"
+    "key_fact"
+  ],
+  "secondary_content": [
+    "table",
+    "technical_block",
+    "risk_register"
+  ],
+  "annex_content": [
+    "source_ledger"
+  ],
+  "detail_level": "dense technical report",
+  "uncertainty_policy": "separate observed state from open risk",
+  "reader_journey": [
+    "identity",
+    "result",
+    "status",
+    "command",
+    "risk",
+    "annex"
   ]
 }

@@ -1,9 +1,25 @@
 {
   "document_intent": "audit_report",
-  "through_line": "The evidence separates what is known from what remains open.",
+  "through_line": "فصل ما ثبت عن ما يحتاج إثباتًا قبل قرار الإغلاق.",
+  "must_appear_first": [
+    "verdict",
+    "key_fact"
+  ],
+  "secondary_content": [
+    "evidence_matrix",
+    "sequence"
+  ],
+  "annex_content": [
+    "technical_annex",
+    "source_ledger"
+  ],
+  "detail_level": "executive with technical depth later",
+  "uncertainty_policy": "اعرض الفتح والحجب والجزئية بصراحة",
   "reader_journey": [
     "verdict",
+    "facts",
     "evidence",
-    "open items"
+    "sequence",
+    "annex"
   ]
 }

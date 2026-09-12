@@ -1,22 +1,56 @@
 {
   "blocks": [
     {
-      "copy_id": "COPY.1",
+      "copy_id": "COPY.PROPOSAL.HEADLINE",
       "role": "headline",
-      "text": "خطوة صغيرة، وقرار أوضح 100",
+      "text": "Test the game before you scale the bet",
       "claim_refs": [
-        "DOC.CLAIM.1"
+        "PROPOSAL.DECISION",
+        "PROPOSAL.CONTEXT"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.PROPOSAL.SUBHEAD",
+      "role": "subheadline",
+      "text": "A bounded pilot answers the core play question with a known timebox and budget.",
+      "claim_refs": [
+        "PROPOSAL.CONTEXT",
+        "PROPOSAL.PILOT.LENGTH",
+        "PROPOSAL.BUDGET.CAP"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.PROPOSAL.CONTEXT",
+      "role": "paragraph",
+      "text": "Before committing to full production, the team needs a playable slice that exposes how the core loop holds up. The pilot gives the decision something practical to review.",
+      "claim_refs": [
+        "PROPOSAL.CONTEXT",
+        "PROPOSAL.DELIVERABLE"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.PROPOSAL.ACTION",
+      "role": "callout",
+      "text": "Decision requested: approve the scoped pilot for 6 weeks with a $12,000 cap.",
+      "claim_refs": [
+        "PROPOSAL.DECISION",
+        "PROPOSAL.PILOT.LENGTH",
+        "PROPOSAL.BUDGET.CAP"
       ],
       "protected_spans": [
-        "100"
+        "6 weeks",
+        "$12,000"
       ]
     },
     {
-      "copy_id": "COPY.SUBHEAD",
-      "role": "subheadline",
-      "text": "مقترح عملي يبدأ بإجابة السؤال الأهم قبل توسيع الالتزام.",
+      "copy_id": "COPY.PROPOSAL.RISK",
+      "role": "paragraph",
+      "text": "Review the result weekly. If the core loop does not hold, stop the pilot before making a larger commitment.",
       "claim_refs": [
-        "DOC.CLAIM.1"
+        "PROPOSAL.RISK"
       ],
       "protected_spans": []
     }

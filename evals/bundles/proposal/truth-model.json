@@ -1,25 +1,92 @@
 {
   "sources": [
     {
-      "source_id": "SOURCE.DOCUMENT",
-      "description": "Approved synthetic source",
-      "locator": "synthetic://wave-5"
+      "source_id": "SOURCE.PROPOSAL.BRIEF",
+      "description": "Approved synthetic game pilot brief",
+      "locator": "fixture: game-pilot-decision-brief-v6"
     }
   ],
   "claims": [
     {
-      "claim_id": "DOC.CLAIM.1",
-      "meaning": "The pilot asks for approval of a focused first step.",
-      "value": "100",
+      "claim_id": "PROPOSAL.PILOT.LENGTH",
+      "meaning": "مدة الطيار المحدود.",
+      "value": "6 weeks",
       "epistemic_state": "source_backed",
       "closure_state": "open",
       "risk": "medium",
       "source_refs": [
-        "SOURCE.DOCUMENT"
+        "SOURCE.PROPOSAL.BRIEF"
       ],
       "protected_tokens": [
-        "100"
+        "6 weeks"
       ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "PROPOSAL.BUDGET.CAP",
+      "meaning": "السقف المالي المطلوب للموافقة.",
+      "value": "$12,000",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.PROPOSAL.BRIEF"
+      ],
+      "protected_tokens": [
+        "$12,000"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "PROPOSAL.DELIVERABLE",
+      "meaning": "المخرج المحدد للطيار.",
+      "value": "one playable vertical slice",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "medium",
+      "source_refs": [
+        "SOURCE.PROPOSAL.BRIEF"
+      ],
+      "protected_tokens": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "PROPOSAL.DECISION",
+      "meaning": "القرار المطلوب من القارئ.",
+      "value": "approve the scoped pilot",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.PROPOSAL.BRIEF"
+      ],
+      "protected_tokens": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "PROPOSAL.CONTEXT",
+      "meaning": "سبب بدء الاختبار المحدود.",
+      "value": "test the core loop before a larger commitment",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "medium",
+      "source_refs": [
+        "SOURCE.PROPOSAL.BRIEF"
+      ],
+      "protected_tokens": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "PROPOSAL.RISK",
+      "meaning": "شرط الإيقاف والمراجعة.",
+      "value": "weekly review; stop if the core loop does not hold",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.PROPOSAL.BRIEF"
+      ],
+      "protected_tokens": [],
       "materiality": "material"
     }
   ]

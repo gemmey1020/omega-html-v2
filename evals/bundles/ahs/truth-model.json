@@ -2,370 +2,791 @@
   "sources": [
     {
       "source_id": "SOURCE.AHS.OBSERVATION",
-      "description": "AHS read-only observation",
-      "locator": "local evidence package"
+      "description": "AHS read-only production observation",
+      "locator": "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_FINAL_READ_ONLY_PRODUCTION_OBSERVATION_2026-09-12.md"
+    },
+    {
+      "source_id": "SOURCE.AHS.AUDIT",
+      "description": "AHS final truth audit",
+      "locator": "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_FINAL_TRUTH_AUDIT_2026-09-12.md"
+    },
+    {
+      "source_id": "SOURCE.AHS.DOCX",
+      "description": "AHS developer requirements intake",
+      "locator": "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_Full_Developer_Bug_List_and_Requirements.docx"
+    },
+    {
+      "source_id": "SOURCE.AHS.TRIPLE",
+      "description": "AHS triple-chain validation",
+      "locator": "/home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_TRIPLE_CHAIN_VALIDATION_2026-09-12.md"
+    },
+    {
+      "source_id": "SOURCE.AHS.BACKEND",
+      "description": "Canonical AHS backend source",
+      "locator": "/home/jemy/Documents/my_work/x_port_x/the_job/ahs-app/core"
+    },
+    {
+      "source_id": "SOURCE.AHS.MOBILE",
+      "description": "Canonical AHS Flutter source",
+      "locator": "/home/jemy/Documents/my_work/x_port_x/the_job/ahs-app/core-front/committee_beauty_health"
+    },
+    {
+      "source_id": "SOURCE.AHS.PRODUCTION",
+      "description": "Observed production boundary",
+      "locator": "/opt/ahs/core"
+    },
+    {
+      "source_id": "SOURCE.AHS.PAYLOAD",
+      "description": "Frozen AHS Omega payload",
+      "locator": "/home/jemy/Documents/my_work/x_port_x/output/data/ahs-omega-hud-gold-payload-2026-09-12.json"
     }
   ],
   "claims": [
     {
       "claim_id": "AHS.REQUIREMENT.01",
-      "meaning": "01 · Users Search Returns 403 Forbidden",
-      "value": "1",
+      "meaning": "المطلب 01: بحث المستخدمين وصلاحيات لوحة الإدارة",
+      "value": {
+        "source_title": "01 · Users Search Returns 403 Forbidden",
+        "source_summary": "Admin/search source and identifier fields exist, but authorized role search and 403 behavior were not tested.",
+        "status": "OPEN-RUNTIME",
+        "category": "Identity, access, and account safety"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "1"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.02",
-      "meaning": "04 · Existing AHS Members Cannot Sign In",
-      "value": "2",
+      "meaning": "المطلب 02: تصدير رموز QR",
+      "value": {
+        "source_title": "02 · QR Code Export",
+        "source_summary": "Legacy and current QR populations are verified, but one/many/all export behavior and format/privacy acceptance are not proven.",
+        "status": "SUPPORTED-SUBSET",
+        "category": "Operational requests, queues, and exports"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
-      "risk": "high",
+      "closure_state": "partial",
+      "risk": "medium",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "2"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.03",
-      "meaning": "05 · Sign-Up Does Not Work Consistently",
-      "value": "3",
+      "meaning": "المطلب 03: الأخبار والتحميل المتتابع",
+      "value": {
+        "source_title": "03 · News Stops Appearing",
+        "source_summary": "Production has 62 News rows; global pagination and local load-more code exist, but the dataset-beyond-failure-point acceptance is open.",
+        "status": "SUPPORTED-SUBSET",
+        "category": "Content, data relationships, and modules"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
+      "closure_state": "partial",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND",
+        "SOURCE.AHS.MOBILE"
       ],
-      "protected_tokens": [
-        "3"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.04",
-      "meaning": "06 · Login by Membership Number or Card Serial",
-      "value": "4",
+      "meaning": "المطلب 04: دخول الأعضاء الحاليين",
+      "value": {
+        "source_title": "04 · Existing AHS Members Cannot Sign In",
+        "source_summary": "Production has 20,789 legacy users and 71 CustomUsers. Existing-member mapping, password compatibility, and sign-in acceptance remain untested.",
+        "status": "OPEN / ULTRA HIGH",
+        "category": "Identity, access, and account safety"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
-      "risk": "high",
+      "risk": "critical",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "4"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.05",
-      "meaning": "13 · Existing User Activation / Migration Access",
-      "value": "5",
+      "meaning": "المطلب 05: ثبات التسجيل ورسائل التحقق",
+      "value": {
+        "source_title": "05 · Sign-Up Does Not Work Consistently",
+        "source_summary": "Local new-user paths and tests exist, but production-safe negative/error behavior is not accepted end-to-end.",
+        "status": "VERIFIED-LOCAL-SUBSET",
+        "category": "Identity, access, and account safety"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "5"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.06",
-      "meaning": "15 · Membership Number in User Profile",
-      "value": "6",
-      "epistemic_state": "source_backed",
+      "meaning": "المطلب 06: الدخول برقم العضوية أو رقم البطاقة",
+      "value": {
+        "source_title": "06 · Login by Membership Number or Card Serial",
+        "source_summary": "Current auth contract demonstrates mobile/email-style identifiers; Membership Number or Card Serial login is not established.",
+        "status": "NOT-FOUND-LOCAL",
+        "category": "Identity, access, and account safety"
+      },
+      "epistemic_state": "not_found",
       "closure_state": "open",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "6"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.07",
-      "meaning": "16 · Forgot Password",
-      "value": "7",
+      "meaning": "المطلب 07: المتجر داخل لوحة الإدارة",
+      "value": {
+        "source_title": "07 · Store / Marketplace Dashboard",
+        "source_summary": "Store APIs/admin/source exist, but production vendors, categories, products, and orders are all zero. Scope may be empty-by-decision or missing-data.",
+        "status": "SUPPORTED-SUBSET / PRODUCTION-EMPTY",
+        "category": "Content, data relationships, and modules"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
+      "closure_state": "partial",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND",
+        "SOURCE.AHS.MOBILE"
       ],
-      "protected_tokens": [
-        "7"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.08",
-      "meaning": "17 · Blacklist Management",
-      "value": "8",
-      "epistemic_state": "source_backed",
+      "meaning": "المطلب 08: الإشعارات ودورة تسليمها",
+      "value": {
+        "source_title": "08 · Push Notifications",
+        "source_summary": "Notification records and local notification package exist, but FCM/APNs provider configuration, device tokens, Dashboard send result, and Android/iOS delivery are unproven.",
+        "status": "NOT-FOUND-LOCAL / OPEN-PROVIDER",
+        "category": "Integrations, migration, release, and handover"
+      },
+      "epistemic_state": "not_found",
       "closure_state": "open",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "8"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.09",
-      "meaning": "02 · QR Code Export",
-      "value": "9",
+      "meaning": "المطلب 09: ظهور طلبات الخدمات في لوحة الإدارة",
+      "value": {
+        "source_title": "09 · Requests Missing from Dashboard",
+        "source_summary": "Modern request tables contain linked rows in the inspected population, but Dashboard visibility across all request families was not tested.",
+        "status": "PARTIAL / E2E OPEN",
+        "category": "Operational requests, queues, and exports"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
-      "risk": "high",
+      "closure_state": "partial",
+      "risk": "critical",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "9"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.10",
-      "meaning": "09 · Requests Missing from Dashboard",
-      "value": "10",
+      "meaning": "المطلب 10: سير الطلبات وسبب الرفض",
+      "value": {
+        "source_title": "10 · Full Request Workflow",
+        "source_summary": "RequestWorkflowAdminMixin exposes approve/reject actions and status transitions; exact rejection-reason and app-reflection contract remains open.",
+        "status": "SUPPORTED-SUBSET",
+        "category": "Operational requests, queues, and exports"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
+      "closure_state": "partial",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "10"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.11",
-      "meaning": "10 · Full Request Workflow",
-      "value": "11",
+      "meaning": "المطلب 11: ربط الأكاديمية بالفرع",
+      "value": {
+        "source_title": "11 · Academy / Branch Link",
+        "source_summary": "227 academies and 24 branches exist. The targeted probe found zero academy-to-branch orphans, but business correctness and cross-surface display remain untested.",
+        "status": "OPEN-DATA-INTEGRITY",
+        "category": "Content, data relationships, and modules"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND",
+        "SOURCE.AHS.MOBILE"
       ],
-      "protected_tokens": [
-        "11"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.12",
-      "meaning": "19 · Pending Queue Cards / Navigation 403",
-      "value": "12",
-      "epistemic_state": "source_backed",
-      "closure_state": "open",
-      "risk": "high",
+      "meaning": "المطلب 12: النسخ الاحتياطي والترحيل",
+      "value": {
+        "source_title": "12 · Full Backup and Migration",
+        "source_summary": "April dump artifacts exist, but freshness, isolated restore, reconciliation, media completeness, and rollback receipt are not proven.",
+        "status": "BLOCKED / ULTRA HIGH",
+        "category": "Integrations, migration, release, and handover"
+      },
+      "epistemic_state": "unknown",
+      "closure_state": "blocked",
+      "risk": "medium",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "12"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.13",
-      "meaning": "20 · Users Export to Excel",
-      "value": "13",
+      "meaning": "المطلب 13: تفعيل المستخدم القديم ومنع التكرار",
+      "value": {
+        "source_title": "13 · Existing User Activation / Migration Access",
+        "source_summary": "Activation helper/source exists, but no proof shows safe verification, duplicate prevention, or preservation of the existing membership relationship.",
+        "status": "OPEN / ULTRA HIGH",
+        "category": "Identity, access, and account safety"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
-      "risk": "high",
+      "risk": "critical",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "13"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.14",
-      "meaning": "03 · News Stops Appearing",
-      "value": "14",
-      "epistemic_state": "source_backed",
+      "meaning": "المطلب 14: الشروط والأحكام",
+      "value": {
+        "source_title": "14 · Terms and Conditions",
+        "source_summary": "Signup terms checkbox/UI exists locally; approved legal content/version and production acceptance were not observed.",
+        "status": "BUSINESS-OPEN",
+        "category": "Content, data relationships, and modules"
+      },
+      "epistemic_state": "unknown",
       "closure_state": "open",
-      "risk": "high",
+      "risk": "medium",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND",
+        "SOURCE.AHS.MOBILE"
       ],
-      "protected_tokens": [
-        "14"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.15",
-      "meaning": "07 · Store / Marketplace Dashboard",
-      "value": "15",
+      "meaning": "المطلب 15: رقم العضوية في الملف الشخصي",
+      "value": {
+        "source_title": "15 · Membership Number in User Profile",
+        "source_summary": "Serial fields and local profile display code exist; valid-member ownership and cross-user isolation were not tested on a device or authorized API session.",
+        "status": "SUPPORTED-SUBSET",
+        "category": "Identity, access, and account safety"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
+      "closure_state": "partial",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "15"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.16",
-      "meaning": "11 · Academy / Branch Link",
-      "value": "16",
-      "epistemic_state": "source_backed",
+      "meaning": "المطلب 16: استعادة كلمة المرور",
+      "value": {
+        "source_title": "16 · Forgot Password",
+        "source_summary": "Legacy forgot-password route is disabled; the local Flutter login presents an explicit not-active message and the screen file is absent.",
+        "status": "NOT-FOUND-LOCAL / OPEN",
+        "category": "Identity, access, and account safety"
+      },
+      "epistemic_state": "not_found",
       "closure_state": "open",
-      "risk": "high",
+      "risk": "critical",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "16"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.17",
-      "meaning": "14 · Terms and Conditions",
-      "value": "17",
-      "epistemic_state": "source_backed",
+      "meaning": "المطلب 17: القائمة المحظورة",
+      "value": {
+        "source_title": "17 · Blacklist Management",
+        "source_summary": "No blacklist implementation was found in the focused remote/local source scan; rules, audit behavior, and false-positive handling are unapproved.",
+        "status": "NOT-FOUND-LOCAL",
+        "category": "Identity, access, and account safety"
+      },
+      "epistemic_state": "not_found",
       "closure_state": "open",
-      "risk": "high",
+      "risk": "critical",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND"
       ],
-      "protected_tokens": [
-        "17"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.18",
-      "meaning": "18 · Dashboard Assets and Icons",
-      "value": "18",
-      "epistemic_state": "source_backed",
-      "closure_state": "open",
+      "meaning": "المطلب 18: أصول لوحة الإدارة",
+      "value": {
+        "source_title": "18 · Dashboard Assets and Icons",
+        "source_summary": "Live static/media topology, duplicate logos, and remote staticfiles.W004 warning were observed; visual role-based QA remains absent.",
+        "status": "OPEN-RUNTIME / VERIFIED WARNING",
+        "category": "Content, data relationships, and modules"
+      },
+      "epistemic_state": "observed",
+      "closure_state": "verified",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND",
+        "SOURCE.AHS.MOBILE"
       ],
-      "protected_tokens": [
-        "18"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.19",
-      "meaning": "21 · Marketing / Application Sliders",
-      "value": "19",
+      "meaning": "المطلب 19: بطاقات الطوابير والتنقل",
+      "value": {
+        "source_title": "19 · Pending Queue Cards / Navigation 403",
+        "source_summary": "Routes and queue-count source exist, but no authorized role/card matrix was executed against the live Dashboard.",
+        "status": "OPEN-RUNTIME",
+        "category": "Operational requests, queues, and exports"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "19"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.20",
-      "meaning": "08 · Push Notifications",
-      "value": "20",
+      "meaning": "المطلب 20: تصدير المستخدمين إلى Excel",
+      "value": {
+        "source_title": "20 · Users Export to Excel",
+        "source_summary": "Remote source contains Users export actions and matches local source; UI visibility, filters, permissions, and columns remain untested.",
+        "status": "SUPPORTED-REMOTE-SOURCE",
+        "category": "Operational requests, queues, and exports"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
-      "risk": "high",
+      "closure_state": "partial",
+      "risk": "medium",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "20"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.21",
-      "meaning": "12 · Full Backup and Migration",
-      "value": "21",
+      "meaning": "المطلب 21: شرائح التسويق والتطبيق",
+      "value": {
+        "source_title": "21 · Marketing / Application Sliders",
+        "source_summary": "Marketing models/admin and static slider assets exist, but production slider tables contain zero rows and Dashboard-to-app flow is unproven.",
+        "status": "PARTIAL / PRODUCTION-EMPTY",
+        "category": "Content, data relationships, and modules"
+      },
       "epistemic_state": "source_backed",
-      "closure_state": "open",
+      "closure_state": "partial",
       "risk": "high",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.BACKEND",
+        "SOURCE.AHS.MOBILE"
       ],
-      "protected_tokens": [
-        "21"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.22",
-      "meaning": "22 · Old vs Current Dashboard Comparison",
-      "value": "22",
+      "meaning": "المطلب 22: مقارنة لوحة الإدارة القديمة والحالية",
+      "value": {
+        "source_title": "22 · Old vs Current Dashboard Comparison",
+        "source_summary": "A full signed module/page/action/permission comparison checklist is not yet an acceptance artifact.",
+        "status": "SCOPE-OPEN",
+        "category": "Integrations, migration, release, and handover"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
-      "risk": "high",
+      "risk": "critical",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "22"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.23",
-      "meaning": "23 · Full App / Dashboard / API / Infrastructure Review",
-      "value": "23",
+      "meaning": "المطلب 23: مراجعة التطبيق ولوحة الإدارة والـAPI والبنية",
+      "value": {
+        "source_title": "23 · Full App / Dashboard / API / Infrastructure Review",
+        "source_summary": "Server and source surfaces were observed, but mobile, roles, push, migration, and full end-to-end acceptance remain open.",
+        "status": "SCOPE-OPEN",
+        "category": "Integrations, migration, release, and handover"
+      },
       "epistemic_state": "source_backed",
       "closure_state": "open",
-      "risk": "high",
+      "risk": "critical",
       "source_refs": [
-        "SOURCE.AHS.OBSERVATION"
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "23"
-      ],
+      "protected_tokens": [],
       "materiality": "material"
     },
     {
       "claim_id": "AHS.REQUIREMENT.24",
-      "meaning": "24 · Completion Report and Handover",
-      "value": "24",
+      "meaning": "المطلب 24: تقرير الإغلاق والتسليم",
+      "value": {
+        "source_title": "24 · Completion Report and Handover",
+        "source_summary": "The evidence package now has explicit statuses and dependencies, but closure sign-off cannot be issued before the acceptance gates pass.",
+        "status": "SUPPORTED-SUBSET",
+        "category": "Integrations, migration, release, and handover"
+      },
+      "epistemic_state": "source_backed",
+      "closure_state": "partial",
+      "risk": "medium",
+      "source_refs": [
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT",
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PRODUCTION"
+      ],
+      "protected_tokens": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "AHS.FACT.PROJECT_POSTURE",
+      "meaning": "المشروع قابل للملاحظة، لكنه غير مغلق إنتاجيًا.",
+      "value": "EVIDENCE-BOUNDED / NOT PRODUCTION-CLOSED",
+      "epistemic_state": "observed",
+      "closure_state": "open",
+      "risk": "critical",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT"
+      ],
+      "protected_tokens": [],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.OBSERVATION_BOUNDARY",
+      "meaning": "نطاق العمل ملاحظة للقراءة فقط ومطابقة للمصادر.",
+      "value": "read-only observation and source reconciliation",
+      "epistemic_state": "source_backed",
+      "closure_state": "verified",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT"
+      ],
+      "protected_tokens": [],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.LEGACY_USERS",
+      "meaning": "عدد سجلات المستخدمين القديمة المرصودة.",
+      "value": "20,789",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "critical",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "20,789"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.CURRENT_USERS",
+      "meaning": "عدد سجلات CustomUser الحالية المرصودة.",
+      "value": "71",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "critical",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "71"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.NATIONAL_ID_OVERLAP",
+      "meaning": "عدد مرشحي التداخل في National_ID.",
+      "value": "28",
+      "epistemic_state": "observed",
+      "closure_state": "open",
+      "risk": "critical",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "28"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.BASELINE_HOURS",
+      "meaning": "خط الأساس الزمني المؤقت.",
+      "value": "120h",
       "epistemic_state": "source_backed",
       "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.PAYLOAD",
+        "SOURCE.AHS.AUDIT"
+      ],
+      "protected_tokens": [
+        "120h"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.RESTORE_STATUS",
+      "meaning": "حالة قابلية الاستعادة.",
+      "value": "restore not proven",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "critical",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.AUDIT"
+      ],
+      "protected_tokens": [
+        "restore not proven"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.BACKUP_DATE",
+      "meaning": "تاريخ ملفات النسخ المرصودة.",
+      "value": "2026-04-20",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
       "risk": "high",
       "source_refs": [
         "SOURCE.AHS.OBSERVATION"
       ],
       "protected_tokens": [
+        "2026-04-20"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.RUNTIME_PATH",
+      "meaning": "مسار المشروع المرصود على الخادم.",
+      "value": "/opt/ahs/core",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION",
+        "SOURCE.AHS.PRODUCTION"
+      ],
+      "protected_tokens": [
+        "/opt/ahs/core"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.DATABASE",
+      "meaning": "هوية قاعدة البيانات ومحركها.",
+      "value": "PostgreSQL 16.13 / ahs_prod",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "PostgreSQL 16.13",
+        "ahs_prod"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.NEWS_ROWS",
+      "meaning": "عدد سجلات الأخبار المرصودة.",
+      "value": "62",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "62"
+      ],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.ACADEMIES_BRANCHES",
+      "meaning": "عدد الأكاديميات والفروع المرصودة.",
+      "value": "227 academies / 24 branches",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "227",
         "24"
       ],
-      "materiality": "material"
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.APK_BOUNDARY",
+      "meaning": "هوية ملف APK ليست متطابقة بين النسختين المرصودتين.",
+      "value": "remote hash differs from local artifact",
+      "epistemic_state": "observed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.RUNTIME_CHECK",
+      "meaning": "فحص Django الأساسي اكتمل مع تحذير staticfiles.",
+      "value": "manage.py check / staticfiles.W004",
+      "epistemic_state": "observed",
+      "closure_state": "partial",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.OBSERVATION"
+      ],
+      "protected_tokens": [
+        "manage.py check",
+        "staticfiles.W004"
+      ],
+      "materiality": "supporting"
     }
   ]
 }

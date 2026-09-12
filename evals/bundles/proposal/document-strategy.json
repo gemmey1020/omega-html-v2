@@ -1,9 +1,22 @@
 {
   "document_intent": "proposal",
-  "through_line": "A clear decision follows the evidence.",
+  "through_line": "A bounded pilot turns a large product decision into a testable next step.",
+  "must_appear_first": [
+    "verdict",
+    "key_fact"
+  ],
+  "secondary_content": [
+    "narrative",
+    "risk_register"
+  ],
+  "annex_content": [],
+  "detail_level": "one to two page decision proposal",
+  "uncertainty_policy": "keep the pilot conditional and reviewable",
   "reader_journey": [
     "verdict",
-    "reason",
-    "action"
+    "case",
+    "terms",
+    "condition",
+    "next"
   ]
 }

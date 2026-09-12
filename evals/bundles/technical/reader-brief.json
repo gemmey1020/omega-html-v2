@@ -1,11 +1,19 @@
 {
-  "audience": "decision maker",
+  "audience": "technical lead",
   "document_intent": "technical",
   "surface_profile": "omega-hud",
-  "primary_question": "What should the reader decide?",
+  "primary_question": "What was verified and what remains open?",
+  "desired_action": "Assign the remaining risk",
+  "technical_depth": "dense",
+  "annex_policy": "show the technical annex",
+  "summary_rail": {
+    "enabled": true,
+    "title": "Release note",
+    "body": "الفحص واضح؛ مسار الملفات الثابتة يحتاج مسؤولية قبل الإصدار."
+  },
   "language": {
     "primary": "ar",
     "direction": "rtl",
-    "technical_english": "when_earned"
+    "technical_english": "when earned"
   }
 }

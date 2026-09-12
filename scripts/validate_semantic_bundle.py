@@ -17,6 +17,8 @@ def run(paths):
    if x[key] in seen:out.append(e(code,f"{kind}[{i}].{key}",x[key]))
    seen.add(x[key])
  uniq(t["sources"],"source_id","DUPLICATE_SOURCE_ID","truth.sources");uniq(t["claims"],"claim_id","DUPLICATE_CLAIM_ID","truth.claims");uniq(a["blocks"],"copy_id","DUPLICATE_COPY_ID","authored.blocks");uniq(c["sections"],"section_id","DUPLICATE_SECTION_ID","composition.sections")
+ structured=[b for s in c["sections"] for b in s.get("structured_blocks",[])]
+ uniq(structured,"block_id","DUPLICATE_STRUCTURED_BLOCK_ID","composition.structured_blocks")
  sources={x["source_id"] for x in t["sources"]}; claims={x["claim_id"]:x for x in t["claims"]}; copies={x["copy_id"]:x for x in a["blocks"]}; authored=set();composed=set()
  for x in t["claims"]:
   for s in x.get("source_refs",[]):
@@ -40,6 +42,27 @@ def run(paths):
    if r not in copies:out.append(e("UNKNOWN_COPY_REF",f"composition.sections[{i}]",r))
    else:composed.update(copies[r]["claim_refs"])
   composed.update(r for r in s.get("claim_refs",[]) if r in claims)
+  for bi,b in enumerate(s.get("structured_blocks",[])):
+   for r in b.get("claim_refs",[]):
+    if r not in claims:out.append(e("UNKNOWN_CLAIM_REF",f"composition.sections[{i}].structured_blocks[{bi}]",r))
+    else:composed.add(r)
+   for r in b.get("copy_refs",[]):
+    if r not in copies:out.append(e("UNKNOWN_COPY_REF",f"composition.sections[{i}].structured_blocks[{bi}]",r))
+    else:composed.update(copies[r]["claim_refs"])
+   for item in b.get("items",[]):
+    for r in item.get("claim_refs",[]):
+     if r not in claims:out.append(e("UNKNOWN_CLAIM_REF",f"composition.sections[{i}].structured_blocks[{bi}].items",r))
+     else:composed.add(r)
+    for r in item.get("copy_refs",[]):
+     if r not in copies:out.append(e("UNKNOWN_COPY_REF",f"composition.sections[{i}].structured_blocks[{bi}].items",r))
+     else:composed.update(copies[r]["claim_refs"])
+   for ri,row in enumerate(b.get("rows",[])):
+    for r in row.get("claim_refs",[]):
+     if r not in claims:out.append(e("UNKNOWN_CLAIM_REF",f"composition.sections[{i}].structured_blocks[{bi}].rows[{ri}]",r))
+     else:composed.add(r)
+    for r in row.get("copy_refs",[]):
+     if r not in copies:out.append(e("UNKNOWN_COPY_REF",f"composition.sections[{i}].structured_blocks[{bi}].rows[{ri}]",r))
+     else:composed.update(copies[r]["claim_refs"])
  for x in t["claims"]:
   if x.get("materiality")=="material":
    if x["claim_id"] not in authored:out.append(e("MATERIAL_CLAIM_NOT_AUTHORED",x["claim_id"],"not authored"))
@@ -56,5 +79,13 @@ def main():
   t=json.loads(Path(a.truth).read_text());material={x["claim_id"] for x in t.get("claims",[]) if x.get("materiality")=="material"}
  except (OSError,ValueError) as exc:
   print(json.dumps({"status":"FAIL","errors":[e("SCHEMA_INVALID","bundle",str(exc))],"warnings":[]},ensure_ascii=False));return 2
- authored=json.loads(Path(a.authored).read_text());composition=json.loads(Path(a.composition).read_text());authored_ids={r for b in authored.get("blocks",[]) for r in b.get("claim_refs",[])};composed_ids={r for s in composition.get("sections",[]) for r in s.get("claim_refs",[])};composed_ids.update(r for s in composition.get("sections",[]) for c in s.get("copy_refs",[]) for b in authored.get("blocks",[]) if b.get("copy_id")==c for r in b.get("claim_refs",[]));out={"status":"FAIL" if errors else "PASS","errors":errors,"warnings":[],"coverage":{"material_claims":len(material),"authored_material_claims":len(material&authored_ids),"composed_material_claims":len(material&composed_ids)}};print(json.dumps(out,ensure_ascii=False));return 2 if errors else 0
+ authored=json.loads(Path(a.authored).read_text());composition=json.loads(Path(a.composition).read_text());authored_ids={r for b in authored.get("blocks",[]) for r in b.get("claim_refs",[])};composed_ids={r for s in composition.get("sections",[]) for r in s.get("claim_refs",[])}
+ composed_ids.update(r for s in composition.get("sections",[]) for c in s.get("copy_refs",[]) for b in authored.get("blocks",[]) if b.get("copy_id")==c for r in b.get("claim_refs",[]))
+ for s in composition.get("sections",[]):
+  for b in s.get("structured_blocks",[]):
+   composed_ids.update(b.get("claim_refs",[]))
+   composed_ids.update(r for c in b.get("copy_refs",[]) for block in authored.get("blocks",[]) if block.get("copy_id")==c for r in block.get("claim_refs",[]))
+   composed_ids.update(r for item in b.get("items",[]) for r in item.get("claim_refs",[]))
+   composed_ids.update(r for row in b.get("rows",[]) for r in row.get("claim_refs",[]))
+ out={"status":"FAIL" if errors else "PASS","errors":errors,"warnings":[],"coverage":{"material_claims":len(material),"authored_material_claims":len(material&authored_ids),"composed_material_claims":len(material&composed_ids)}};print(json.dumps(out,ensure_ascii=False));return 2 if errors else 0
 if __name__=="__main__":sys.exit(main())

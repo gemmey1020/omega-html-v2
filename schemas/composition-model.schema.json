@@ -1,1 +1,43 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,"required":["sections"],"properties":{"sections":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["section_id","purpose","copy_refs","presentation_intent"],"properties":{"section_id":{"type":"string"},"purpose":{"type":"string"},"copy_refs":{"type":"array","items":{"type":"string","minLength":1}},"claim_refs":{"type":"array","items":{"type":"string","minLength":1}},"presentation_intent":{"type":"string"},"annex":{"type":"boolean"}}}}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sections"],
+  "properties": {
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["section_id", "purpose", "copy_refs", "presentation_intent"],
+        "properties": {
+          "section_id": {"type": "string", "minLength": 1},
+          "purpose": {"type": "string", "minLength": 1},
+          "copy_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "claim_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "presentation_intent": {"enum": ["verdict", "narrative", "key_fact", "comparison", "evidence_matrix", "risk_register", "sequence", "checklist", "table", "callout", "technical_block", "technical_annex", "source_ledger"]},
+          "annex": {"type": "boolean"},
+          "structured_blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["block_id", "type"],
+              "properties": {
+                "block_id": {"type": "string", "minLength": 1},
+                "type": {"enum": ["fact_list", "table", "comparison", "sequence", "checklist", "risk_register", "code", "source_ledger", "callout"]},
+                "title": {"type": "string"},
+                "claim_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+                "copy_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+                "items": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["label", "value"], "properties": {"label": {"type": "string"}, "value": {"type": "string"}, "detail": {"type": "string"}, "claim_refs": {"type": "array", "items": {"type": "string"}}, "copy_refs": {"type": "array", "items": {"type": "string"}}}}},
+                "columns": {"type": "array", "items": {"type": "string"}},
+                "rows": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["cells"], "properties": {"cells": {"type": "array", "items": {"type": "string"}}, "claim_refs": {"type": "array", "items": {"type": "string"}}, "copy_refs": {"type": "array", "items": {"type": "string"}}}}},
+                "code": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

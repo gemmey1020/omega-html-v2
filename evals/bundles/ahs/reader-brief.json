@@ -1,11 +1,20 @@
 {
-  "audience": "executive reader",
+  "audience": "صاحب قرار أو مسؤول تسليم",
   "document_intent": "audit_report",
   "surface_profile": "omega-editorial",
-  "primary_question": "What is proven and what remains open?",
+  "primary_question": "ما الذي ثبت، وما الذي يمنع الإغلاق؟",
+  "desired_action": "تحديد بوابة الإغلاق التالية",
+  "technical_depth": "technical annex",
+  "annex_policy": "التفاصيل التقنية في الملحق",
+  "summary_rail": {
+    "enabled": true,
+    "title": "قرار اليوم",
+    "body": "المتابعة ممكنة. إعلان الإغلاق يحتاج دليل الهوية والاستعادة والأدوار والأجهزة."
+  },
   "language": {
     "primary": "ar",
     "direction": "rtl",
-    "technical_english": "when_earned"
+    "technical_english": "when_earned",
+    "translation_preference": "Arabic prose with exact technical identifiers"
   }
 }

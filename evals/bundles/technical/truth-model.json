@@ -1,25 +1,110 @@
 {
   "sources": [
     {
-      "source_id": "SOURCE.DOCUMENT",
-      "description": "Approved synthetic source",
-      "locator": "synthetic://wave-5"
+      "source_id": "SOURCE.TECHNICAL.BRIEF",
+      "description": "Approved synthetic runtime review brief",
+      "locator": "fixture: runtime-review-brief-v6"
     }
   ],
   "claims": [
     {
-      "claim_id": "DOC.CLAIM.1",
-      "meaning": "المسار `/srv/app` يستخدم `PostgreSQL` والنسخة v2.1.",
-      "value": "100",
-      "epistemic_state": "source_backed",
-      "closure_state": "open",
+      "claim_id": "TECH.PATH",
+      "meaning": "Path under review.",
+      "value": "/srv/ahs/core",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
       "risk": "medium",
       "source_refs": [
-        "SOURCE.DOCUMENT"
+        "SOURCE.TECHNICAL.BRIEF"
       ],
       "protected_tokens": [
-        "100"
+        "/srv/ahs/core"
       ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "TECH.VERSION",
+      "meaning": "Application version under review.",
+      "value": "v2.1",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "medium",
+      "source_refs": [
+        "SOURCE.TECHNICAL.BRIEF"
+      ],
+      "protected_tokens": [
+        "v2.1"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "TECH.DATABASE",
+      "meaning": "Database identity.",
+      "value": "ahs_prod / PostgreSQL 16",
+      "epistemic_state": "observed",
+      "closure_state": "partial",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.TECHNICAL.BRIEF"
+      ],
+      "protected_tokens": [
+        "ahs_prod",
+        "PostgreSQL 16"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "TECH.COMMAND",
+      "meaning": "Command used for the check.",
+      "value": "python manage.py check",
+      "epistemic_state": "observed",
+      "closure_state": "verified",
+      "risk": "low",
+      "source_refs": [
+        "SOURCE.TECHNICAL.BRIEF"
+      ],
+      "protected_tokens": [
+        "python manage.py check"
+      ],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "TECH.STATUS",
+      "meaning": "Status of the review.",
+      "value": "passed with one warning",
+      "epistemic_state": "observed",
+      "closure_state": "partial",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.TECHNICAL.BRIEF"
+      ],
+      "protected_tokens": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "TECH.RISK",
+      "meaning": "Remaining operational risk.",
+      "value": "static asset path warning needs ownership before release",
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.TECHNICAL.BRIEF"
+      ],
+      "protected_tokens": [],
+      "materiality": "material"
+    },
+    {
+      "claim_id": "TECH.ANNEX",
+      "meaning": "The report includes an evidence annex.",
+      "value": "source ledger and status table",
+      "epistemic_state": "source_backed",
+      "closure_state": "verified",
+      "risk": "low",
+      "source_refs": [
+        "SOURCE.TECHNICAL.BRIEF"
+      ],
+      "protected_tokens": [],
       "materiality": "material"
     }
   ]

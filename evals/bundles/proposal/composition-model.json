@@ -1,14 +1,126 @@
 {
   "sections": [
     {
-      "section_id": "main",
-      "purpose": "The decision and its basis",
+      "section_id": "decision",
+      "purpose": "The decision requested",
       "copy_refs": [
-        "COPY.1",
-        "COPY.SUBHEAD"
+        "COPY.PROPOSAL.HEADLINE",
+        "COPY.PROPOSAL.SUBHEAD",
+        "COPY.PROPOSAL.ACTION"
       ],
+      "claim_refs": [
+        "PROPOSAL.DECISION"
+      ],
+      "presentation_intent": "verdict",
+      "structured_blocks": []
+    },
+    {
+      "section_id": "case",
+      "purpose": "Why this scope",
+      "copy_refs": [
+        "COPY.PROPOSAL.CONTEXT"
+      ],
+      "claim_refs": [
+        "PROPOSAL.CONTEXT"
+      ],
+      "presentation_intent": "narrative",
+      "structured_blocks": []
+    },
+    {
+      "section_id": "terms",
+      "purpose": "Pilot boundaries",
+      "copy_refs": [],
       "claim_refs": [],
-      "presentation_intent": "verdict"
+      "presentation_intent": "key_fact",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.PROPOSAL.TERMS",
+          "type": "fact_list",
+          "title": "What approval covers",
+          "items": [
+            {
+              "label": "Duration",
+              "value": "6 weeks",
+              "claim_refs": [
+                "PROPOSAL.PILOT.LENGTH"
+              ]
+            },
+            {
+              "label": "Cap",
+              "value": "$12,000",
+              "claim_refs": [
+                "PROPOSAL.BUDGET.CAP"
+              ]
+            },
+            {
+              "label": "Deliverable",
+              "value": "one playable vertical slice",
+              "claim_refs": [
+                "PROPOSAL.DELIVERABLE"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "condition",
+      "purpose": "Condition for continuing",
+      "copy_refs": [
+        "COPY.PROPOSAL.RISK"
+      ],
+      "claim_refs": [
+        "PROPOSAL.RISK"
+      ],
+      "presentation_intent": "risk_register",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.PROPOSAL.RISK",
+          "type": "risk_register",
+          "title": "One clear condition",
+          "items": [
+            {
+              "label": "Risk",
+              "value": "Spending before learning the loop",
+              "detail": "المراجعة الأسبوعية توقف الطيار إذا لم تثبت الحلقة الأساسية.",
+              "claim_refs": [
+                "PROPOSAL.RISK"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "next",
+      "purpose": "Next step",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "checklist",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.PROPOSAL.NEXT",
+          "type": "checklist",
+          "items": [
+            {
+              "label": "Approve the scope",
+              "value": "Sign off on the timebox and cap.",
+              "claim_refs": [
+                "PROPOSAL.PILOT.LENGTH",
+                "PROPOSAL.BUDGET.CAP"
+              ]
+            },
+            {
+              "label": "Start the pilot",
+              "value": "Build the playable slice and review it weekly.",
+              "claim_refs": [
+                "PROPOSAL.DELIVERABLE",
+                "PROPOSAL.RISK"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

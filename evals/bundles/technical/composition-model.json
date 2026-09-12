@@ -1,14 +1,216 @@
 {
   "sections": [
     {
-      "section_id": "main",
-      "purpose": "The decision and its basis",
+      "section_id": "identity",
+      "purpose": "هوية الشيء الذي فُحص",
       "copy_refs": [
-        "COPY.1",
-        "COPY.SUBHEAD"
+        "COPY.TECH.HEADLINE",
+        "COPY.TECH.SUBHEAD"
       ],
       "claim_refs": [],
-      "presentation_intent": "verdict"
+      "presentation_intent": "verdict",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.TECH.IDENTITY",
+          "type": "fact_list",
+          "title": "Environment",
+          "items": [
+            {
+              "label": "Path",
+              "value": "/srv/ahs/core",
+              "claim_refs": [
+                "TECH.PATH"
+              ]
+            },
+            {
+              "label": "Version",
+              "value": "v2.1",
+              "claim_refs": [
+                "TECH.VERSION"
+              ]
+            },
+            {
+              "label": "Database",
+              "value": "ahs_prod / PostgreSQL 16",
+              "claim_refs": [
+                "TECH.DATABASE"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "overview",
+      "purpose": "النتيجة في سطر يمكن متابعته",
+      "copy_refs": [
+        "COPY.TECH.INTRO",
+        "COPY.TECH.RISK"
+      ],
+      "claim_refs": [
+        "TECH.STATUS"
+      ],
+      "presentation_intent": "narrative",
+      "structured_blocks": []
+    },
+    {
+      "section_id": "status",
+      "purpose": "حالة الأدلة التنفيذية",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "table",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.TECH.STATUS",
+          "type": "table",
+          "title": "Evidence status",
+          "columns": [
+            "Check",
+            "Observed",
+            "State"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Runtime check",
+                "python manage.py check",
+                "مكتمل"
+              ],
+              "claim_refs": [
+                "TECH.COMMAND",
+                "TECH.STATUS"
+              ]
+            },
+            {
+              "cells": [
+                "Static asset path",
+                "warning remains",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "TECH.RISK"
+              ]
+            },
+            {
+              "cells": [
+                "Annex",
+                "source ledger and status table",
+                "موجود"
+              ],
+              "claim_refs": [
+                "TECH.ANNEX"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "command",
+      "purpose": "الأمر والسياق التقني",
+      "copy_refs": [
+        "COPY.TECH.CODE"
+      ],
+      "claim_refs": [],
+      "presentation_intent": "technical_block",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.TECH.CODE",
+          "type": "code",
+          "title": "Observed command",
+          "code": "cd /srv/ahs/core\npython manage.py check\n# database: ahs_prod / PostgreSQL 16",
+          "claim_refs": [
+            "TECH.PATH",
+            "TECH.COMMAND",
+            "TECH.DATABASE"
+          ],
+          "copy_refs": [
+            "COPY.TECH.CODE"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "risk",
+      "purpose": "المخاطرة التي لا ينبغي أن تضيع",
+      "copy_refs": [
+        "COPY.TECH.RISK"
+      ],
+      "claim_refs": [
+        "TECH.RISK"
+      ],
+      "presentation_intent": "risk_register",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.TECH.RISK",
+          "type": "risk_register",
+          "title": "Release caveat",
+          "items": [
+            {
+              "label": "Static asset path",
+              "value": "open",
+              "detail": "يحتاج التحذير إلى مالك وقرار قبل الإصدار.",
+              "claim_refs": [
+                "TECH.RISK"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "annex",
+      "purpose": "تفاصيل يحتاجها فريق التشغيل",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "technical_annex",
+      "annex": true,
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.TECH.ANNEX",
+          "type": "code",
+          "title": "Technical annex",
+          "code": "# Keep the warning visible until an owner accepts it.",
+          "claim_refs": [
+            "TECH.RISK"
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "ledger",
+      "purpose": "من أين جاءت هذه النتيجة؟",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "source_ledger",
+      "annex": true,
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.TECH.LEDGER",
+          "type": "source_ledger",
+          "title": "Source ledger",
+          "items": [
+            {
+              "label": "Runtime brief",
+              "value": "المسار والنسخة وقاعدة البيانات.",
+              "claim_refs": [
+                "TECH.PATH",
+                "TECH.VERSION",
+                "TECH.DATABASE"
+              ]
+            },
+            {
+              "label": "Check result",
+              "value": "الأمر ونتيجته والتحذير المفتوح.",
+              "claim_refs": [
+                "TECH.COMMAND",
+                "TECH.STATUS",
+                "TECH.RISK"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

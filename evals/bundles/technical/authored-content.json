@@ -1,22 +1,60 @@
 {
   "blocks": [
     {
-      "copy_id": "COPY.1",
+      "copy_id": "COPY.TECH.HEADLINE",
       "role": "headline",
-      "text": "مراجعة تقنية قابلة للتدقيق 100",
+      "text": "مراجعة تقنية لمسار الإصدار",
       "claim_refs": [
-        "DOC.CLAIM.1"
+        "TECH.PATH",
+        "TECH.VERSION"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.TECH.SUBHEAD",
+      "role": "subheadline",
+      "text": "فحص قصير يربط المسار والنسخة وقاعدة البيانات بالنتيجة التي يمكن لفريق التشغيل متابعتها.",
+      "claim_refs": [
+        "TECH.PATH",
+        "TECH.VERSION",
+        "TECH.STATUS"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.TECH.INTRO",
+      "role": "paragraph",
+      "text": "هذه المراجعة تلتقط هوية البيئة أولًا، ثم تعرض حالة الفحص، ثم تترك أثرًا واضحًا للمخاطرة وملحق الأدلة الذي يحتاجه فريق التشغيل.",
+      "claim_refs": [
+        "TECH.STATUS",
+        "TECH.RISK",
+        "TECH.ANNEX"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.TECH.CODE",
+      "role": "technical_text",
+      "text": "cd /srv/ahs/core\npython manage.py check\n# database: ahs_prod / PostgreSQL 16",
+      "claim_refs": [
+        "TECH.PATH",
+        "TECH.COMMAND",
+        "TECH.DATABASE"
       ],
       "protected_spans": [
-        "100"
+        "/srv/ahs/core",
+        "python manage.py check",
+        "ahs_prod",
+        "PostgreSQL 16"
       ]
     },
     {
-      "copy_id": "COPY.SUBHEAD",
-      "role": "subheadline",
-      "text": "المسارات والنسخ والحالة التشغيلية كما تظهر في الدليل.",
+      "copy_id": "COPY.TECH.RISK",
+      "role": "callout",
+      "text": "النتيجة قابلة للاستخدام، لكن تحذير مسار الملفات الثابتة يحتاج مالكًا وقرارًا قبل ربطها بقرار إصدار.",
       "claim_refs": [
-        "DOC.CLAIM.1"
+        "TECH.STATUS",
+        "TECH.RISK"
       ],
       "protected_spans": []
     }

@@ -1,276 +1,712 @@
 {
   "blocks": [
     {
-      "copy_id": "COPY.AHS.01",
+      "copy_id": "COPY.AHS.HEADLINE",
       "role": "headline",
-      "text": "الحقيقة التشغيلية لمشروع AHS 1",
+      "text": "مشروع AHS: الحقيقة التشغيلية قبل قرار الإغلاق",
       "claim_refs": [
-        "AHS.REQUIREMENT.01"
-      ],
-      "protected_spans": [
-        "1"
-      ]
-    },
-    {
-      "copy_id": "COPY.SUBHEAD",
-      "role": "subheadline",
-      "text": "ما الذي أثبته الدليل، وما الذي ما زال مفتوحًا؟",
-      "claim_refs": [
-        "AHS.REQUIREMENT.01"
+        "AHS.FACT.PROJECT_POSTURE"
       ],
       "protected_spans": []
     },
     {
-      "copy_id": "COPY.AHS.02",
+      "copy_id": "COPY.AHS.SUBHEAD",
+      "role": "subheadline",
+      "text": "المصدر يوضح ما ثبت على الخادم والكود، وما يحتاج إلى اختبار أو قرار قبل إعلان الجاهزية.",
+      "claim_refs": [
+        "AHS.FACT.PROJECT_POSTURE",
+        "AHS.FACT.OBSERVATION_BOUNDARY"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.AHS.CALLOUT",
+      "role": "callout",
+      "text": "القرار الحالي: استمر في الإغلاق المنضبط، ولا تسمِّ المشروع مغلقًا إنتاجيًا قبل إثبات الهوية والاستعادة والأدوار والأجهزة.",
+      "claim_refs": [
+        "AHS.FACT.PROJECT_POSTURE",
+        "AHS.FACT.RESTORE_STATUS"
+      ],
+      "protected_spans": []
+    },
+    {
+      "copy_id": "COPY.AHS.FACTS",
       "role": "paragraph",
-      "text": "04 · Existing AHS Members Cannot Sign In — requirement 2",
+      "text": "السجل المرصود يضم 20,789 مستخدمًا قديمًا و71 مستخدمًا حاليًا، مع 28 مرشح تداخل في National_ID. ويضم المحتوى 62 خبرًا، إلى جانب 227 أكاديمية و24 فرعًا. خط الأساس المؤقت 120h، بينما restore not proven حتى الآن؛ وهوية الـAPK تحمل remote hash differs.",
+      "claim_refs": [
+        "AHS.FACT.LEGACY_USERS",
+        "AHS.FACT.CURRENT_USERS",
+        "AHS.FACT.NATIONAL_ID_OVERLAP",
+        "AHS.FACT.NEWS_ROWS",
+        "AHS.FACT.ACADEMIES_BRANCHES",
+        "AHS.FACT.BASELINE_HOURS",
+        "AHS.FACT.RESTORE_STATUS",
+        "AHS.FACT.APK_BOUNDARY"
+      ],
+      "protected_spans": [
+        "20,789",
+        "71",
+        "28",
+        "62",
+        "227",
+        "24",
+        "120h",
+        "restore not proven"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.TECH",
+      "role": "paragraph",
+      "text": "المسار المرصود /opt/ahs/core يعمل على PostgreSQL 16.13 وقاعدة ahs_prod. فحص manage.py check اكتمل مع staticfiles.W004؛ وملف النسخ يحمل تاريخ 2026-04-20.",
+      "claim_refs": [
+        "AHS.FACT.RUNTIME_PATH",
+        "AHS.FACT.DATABASE",
+        "AHS.FACT.RUNTIME_CHECK",
+        "AHS.FACT.BACKUP_DATE"
+      ],
+      "protected_spans": [
+        "/opt/ahs/core",
+        "PostgreSQL 16.13",
+        "ahs_prod",
+        "manage.py check",
+        "staticfiles.W004",
+        "2026-04-20"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.CODE",
+      "role": "technical_text",
+      "text": "python manage.py check\n# observed warning: staticfiles.W004",
+      "claim_refs": [
+        "AHS.FACT.RUNTIME_CHECK"
+      ],
+      "protected_spans": [
+        "manage.py check",
+        "staticfiles.W004"
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.REQUIREMENT.01",
+      "role": "paragraph",
+      "text": "المطلب 01 — بحث المستخدمين وصلاحيات لوحة الإدارة: مسارات البحث وحقول المعرّفات موجودة، لكن اختبار الأدوار وسلوك 403 لم يُنفّذ.",
+      "claim_refs": [
+        "AHS.REQUIREMENT.01"
+      ],
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.01",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.01",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.01",
+          "dimension": "risk",
+          "value": "high"
+        }
+      ]
+    },
+    {
+      "copy_id": "COPY.AHS.REQUIREMENT.02",
+      "role": "paragraph",
+      "text": "المطلب 02 — تصدير رموز QR: بيانات QR القديمة والحالية موجودة؛ التصدير لعنصر واحد أو مجموعة أو الكل لم يُثبت.",
       "claim_refs": [
         "AHS.REQUIREMENT.02"
       ],
-      "protected_spans": [
-        "2"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.02",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.02",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.02",
+          "dimension": "risk",
+          "value": "medium"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.03",
+      "copy_id": "COPY.AHS.REQUIREMENT.03",
       "role": "paragraph",
-      "text": "05 · Sign-Up Does Not Work Consistently — requirement 3",
+      "text": "المطلب 03 — الأخبار والتحميل المتتابع: يوجد 62 سجل خبر، لكن اختبار تجاوز نقطة الفشل والتصفح المتتابع ما زال مفتوحًا.",
       "claim_refs": [
         "AHS.REQUIREMENT.03"
       ],
-      "protected_spans": [
-        "3"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.03",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.03",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.03",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.04",
+      "copy_id": "COPY.AHS.REQUIREMENT.04",
       "role": "paragraph",
-      "text": "06 · Login by Membership Number or Card Serial — requirement 4",
+      "text": "المطلب 04 — دخول الأعضاء الحاليين: يوجد 20,789 مستخدمًا قديمًا و71 مستخدمًا حاليًا؛ توافق الدخول والربط بينهما غير مختبر.",
       "claim_refs": [
         "AHS.REQUIREMENT.04"
       ],
-      "protected_spans": [
-        "4"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.04",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.04",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.04",
+          "dimension": "risk",
+          "value": "critical"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.05",
+      "copy_id": "COPY.AHS.REQUIREMENT.05",
       "role": "paragraph",
-      "text": "13 · Existing User Activation / Migration Access — requirement 5",
+      "text": "المطلب 05 — ثبات التسجيل ورسائل التحقق: مسارات التسجيل المحلية واختباراتها موجودة، بينما قبول أخطاء الإنتاج والحالات السلبية لم يُحسم.",
       "claim_refs": [
         "AHS.REQUIREMENT.05"
       ],
-      "protected_spans": [
-        "5"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.05",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.05",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.05",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.06",
+      "copy_id": "COPY.AHS.REQUIREMENT.06",
       "role": "paragraph",
-      "text": "15 · Membership Number in User Profile — requirement 6",
+      "text": "المطلب 06 — الدخول برقم العضوية أو رقم البطاقة: عقد الدخول الحالي يعتمد على الهاتف أو البريد أو اسم المستخدم؛ رقم العضوية ورقم البطاقة غير مثبتين.",
       "claim_refs": [
         "AHS.REQUIREMENT.06"
       ],
-      "protected_spans": [
-        "6"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.06",
+          "dimension": "epistemic_state",
+          "value": "not_found"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.06",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.06",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.07",
+      "copy_id": "COPY.AHS.REQUIREMENT.07",
       "role": "paragraph",
-      "text": "16 · Forgot Password — requirement 7",
+      "text": "المطلب 07 — المتجر داخل لوحة الإدارة: كود المتجر موجود، لكن جداول الإنتاج للمنتجات والبائعين والطلبات فارغة؛ النطاق يحتاج قرارًا.",
       "claim_refs": [
         "AHS.REQUIREMENT.07"
       ],
-      "protected_spans": [
-        "7"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.07",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.07",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.07",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.08",
+      "copy_id": "COPY.AHS.REQUIREMENT.08",
       "role": "paragraph",
-      "text": "17 · Blacklist Management — requirement 8",
+      "text": "المطلب 08 — الإشعارات ودورة تسليمها: مسارات قراءة الإشعارات موجودة، أما مزود الإرسال والأجهزة ودورة الرموز فلم تُثبت.",
       "claim_refs": [
         "AHS.REQUIREMENT.08"
       ],
-      "protected_spans": [
-        "8"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.08",
+          "dimension": "epistemic_state",
+          "value": "not_found"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.08",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.08",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.09",
+      "copy_id": "COPY.AHS.REQUIREMENT.09",
       "role": "paragraph",
-      "text": "02 · QR Code Export — requirement 9",
+      "text": "المطلب 09 — ظهور طلبات الخدمات في لوحة الإدارة: جداول الطلبات الحديثة موجودة، لكن ظهور كل عائلة طلب في لوحة الإدارة لم يُختبر.",
       "claim_refs": [
         "AHS.REQUIREMENT.09"
       ],
-      "protected_spans": [
-        "9"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.09",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.09",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.09",
+          "dimension": "risk",
+          "value": "critical"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.10",
+      "copy_id": "COPY.AHS.REQUIREMENT.10",
       "role": "paragraph",
-      "text": "09 · Requests Missing from Dashboard — requirement 10",
+      "text": "المطلب 10 — سير الطلبات وسبب الرفض: أدوات القبول والرفض موجودة، بينما سبب الرفض وانعكاس الحالة على التطبيق ما زالا مفتوحين.",
       "claim_refs": [
         "AHS.REQUIREMENT.10"
       ],
-      "protected_spans": [
-        "10"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.10",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.10",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.10",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.11",
+      "copy_id": "COPY.AHS.REQUIREMENT.11",
       "role": "paragraph",
-      "text": "10 · Full Request Workflow — requirement 11",
+      "text": "المطلب 11 — ربط الأكاديمية بالفرع: يوجد 227 أكاديمية و24 فرعًا، ولم يظهر يتيم في الفحص الموجّه؛ صحة العلاقة على كل الأسطح لم تُقبل.",
       "claim_refs": [
         "AHS.REQUIREMENT.11"
       ],
-      "protected_spans": [
-        "11"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.11",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.11",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.11",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.12",
+      "copy_id": "COPY.AHS.REQUIREMENT.12",
       "role": "paragraph",
-      "text": "19 · Pending Queue Cards / Navigation 403 — requirement 12",
+      "text": "المطلب 12 — النسخ الاحتياطي والترحيل: ملفات نسخ بتاريخ 2026-04-20 موجودة، لكن الاستعادة والمطابقة وخطة الرجوع غير مثبتة.",
       "claim_refs": [
         "AHS.REQUIREMENT.12"
       ],
-      "protected_spans": [
-        "12"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.12",
+          "dimension": "epistemic_state",
+          "value": "unknown"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.12",
+          "dimension": "closure_state",
+          "value": "blocked"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.12",
+          "dimension": "risk",
+          "value": "medium"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.13",
+      "copy_id": "COPY.AHS.REQUIREMENT.13",
       "role": "paragraph",
-      "text": "20 · Users Export to Excel — requirement 13",
+      "text": "المطلب 13 — تفعيل المستخدم القديم ومنع التكرار: توجد خدمة تفعيل، لكن إثبات الهوية ومنع إنشاء عضوية مكررة غير مثبتين.",
       "claim_refs": [
         "AHS.REQUIREMENT.13"
       ],
-      "protected_spans": [
-        "13"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.13",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.13",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.13",
+          "dimension": "risk",
+          "value": "critical"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.14",
+      "copy_id": "COPY.AHS.REQUIREMENT.14",
       "role": "paragraph",
-      "text": "03 · News Stops Appearing — requirement 14",
+      "text": "المطلب 14 — الشروط والأحكام: واجهة قبول الشروط موجودة، أما النص القانوني المعتمد وإصداره وربطه بالإنتاج فمفتوح.",
       "claim_refs": [
         "AHS.REQUIREMENT.14"
       ],
-      "protected_spans": [
-        "14"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.14",
+          "dimension": "epistemic_state",
+          "value": "unknown"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.14",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.14",
+          "dimension": "risk",
+          "value": "medium"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.15",
+      "copy_id": "COPY.AHS.REQUIREMENT.15",
       "role": "paragraph",
-      "text": "07 · Store / Marketplace Dashboard — requirement 15",
+      "text": "المطلب 15 — رقم العضوية في الملف الشخصي: الحقل Serial ومسار عرضه موجودان، لكن عرض رقم عضو فعلي وعزل بياناته لم يُختبرا.",
       "claim_refs": [
         "AHS.REQUIREMENT.15"
       ],
-      "protected_spans": [
-        "15"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.15",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.15",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.15",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.16",
+      "copy_id": "COPY.AHS.REQUIREMENT.16",
       "role": "paragraph",
-      "text": "11 · Academy / Branch Link — requirement 16",
+      "text": "المطلب 16 — استعادة كلمة المرور: مسار الاستعادة القديم معطّل، ولم يظهر مسار بديل مكتمل من التعرف حتى تسجيل الدخول الجديد.",
       "claim_refs": [
         "AHS.REQUIREMENT.16"
       ],
-      "protected_spans": [
-        "16"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.16",
+          "dimension": "epistemic_state",
+          "value": "not_found"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.16",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.16",
+          "dimension": "risk",
+          "value": "critical"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.17",
+      "copy_id": "COPY.AHS.REQUIREMENT.17",
       "role": "paragraph",
-      "text": "14 · Terms and Conditions — requirement 17",
+      "text": "المطلب 17 — القائمة المحظورة: لم يظهر تنفيذ محلي للقائمة المحظورة؛ قواعد المطابقة وسجل التغيير تحتاج اعتمادًا.",
       "claim_refs": [
         "AHS.REQUIREMENT.17"
       ],
-      "protected_spans": [
-        "17"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.17",
+          "dimension": "epistemic_state",
+          "value": "not_found"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.17",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.17",
+          "dimension": "risk",
+          "value": "critical"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.18",
+      "copy_id": "COPY.AHS.REQUIREMENT.18",
       "role": "paragraph",
-      "text": "18 · Dashboard Assets and Icons — requirement 18",
+      "text": "المطلب 18 — أصول لوحة الإدارة: التخزين الثابت والوسائط موجودان، مع تحذير staticfiles.W004؛ فحص بصري بصلاحيات فعلية لم يُنفّذ.",
       "claim_refs": [
         "AHS.REQUIREMENT.18"
       ],
-      "protected_spans": [
-        "18"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.18",
+          "dimension": "epistemic_state",
+          "value": "observed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.18",
+          "dimension": "closure_state",
+          "value": "verified"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.18",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.19",
+      "copy_id": "COPY.AHS.REQUIREMENT.19",
       "role": "paragraph",
-      "text": "21 · Marketing / Application Sliders — requirement 19",
+      "text": "المطلب 19 — بطاقات الطوابير والتنقل: مصادر الطوابير والمسارات موجودة، لكن مصفوفة الأدوار وبطاقات الانتظار لم تُقبل حيًا.",
       "claim_refs": [
         "AHS.REQUIREMENT.19"
       ],
-      "protected_spans": [
-        "19"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.19",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.19",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.19",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.20",
+      "copy_id": "COPY.AHS.REQUIREMENT.20",
       "role": "paragraph",
-      "text": "08 · Push Notifications — requirement 20",
+      "text": "المطلب 20 — تصدير المستخدمين إلى Excel: تنفيذ تصدير المستخدمين موجود في المصدر، لكن زر لوحة الإدارة والصلاحيات والمرشحات لم تُختبر.",
       "claim_refs": [
         "AHS.REQUIREMENT.20"
       ],
-      "protected_spans": [
-        "20"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.20",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.20",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.20",
+          "dimension": "risk",
+          "value": "medium"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.21",
+      "copy_id": "COPY.AHS.REQUIREMENT.21",
       "role": "paragraph",
-      "text": "12 · Full Backup and Migration — requirement 21",
+      "text": "المطلب 21 — شرائح التسويق والتطبيق: وحدة التسويق وأصول الشرائح موجودة، بينما جداول الإنتاج فارغة وتدفق لوحة الإدارة إلى التطبيق غير مثبت.",
       "claim_refs": [
         "AHS.REQUIREMENT.21"
       ],
-      "protected_spans": [
-        "21"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.21",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.21",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.21",
+          "dimension": "risk",
+          "value": "high"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.22",
+      "copy_id": "COPY.AHS.REQUIREMENT.22",
       "role": "paragraph",
-      "text": "22 · Old vs Current Dashboard Comparison — requirement 22",
+      "text": "المطلب 22 — مقارنة لوحة الإدارة القديمة والحالية: لا توجد قائمة قبول موقعة تقارن الصفحات والأفعال والصلاحيات والاستثناءات بين اللوحتين.",
       "claim_refs": [
         "AHS.REQUIREMENT.22"
       ],
-      "protected_spans": [
-        "22"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.22",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.22",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.22",
+          "dimension": "risk",
+          "value": "critical"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.23",
+      "copy_id": "COPY.AHS.REQUIREMENT.23",
       "role": "paragraph",
-      "text": "23 · Full App / Dashboard / API / Infrastructure Review — requirement 23",
+      "text": "المطلب 23 — مراجعة التطبيق ولوحة الإدارة والـAPI والبنية: تمت ملاحظة الخادم والمصدر، لكن قبول الهاتف والأدوار والإشعارات والترحيل الشامل ما زال مفتوحًا.",
       "claim_refs": [
         "AHS.REQUIREMENT.23"
       ],
-      "protected_spans": [
-        "23"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.23",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.23",
+          "dimension": "closure_state",
+          "value": "open"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.23",
+          "dimension": "risk",
+          "value": "critical"
+        }
       ]
     },
     {
-      "copy_id": "COPY.AHS.24",
+      "copy_id": "COPY.AHS.REQUIREMENT.24",
       "role": "paragraph",
-      "text": "24 · Completion Report and Handover — requirement 24",
+      "text": "المطلب 24 — تقرير الإغلاق والتسليم: حزمة الأدلة والحالات موجودة، لكن توقيع الإغلاق لا يصدر قبل عبور بوابات القبول.",
       "claim_refs": [
         "AHS.REQUIREMENT.24"
       ],
-      "protected_spans": [
-        "24"
+      "protected_spans": [],
+      "state_projections": [
+        {
+          "claim_id": "AHS.REQUIREMENT.24",
+          "dimension": "epistemic_state",
+          "value": "source_backed"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.24",
+          "dimension": "closure_state",
+          "value": "partial"
+        },
+        {
+          "claim_id": "AHS.REQUIREMENT.24",
+          "dimension": "risk",
+          "value": "medium"
+        }
       ]
     }
   ]
