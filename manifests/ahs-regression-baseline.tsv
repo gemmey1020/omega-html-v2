@@ -1,0 +1,14 @@
+artifact	sha256	size_or_note
+output/html/ahs-omega-hud-teal-v2-2026-09-12.html	5b39639ab29e49428adf27bae547c631663a882190cf184405600a42df8c5920	61304
+output/html/ahs-omega-hud-gold-v2-2026-09-12.html	8b5508dc36bbf28878b73d3a172a0f8e2318c5d1cf4c915fed6b6008b15db5be	61304
+output/data/ahs-omega-hud-gold-payload-2026-09-12.json	432635e6edfbd6c1d192a5cd5b12c2dfae92ad2f940d962b4a3341118c6c44af	26381
+scripts/build_ahs_omega_hud.py	a8f8a231fb8a95075408e55323bb93dd3f38048ca729982d0010a534d4a4cf67	9886
+
+# Source-package paths are external regression inputs; contents are not copied.
+# /home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_FINAL_READ_ONLY_PRODUCTION_OBSERVATION_2026-09-12.md
+# /home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_Full_Developer_Bug_List_and_Requirements.docx
+# /home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_FINAL_TRUTH_AUDIT_2026-09-12.md
+# /home/jemy/Documents/my_work/x_port_x/the_job_lab/ahs-app/AHS_TRIPLE_CHAIN_VALIDATION_2026-09-12.md
+# /home/jemy/Documents/my_work/x_port_x/the_job/ahs-app/core
+# /home/jemy/Documents/my_work/x_port_x/the_job/ahs-app/core-front/committee_beauty_health
+# /opt/ahs/core
