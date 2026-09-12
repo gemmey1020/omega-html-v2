@@ -20,5 +20,9 @@ documents, not AHS-specific behavior.
 
 The semantic boundaries are defined by Truth, Reader Brief, Document Strategy,
 Authored Content, and Composition contracts under `references/` and `schemas/`.
+Gate 4 freezes a candidate human-authoring layer with Arabic-first policy,
+role-based copy routing, optional evidence-backed voice adaptation, and a
+conservative final prose pass. Truth Lock remains authoritative before and
+after authoring.
 The final authoring and rendering pipeline is not implemented yet. The installed `/home/jemy/.codex/skills/omega-html/` remains the live
 v1 skill and is not modified by this candidate.
