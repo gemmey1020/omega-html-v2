@@ -359,6 +359,8 @@ class Wave6QualityTest(unittest.TestCase):
         self.assertIn('data-section-id="effort"', html)
         self.assertIn('data-presentation-intent="comparison"', html)
         self.assertIn("ليس موعدًا مضمونًا", html)
+        self.assertEqual(html.count('type="button" class="mode-card'), 3)
+        self.assertEqual(len(re.findall(r'<button[^>]+aria-pressed="true"', html)), 1)
 
     def test_ahs_promotes_effort_snapshot_near_the_top(self):
         html = render(self.bundle("ahs"), "omega-gold")
@@ -409,6 +411,93 @@ class Wave6QualityTest(unittest.TestCase):
         self.assertIn('.hud-page .section--operations .section-heading {order:2', html)
         self.assertIn('.hud-page .section--content {display:block', html)
         self.assertIn('.hud-page .section--content .section-heading {display:flex', html)
+
+    def test_audit_hero_integrates_status_and_public_navigation(self):
+        for bundle_name in ("ahs", "ahs-en"):
+            with self.subTest(bundle=bundle_name):
+                html = render(self.bundle(bundle_name), "omega-cyan")
+                hero = html.split('<header class="hero', 1)[1].split("</header>", 1)[0]
+                self.assertIn('class="hero-status-panel"', hero)
+                self.assertIn('class="section-nav"', hero)
+                for anchor in ("#effort", "#facts", "#timeline", "#identity"):
+                    self.assertIn(f'href="{anchor}"', hero)
+                self.assertNotIn('class="summary-note"', hero)
+
+    def test_audit_evidence_is_accessible_rows_while_technical_keeps_tables(self):
+        audit = render(self.bundle("ahs"), "omega-gold")
+        technical = render(self.bundle("technical"), "omega-hud")
+        self.assertGreaterEqual(audit.count('class="evidence-chapter"'), 4)
+        self.assertGreaterEqual(audit.count('class="requirement-row"'), 24)
+        self.assertNotIn("<table", audit)
+        self.assertIn("<table", technical)
+        self.assertIn('data-claim-id="AHS.REQUIREMENT.01"', audit)
+        self.assertIn('data-copy-ref="COPY.AHS.REQUIREMENT.01"', audit)
+        self.assertIn('data-structured-id="STRUCT.AHS.IDENTITY"', audit)
+
+    def test_audit_exposes_four_real_section_structures(self):
+        html = render(self.bundle("ahs"), "omega-teal")
+        for structure in (
+            'class="effort-snapshot"',
+            'class="metric-grid"',
+            'class="timeline-track"',
+            'class="evidence-chapter"',
+        ):
+            with self.subTest(structure=structure):
+                self.assertIn(structure, html)
+
+    def test_dark_colorways_define_semantic_surface_and_status_tokens(self):
+        required = {
+            "elevated", "accent_deep", "glow", "status_passed",
+            "status_open", "status_blocked", "status_conditional",
+        }
+        signatures = set()
+        for profile in ("omega-gold", "omega-teal", "omega-cyan"):
+            with self.subTest(profile=profile):
+                self.assertTrue(required.issubset(THEMES[profile]))
+                signatures.add(tuple(THEMES[profile][key] for key in sorted(required)))
+                html = render(self.bundle("ahs"), profile)
+                for css_var in ("--elevated:", "--accent-deep:", "--glow:", "--status-blocked:"):
+                    self.assertIn(css_var, html)
+        self.assertEqual(len(signatures), 3)
+
+    def test_language_specific_hero_typography_and_mobile_contract(self):
+        html = render(self.bundle("ahs-en"), "omega-cyan")
+        self.assertIn('html[lang="ar"] .landing-hero h1', html)
+        self.assertIn('html[lang="en"] .landing-hero h1', html)
+        self.assertIn("text-wrap:balance", html)
+        self.assertIn("min-height:44px", html)
+        self.assertIn(".requirement-row", html)
+
+    def test_scroll_story_is_progressively_enhanced_and_motion_safe(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('class="scroll-progress"', html)
+        self.assertIn("IntersectionObserver", html)
+        self.assertIn('data-reveal="section"', html)
+        self.assertIn("reveal-enabled", html)
+        self.assertIn("prefers-reduced-motion", html)
+        self.assertIn(".reveal-enabled [data-reveal]", html)
+        self.assertNotIn(".reveal-enabled [data-reveal] {opacity:0", html)
+
+    def test_timeline_state_is_explicit_without_color(self):
+        html = render(self.bundle("ahs-en"), "omega-cyan")
+        for state, symbol, label in (
+            ("passed", "✓", "Passed"),
+            ("open", "○", "Open"),
+            ("blocked", "!", "Blocked"),
+            ("conditional", "◐", "Conditional"),
+        ):
+            with self.subTest(state=state):
+                self.assertRegex(
+                    html,
+                    rf'data-state="{state}"[^>]*>.*?class="status-indicator"[^>]*>\s*{re.escape(symbol)}\s+{label}',
+                )
+
+    def test_public_audit_omits_internal_counter_metadata(self):
+        audit = render(self.bundle("ahs"), "omega-gold")
+        proposal = render(self.bundle("proposal"), "omega-minimal")
+        self.assertNotIn('name="omega:source_count"', audit)
+        self.assertNotIn('name="omega:claim_count"', audit)
+        self.assertIn('name="omega:source_count"', proposal)
 
 
 if __name__ == "__main__":

@@ -48,6 +48,27 @@ THEMES = {
     },
 }
 
+SEMANTIC_THEME_TOKENS = {
+    "omega-editorial": ("#fffaf3", "#713b2d", "#bd765b", "#287354", "#6a625d", "#a44e3f", "#8b5c22"),
+    "omega-minimal": ("#111b20", "#1f7569", "#3d998b", "#4fb8a7", "#8fa3a0", "#dc7b6a", "#d3aa63"),
+    "omega-hud": ("#142529", "#287965", "#4aab92", "#62ddbd", "#a9bab5", "#e18a71", "#dbb86b"),
+    "aion": ("#122731", "#176a78", "#2d9daf", "#42d9ee", "#a7bec5", "#e27d71", "#d9af65"),
+    "omega-gold": ("#12100c", "#765322", "#a87833", "#d1a254", "#a3a9a5", "#d97862", "#d5a955"),
+    "omega-teal": ("#0b1b1b", "#17685d", "#278879", "#4bc0aa", "#9bb0ab", "#d77968", "#d0ad62"),
+    "omega-cyan": ("#0a1a22", "#155e72", "#217f96", "#45bad3", "#99afb7", "#d97868", "#d4ab60"),
+}
+for _profile, _tokens in SEMANTIC_THEME_TOKENS.items():
+    (_elevated, _deep, _glow, _passed, _open, _blocked, _conditional) = _tokens
+    THEMES[_profile].update({
+        "elevated": _elevated,
+        "accent_deep": _deep,
+        "glow": _glow,
+        "status_passed": _passed,
+        "status_open": _open,
+        "status_blocked": _blocked,
+        "status_conditional": _conditional,
+    })
+
 INTENT_LABELS = {
     "ar": {
         "verdict": "الحكم الحالي", "narrative": "السياق", "key_fact": "حقائق أساسية",
@@ -266,10 +287,10 @@ def render_structured(block, lang, section_id=None, baseline=""):
                 cadence, duration = (parts + [""])[:2]
                 linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
                 cards.append(
-                    f'<article class="mode-card mode-card--{esc(item["label"].lower())}" {linked}>'
+                    f'<button type="button" class="mode-card mode-card--{esc(item["label"].lower())}" aria-pressed="{"true" if index == 2 else "false"}" {linked}>'
                     f'<span class="mode-index">{index:02d}</span><span class="mode-name">{esc(item["label"])}</span>'
                     f'<strong class="mode-value">{esc(cadence)}</strong><span class="mode-duration">{esc(duration)}</span>'
-                    f'<p>{esc(item.get("detail", ""))}</p><span class="mode-state">{esc("مشروط" if lang == "ar" else "Conditional")}</span></article>'
+                    f'<p>{esc(item.get("detail", ""))}</p><span class="mode-state">{esc("مشروط" if lang == "ar" else "Conditional")}</span></button>'
                 )
             baseline_html = (
                 f'<div class="effort-baseline"><span>{esc("خط الأساس التخطيطي" if lang == "ar" else "Planning baseline")}</span><strong>{esc(baseline or "120h")}</strong>'
@@ -297,7 +318,8 @@ def render_structured(block, lang, section_id=None, baseline=""):
         for index, item in enumerate(block.get("items", []), start=1):
             state = item.get("value", "مفتوح")
             data_state = {"مُثبت": "passed", "مفتوح": "open", "محجوب": "blocked", "مشروط": "conditional", "Passed": "passed", "Open": "open", "Blocked": "blocked", "Conditional": "conditional"}.get(state, "open")
-            status_label = "✓ مُثبت" if lang == "ar" and state == "مُثبت" else ("✓ Passed" if lang == "en" and state == "Passed" else localize(state, lang))
+            symbols = {"passed": "✓", "open": "○", "blocked": "!", "conditional": "◐"}
+            status_label = f'{symbols[data_state]} {localize(state, lang)}'
             linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
             steps.append(
                 f'<li class="timeline-step timeline-step--{status_classes.get(state, "open")}" data-state="{data_state}" {linked}>'
@@ -343,8 +365,34 @@ def render_structured(block, lang, section_id=None, baseline=""):
     return ""
 
 
+def render_evidence_chapter(block, lang):
+    """Render public audit evidence as readable rows while preserving traceability."""
+    state_map = {
+        "مُثبت": ("passed", "✓"), "Passed": ("passed", "✓"),
+        "مُثبت جزئيًا": ("conditional", "◐"), "Passed in part": ("conditional", "◐"),
+        "مفتوح": ("open", "○"), "Open": ("open", "○"),
+        "محجوب": ("blocked", "!"), "Blocked": ("blocked", "!"),
+    }
+    title = f'<h3 class="structured-title">{esc(localize(block["title"], lang))}</h3>' if block.get("title") else ""
+    rows = []
+    for row in block.get("rows", []):
+        cells = row.get("cells", [])
+        requirement = cells[0] if cells else ""
+        reading = cells[1] if len(cells) > 1 else ""
+        status = localize(cells[2], lang) if len(cells) > 2 else ("مفتوح" if lang == "ar" else "Open")
+        state, symbol = state_map.get(status, ("open", "○"))
+        linked = refs_attrs(row.get("claim_refs"), row.get("copy_refs"))
+        rows.append(
+            f'<article class="requirement-row" data-state="{state}" {linked}>'
+            f'<div class="requirement-row__title"><strong>{esc(localize(requirement, lang))}</strong>'
+            f'<span class="status-chip status-chip--{state}"><span aria-hidden="true">{symbol}</span> {esc(status)}</span></div>'
+            f'<p>{esc(localize(reading, lang))}</p></article>'
+        )
+    return f'<div class="evidence-chapter" {structured_attrs(block)}>{title}<div class="requirement-list">{"".join(rows)}</div></div>'
+
+
 def stylesheet(theme):
-    return f'''\n:root{{--bg:{theme["bg"]};--surface:{theme["surface"]};--ink:{theme["ink"]};--muted:{theme["muted"]};--accent:{theme["accent"]};--soft:{theme["soft"]};--line:{theme["line"]};--display:{theme["display"]};--body:{theme["body"]}}}
+    return f'''\n:root{{--bg:{theme["bg"]};--surface:{theme["surface"]};--elevated:{theme["elevated"]};--ink:{theme["ink"]};--muted:{theme["muted"]};--accent:{theme["accent"]};--accent-deep:{theme["accent_deep"]};--glow:{theme["glow"]};--soft:{theme["soft"]};--line:{theme["line"]};--status-passed:{theme["status_passed"]};--status-open:{theme["status_open"]};--status-blocked:{theme["status_blocked"]};--status-conditional:{theme["status_conditional"]};--display:{theme["display"]};--body:{theme["body"]}}}
 *{{box-sizing:border-box}}html{{background:var(--bg)}}body{{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7}}.page{{max-width:1360px;margin:auto;padding:0 clamp(22px,5vw,86px)}}.hero{{padding:22px 0 clamp(42px,7vw,82px);border-bottom:1px solid var(--line)}}.hero-meta{{display:flex;justify-content:space-between;align-items:center;gap:20px;color:var(--muted);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}}.brandmark{{color:var(--accent);font-weight:800}}.document-label{{font-weight:700}}.hero-grid{{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(220px,.45fr);gap:clamp(30px,7vw,110px);align-items:end;margin-top:clamp(34px,6vw,70px)}}.hero-copy{{min-width:0}}.eyebrow,.section-kicker{{color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}}h1,h2,h3{{font-family:var(--display);line-height:1.14}}h1{{font-size:clamp(2.7rem,6.3vw,5.35rem);letter-spacing:-.045em;max-width:15ch;margin:10px 0 20px}}.lede{{max-width:64ch;color:var(--muted);font-size:1.06rem;margin:0}}.summary-note{{border-top:2px solid var(--accent);padding-top:13px;max-width:280px;color:var(--muted);font-size:.88rem}}.summary-note h2{{font-size:1.08rem;color:var(--ink);margin:0 0 7px}}.summary-note p{{margin:0}}.document-grid{{display:grid;grid-template-columns:minmax(210px,.36fr) minmax(0,1fr);gap:clamp(30px,6vw,96px);padding:0}}.section{{display:contents}}.section-heading,.section-body{{border-bottom:1px solid var(--line);padding:clamp(38px,6vw,72px) 0}}.section-heading{{grid-column:1;grid-row:auto;align-self:start}}.section-body{{grid-column:2;min-width:0}}.section-heading h2{{font-size:clamp(1.5rem,2.45vw,2.35rem);letter-spacing:-.025em;margin:10px 0 0;max-width:18ch}}.copy{{max-width:68ch;margin:0 0 18px}}.copy--callout,.callout{{border-inline-start:3px solid var(--accent);background:var(--soft);padding:16px 20px;margin:0 0 22px;max-width:72ch}}.structured-title{{font-family:var(--body);font-size:.78rem;color:var(--muted);font-weight:800;letter-spacing:.05em;margin:0 0 14px;text-transform:uppercase}}.structured--facts{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--accent);margin:22px 0 0}}.fact{{padding:17px 18px 19px 0;border-bottom:1px solid var(--line);min-width:0}}[dir="ltr"] .fact{{padding-inline:0 18px}}.fact dt{{color:var(--muted);font-size:.78rem;margin-bottom:4px}}.fact dd{{font-size:1.06rem;font-weight:800;margin:0;overflow-wrap:anywhere}}.fact small{{display:block;color:var(--muted);font-size:.78rem;font-weight:400;margin-top:4px}}.table-wrap{{overflow-x:auto}}table{{width:100%;border-collapse:collapse;border-top:2px solid var(--accent);font-size:.94rem}}th,td{{padding:13px 14px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}}th{{color:var(--muted);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}}td:first-child{{font-weight:700}}.structured--comparison table{{border-inline-start:3px solid var(--accent)}}.structured--sequence ol,.structured--checklist ul,.structured--ledger ol{{list-style:none;margin:0;padding:0}}.structured--sequence li,.structured--checklist li{{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;border-bottom:1px solid var(--line);padding:14px 0}}.structured--sequence li::before{{counter-increment:item;content:counter(item,decimal-leading-zero);color:var(--accent);font-size:1.05rem;font-weight:800}}.structured--sequence ol{{counter-reset:item}}.structured--sequence li strong,.structured--checklist li strong{{display:block}}.structured--sequence li span,.structured--checklist li span{{grid-column:2;color:var(--muted);font-size:.9rem}}.structured--checklist li::before{{content:"□";font-size:1.15rem;color:var(--accent)}}.structured--risk{{display:grid;gap:0;border-top:2px solid var(--accent)}}.risk{{display:grid;grid-template-columns:minmax(150px,.35fr) minmax(130px,.28fr) minmax(0,1fr);gap:18px;border-bottom:1px solid var(--line);padding:16px 0;align-items:start}}.risk span{{color:var(--accent);font-size:.84rem;font-weight:800}}.risk p{{color:var(--muted);margin:0}}.structured--code,.technical-copy{{background:var(--surface);border:1px solid var(--line);padding:18px 20px;overflow:auto}}.structured--code{{margin-top:18px}}pre{{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:.86rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;direction:ltr;text-align:left}}.structured--ledger{{border-top:2px solid var(--accent)}}.structured--ledger li{{display:grid;grid-template-columns:minmax(145px,.36fr) minmax(0,1fr);gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}}.structured--ledger span{{color:var(--muted)}}footer{{padding:22px 0 36px;color:var(--muted);font-size:.76rem;border-top:1px solid var(--line)}}[dir="rtl"] .technical-copy,[dir="rtl"] .structured--code{{direction:ltr;text-align:left}}@media(max-width:820px){{body{{font-size:15px}}.page{{padding:0 18px}}.hero{{padding-bottom:38px}}.hero-meta{{align-items:flex-start;font-size:.62rem}}.hero-grid{{display:block;margin-top:34px}}h1{{font-size:clamp(2.45rem,12vw,4rem);max-width:17ch;margin-bottom:16px}}.lede{{font-size:.98rem}}.summary-note{{margin-top:30px;max-width:none}}.document-grid{{display:block}}.section{{display:block}}.section-heading,.section-body{{padding:34px 0}}.section-heading{{border-bottom:0;padding-bottom:9px}}.section-heading h2{{font-size:1.7rem;max-width:none}}.section-body{{padding-top:0}}.structured--facts{{grid-template-columns:repeat(2,minmax(0,1fr))}}.fact{{padding-inline:0 14px}}.fact:nth-child(even){{padding-inline:14px 0;border-inline-start:1px solid var(--line)}}table{{font-size:.88rem}}table thead{{display:none}}table,tbody,tr,td{{display:block;width:100%}}tr{{padding:10px 0;border-bottom:1px solid var(--line)}}td{{display:grid;grid-template-columns:minmax(100px,.34fr) minmax(0,1fr);gap:12px;padding:8px 0;border:0}}td::before{{content:attr(data-label);color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}}.risk{{grid-template-columns:minmax(110px,.35fr) minmax(0,1fr);gap:8px 14px}}.risk p{{grid-column:1 / -1}}.structured--ledger li{{grid-template-columns:1fr;gap:3px}}footer{{padding-bottom:24px}}}}@media print{{@page{{size:A4;margin:15mm}}html,body{{background:#fff;color:#171717}}html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]{{--surface:#fff;--bg:#fff;--ink:#171717;--muted:#555;--accent:#333;--soft:#f1f1f1;--line:#c8c8c8}}.page{{max-width:none;padding:0}}.hero{{padding:5mm 0 9mm}}.hero-grid{{margin-top:8mm}}h1{{font-size:30pt}}.summary-note{{max-width:230px}}.document-grid{{display:grid;grid-template-columns:28% 1fr;gap:10%}}.section-heading,.section-body{{padding:7mm 0}}table{{font-size:9pt}}.table-wrap{{overflow:visible}}.structured--technical_annex{{break-before:page}}.structured--code,.technical-copy{{background:#fff}}footer{{padding-top:6mm}}}}'''
 
 
@@ -455,7 +503,8 @@ def hud_stylesheet_overrides():
   .effort-baseline strong {grid-row:span 2;color:var(--accent);font:700 clamp(1.7rem,3.5vw,2.7rem)/1 Georgia,'Noto Serif Arabic',serif;letter-spacing:-.04em}
   .effort-baseline small {color:var(--ink);font-size:.82rem}
   .mode-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-  .mode-card {position:relative;display:flex;flex-direction:column;min-height:190px;padding:17px 16px 16px;border:1px solid var(--line);border-top:2px solid var(--accent);background:color-mix(in srgb,var(--surface) 88%,transparent);box-shadow:0 12px 24px rgba(0,0,0,.15);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;background-color .25s ease}
+  .mode-card {position:relative;display:flex;flex-direction:column;min-height:190px;padding:17px 16px 16px;border:1px solid var(--line);border-top:2px solid var(--accent);background:color-mix(in srgb,var(--surface) 88%,transparent);box-shadow:0 12px 24px rgba(0,0,0,.15);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;background-color .25s ease;font:inherit;color:inherit;text-align:start;cursor:pointer}
+  .mode-card[aria-pressed="true"] {border-color:var(--accent);background:color-mix(in srgb,var(--accent) 11%,var(--elevated));box-shadow:0 18px 38px rgba(0,0,0,.24),0 0 28px color-mix(in srgb,var(--glow) 16%,transparent)}
   .mode-card:nth-child(1) {border-radius:var(--hud-radius-md) 8px var(--hud-radius-md) 8px}
   .mode-card:nth-child(2) {border-radius:8px var(--hud-radius-lg) 8px var(--hud-radius-lg);transform:translateY(-8px)}
   .mode-card:nth-child(3) {border-radius:8px var(--hud-radius-md) 8px var(--hud-radius-md)}
@@ -551,6 +600,93 @@ def hud_stylesheet_overrides():
 '''
 
 
+def landing_experience_stylesheet():
+    return r'''
+@media screen {
+  .scroll-progress {position:fixed;inset:0 0 auto;z-index:100;width:100%;height:2px;pointer-events:none;background:linear-gradient(90deg,var(--accent) var(--scroll-progress,0%),transparent 0);box-shadow:0 0 18px var(--glow)}
+  .landing-hero .hero-surface {background:radial-gradient(circle at 86% 8%,color-mix(in srgb,var(--glow) 30%,transparent),transparent 34%),linear-gradient(145deg,color-mix(in srgb,var(--elevated) 82%,var(--surface)),var(--surface));border-color:color-mix(in srgb,var(--accent) 42%,var(--line))}
+  .landing-hero .hero-grid {grid-template-columns:minmax(0,1.4fr) minmax(270px,.6fr);align-items:stretch}
+  .landing-hero .hero-copy {display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+  html[dir="rtl"] .landing-hero .hero-copy {align-items:flex-start}
+  html[lang="ar"] .landing-hero h1 {font-size:clamp(3.15rem,6.6vw,6.15rem);max-width:12ch;line-height:1.06;text-wrap:balance}
+  html[lang="en"] .landing-hero h1 {font-size:clamp(2.9rem,5.7vw,5.55rem);max-width:14ch;line-height:1.02;text-wrap:balance}
+  .hero-status-panel {position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:100%;padding:22px;border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-radius:28px 12px 28px 12px;background:linear-gradient(155deg,color-mix(in srgb,var(--elevated) 92%,var(--accent) 8%),color-mix(in srgb,var(--surface) 90%,transparent));box-shadow:0 22px 52px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.05)}
+  .hero-status-panel::before {content:"";width:46px;height:3px;margin-bottom:36px;border-radius:9px;background:var(--accent);box-shadow:0 0 22px var(--glow)}
+  .hero-status-panel h2 {margin:0 0 10px;font-size:clamp(1.15rem,2vw,1.55rem)}
+  .hero-status-panel p {margin:0;color:var(--muted);font-size:.92rem;line-height:1.8}
+  .hero-status-panel__state {display:inline-flex;align-items:center;gap:8px;margin-top:26px;color:var(--status-conditional);font-size:.72rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+  .hero-status-panel__state::before {content:"◐";display:grid;place-items:center;width:25px;height:25px;border:1px solid currentColor;border-radius:50%}
+  .section-nav {display:flex;align-items:center;gap:6px;margin-top:24px;padding:6px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--surface) 84%,transparent);overflow-x:auto;scrollbar-width:none}
+  .section-nav a {display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;color:var(--muted);font-size:.74rem;font-weight:800;text-decoration:none;white-space:nowrap;transition:color .2s ease,background-color .2s ease,transform .2s ease}
+  .section-nav a:hover,.section-nav a:focus-visible {color:var(--ink);background:color-mix(in srgb,var(--accent) 14%,var(--surface));transform:translateY(-1px)}
+  .section-nav a:focus-visible {outline:2px solid var(--accent);outline-offset:2px}
+  .evidence-chapter {padding:2px}
+  .requirement-list {display:grid;gap:10px}
+  .requirement-row {position:relative;display:grid;grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr);gap:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--elevated) 82%,var(--surface));box-shadow:0 10px 26px rgba(0,0,0,.12);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+  .requirement-row:hover {transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 58%,var(--line));box-shadow:0 18px 34px rgba(0,0,0,.2)}
+  .requirement-row__title {display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+  .requirement-row__title strong {font-size:.94rem;line-height:1.55}
+  .requirement-row p {margin:0;color:var(--muted);font-size:.86rem;line-height:1.75}
+  .status-chip {display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border:1px solid currentColor;border-radius:999px;font-size:.67rem;font-weight:900;line-height:1.2}
+  .status-chip--passed,.timeline-step--passed .status-indicator {color:var(--status-passed)}
+  .status-chip--open,.timeline-step--open .status-indicator {color:var(--status-open)}
+  .status-chip--blocked,.timeline-step--blocked .status-indicator {color:var(--status-blocked)}
+  .status-chip--conditional,.timeline-step--conditional .status-indicator {color:var(--status-conditional)}
+  .timeline-step--passed .timeline-marker {border-color:var(--status-passed)}
+  .timeline-step--open .timeline-marker {border-color:var(--status-open)}
+  .timeline-step--blocked .timeline-marker {border-color:var(--status-blocked)}
+  .timeline-step--conditional .timeline-marker {border-color:var(--status-conditional)}
+  .reveal-enabled [data-reveal] {opacity:.92;transform:translateY(12px);filter:saturate(.88);transition:opacity .65s cubic-bezier(.2,.75,.25,1),transform .65s cubic-bezier(.2,.75,.25,1),filter .65s ease}
+  .reveal-enabled [data-reveal].is-visible {opacity:1;transform:none;filter:none}
+}
+@media screen and (max-width:820px) {
+  .landing-hero .hero-grid {display:grid;grid-template-columns:1fr;gap:22px}
+  html[lang="ar"] .landing-hero h1 {font-size:clamp(2.55rem,11vw,4.1rem);max-width:13ch}
+  html[lang="en"] .landing-hero h1 {font-size:clamp(2.35rem,10vw,3.8rem);max-width:15ch}
+  .hero-status-panel {min-height:0;border-radius:20px 9px 20px 9px}
+  .hero-status-panel::before {margin-bottom:18px}
+  .section-nav {border-radius:16px;justify-content:flex-start}
+  .requirement-row {grid-template-columns:1fr;gap:10px;padding:16px;border-radius:16px}
+}
+@media (prefers-reduced-motion:reduce) {
+  .reveal-enabled [data-reveal] {opacity:1;transform:none;transition:none}
+  .scroll-progress {display:none}
+}
+'''
+
+
+def landing_experience_script():
+    return r'''<script>
+(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodes = [...document.querySelectorAll('[data-reveal]')];
+  if (!reduced && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('reveal-enabled');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {rootMargin: '0px 0px -8% 0px', threshold: 0.08});
+    nodes.forEach((node) => observer.observe(node));
+  }
+  const updateProgress = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.min(100, Math.max(0, window.scrollY / max * 100)) : 0;
+    document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
+  };
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, {passive: true});
+  document.querySelectorAll('.mode-card').forEach((card) => card.addEventListener('click', () => {
+    document.querySelectorAll('.mode-card').forEach((item) => item.setAttribute('aria-pressed', 'false'));
+    card.setAttribute('aria-pressed', 'true');
+  }));
+})();
+</script>'''
+
+
 def render(bundle, profile=None):
     truth, authored, composition, reader = bundle["truth"], bundle["authored"], bundle["composition"], bundle["reader"]
     profile = profile or reader.get("surface_profile", "omega-editorial")
@@ -576,6 +712,12 @@ def render(bundle, profile=None):
     landing_surface = kind == "audit"
     public_status = "حالة موثقة" if lang == "ar" else "Evidence-led"
     public_signal_label = "لمحة من الدليل" if lang == "ar" else "Evidence at a glance"
+    if landing_surface and rail.get("enabled"):
+        note = (
+            f'<aside class="hero-status-panel"><div><h2>{esc(localize(rail.get("title", ""), lang))}</h2>'
+            f'<p>{esc(rail.get("body", ""))}</p></div><span class="hero-status-panel__state">'
+            f'{esc("إغلاق مشروط" if lang == "ar" else "Conditional closure")}</span></aside>'
+        )
     if landing_surface:
         hud_topbar = (
             f'<div class="hud-topbar"><div class="hud-brand"><span>Ω OMEGA</span>'
@@ -606,13 +748,20 @@ def render(bundle, profile=None):
         section_intent = section["presentation_intent"]
         section_label = labels.get(section_intent, section_intent)
         copy_html = "".join(render_copy(blocks[ref], section_intent) for ref in section.get("copy_refs", []) if ref in blocks and blocks[ref].get("role") not in {"headline", "subheadline"})
-        structured_html = "".join(render_structured(block, lang, section["section_id"], baseline) for block in section.get("structured_blocks", []))
+        structured_html = "".join(
+            render_evidence_chapter(block, lang)
+            if landing_surface and section_intent == "evidence_matrix" and block.get("type") in {"table", "comparison"}
+            else render_structured(block, lang, section["section_id"], baseline)
+            for block in section.get("structured_blocks", [])
+        )
         treatment = visual_treatments.get(section["section_id"], section_intent)
         attrs = f'id="{esc(section["section_id"])}" data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}" data-visual-treatment="{esc(treatment)}"'
-        sections.append(f'<section class="section section--{esc(section_intent)}" {attrs}><div class="section-heading"><div class="section-kicker">{esc(section_label)}</div><h2>{esc(section["purpose"])}</h2></div><div class="section-body">{copy_html}{structured_html}</div></section>')
+        reveal = ' data-reveal="section"' if landing_surface else ""
+        sections.append(f'<section class="section section--{esc(section_intent)}" {attrs}{reveal}><div class="section-heading"><div class="section-kicker">{esc(section_label)}</div><h2>{esc(section["purpose"])}</h2></div><div class="section-body">{copy_html}{structured_html}</div></section>')
     footer = "AHS · قراءة تنفيذية مستقلة" if lang == "ar" else ("AHS · independent operational review" if intent == "audit_report" else "Omega · independent decision brief")
     css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
     css += hud_stylesheet_overrides()
+    css += landing_experience_stylesheet()
     css += '''
 @media screen {
   html {scroll-behavior:smooth}
@@ -653,8 +802,26 @@ def render(bundle, profile=None):
     if landing_surface:
         cta_label = "استعرض مسار الإغلاق" if lang == "ar" else "Review closure path"
         hero_cta = f'<a class="hero-cta" href="#timeline">{esc(cta_label)}<span aria-hidden="true">↗</span></a>'
+    nav_labels = (
+        (("الجهد", "effort"), ("الأرقام", "facts"), ("المسار", "timeline"), ("الأدلة", "identity"))
+        if lang == "ar" else
+        (("Effort", "effort"), ("Facts", "facts"), ("Timeline", "timeline"), ("Evidence", "identity"))
+    )
+    section_nav = (
+        '<nav class="section-nav" aria-label="{}">{}</nav>'.format(
+            esc("أقسام الصفحة" if lang == "ar" else "Page sections"),
+            "".join(f'<a href="#{anchor}">{esc(label)}</a>' for label, anchor in nav_labels),
+        ) if landing_surface else ""
+    )
+    counter_meta = (
+        "" if landing_surface else
+        f'<meta name="omega:source_count" content="{len(truth.get("sources", []))}">'
+        f'<meta name="omega:claim_count" content="{len(truth.get("claims", []))}">'
+    )
+    progress = '<div class="scroll-progress" aria-hidden="true"></div>' if landing_surface else ""
+    experience_script = landing_experience_script() if landing_surface else ""
     page_mode = "landing" if landing_surface else "document"
-    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}" data-page-mode="{page_mode}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="screen"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="viewport"><meta name="omega:page_intent" content="screen_first"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body>{preloader}<div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}{' landing-hero' if landing_surface else ''}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p>{hero_cta}</div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(public_signal_label if landing_surface else hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>{esc(footer)}</span><span class="footer-note">{esc("قرار مبني على ما أمكن إثباته" if lang == "ar" else "Decision built on what can be proven")}</span></footer></div></body></html>'''
+    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}" data-page-mode="{page_mode}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="screen"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="viewport"><meta name="omega:page_intent" content="screen_first"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}">{counter_meta}<link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body>{progress}{preloader}<div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}{' landing-hero' if landing_surface else ''}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p>{hero_cta}{section_nav}</div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(public_signal_label if landing_surface else hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>{esc(footer)}</span><span class="footer-note">{esc("قرار مبني على ما أمكن إثباته" if lang == "ar" else "Decision built on what can be proven")}</span></footer></div>{experience_script}</body></html>'''
 
 
 def main():
