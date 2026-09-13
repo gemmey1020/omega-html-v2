@@ -15,7 +15,7 @@
           "purpose": {"type": "string", "minLength": 1},
           "copy_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
           "claim_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
-          "presentation_intent": {"enum": ["verdict", "narrative", "key_fact", "comparison", "evidence_matrix", "risk_register", "sequence", "checklist", "table", "callout", "technical_block", "technical_annex", "source_ledger"]},
+          "presentation_intent": {"enum": ["verdict", "narrative", "key_fact", "comparison", "timeline", "evidence_matrix", "risk_register", "sequence", "checklist", "table", "callout", "technical_block", "technical_annex", "source_ledger"]},
           "annex": {"type": "boolean"},
           "structured_blocks": {
             "type": "array",
@@ -25,7 +25,7 @@
               "required": ["block_id", "type"],
               "properties": {
                 "block_id": {"type": "string", "minLength": 1},
-                "type": {"enum": ["fact_list", "table", "comparison", "sequence", "checklist", "risk_register", "code", "source_ledger", "callout"]},
+                "type": {"enum": ["fact_list", "table", "comparison", "timeline", "sequence", "checklist", "risk_register", "code", "source_ledger", "callout"]},
                 "title": {"type": "string"},
                 "claim_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
                 "copy_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},

@@ -3,6 +3,7 @@
 import argparse
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -50,6 +51,7 @@ INTENT_LABELS = {
     "ar": {
         "verdict": "الحكم الحالي", "narrative": "السياق", "key_fact": "حقائق أساسية",
         "comparison": "مقارنة", "evidence_matrix": "مصفوفة الأدلة", "risk_register": "المخاطر المفتوحة",
+        "timeline": "خط زمني مشروط",
         "sequence": "تسلسل المتابعة", "checklist": "الخطوات التالية", "table": "جدول الحالة",
         "callout": "تنبيه", "technical_block": "تفصيل تقني", "technical_annex": "الملحق التقني",
         "source_ledger": "سجل المصادر",
@@ -57,6 +59,7 @@ INTENT_LABELS = {
     "en": {
         "verdict": "Current decision", "narrative": "Context", "key_fact": "Key facts",
         "comparison": "Comparison", "evidence_matrix": "Evidence matrix", "risk_register": "Open risks",
+        "timeline": "Conditional timeline",
         "sequence": "Sequence", "checklist": "Next steps", "table": "Status table",
         "callout": "Note", "technical_block": "Technical detail", "technical_annex": "Technical annex",
         "source_ledger": "Source ledger",
@@ -183,17 +186,80 @@ def structured_attrs(block):
     return f'data-structured-id="{esc(block["block_id"])}"' + (f" {linked}" if linked else "")
 
 
-def render_structured(block, lang):
+def metric_parts(value):
+    match = re.match(r"^(≈\s*)?([\d,]+h?)(?:\s+(.*))?$", value.strip())
+    if not match:
+        match = re.match(r"^([\d,]+)(?:\s+(.*))?$", value.strip())
+    if not match:
+        return value, ""
+    number = (match.group(1) or "") + match.group(2)
+    return number.strip(), (match.group(3) or "").strip()
+
+
+def render_structured(block, lang, section_id=None, baseline=""):
     kind = block["type"]
     title = f'<h3 class="structured-title">{esc(localize(block["title"], lang))}</h3>' if block.get("title") else ""
     attrs = structured_attrs(block)
     if kind == "fact_list":
+        if section_id == "facts" and block.get("block_id") == "STRUCT.AHS.FACTS":
+            cards = []
+            for item in block.get("items", []):
+                number, context = metric_parts(item["value"])
+                if item["label"] == "مرشحو التداخل":
+                    context = "مرشح تداخل · National_ID"
+                linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
+                cards.append(
+                    f'<article class="metric-card" data-metric-value="{esc(number)}" {linked}>'
+                    f'<span class="metric-label">{esc(localize(item["label"], lang))}</span>'
+                    f'<strong class="metric-value">{esc(number)}</strong>'
+                    f'<span class="metric-context">{esc(localize(context, lang))}</span></article>'
+                )
+            return f'<div class="structured structured--metrics" {attrs}><div class="metric-grid">{title}{"".join(cards)}</div></div>'
+        if section_id == "effort":
+            cards = []
+            for index, item in enumerate(block.get("items", []), start=1):
+                parts = [part.strip() for part in item["value"].split("·", 1)]
+                cadence, duration = (parts + [""])[:2]
+                linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
+                cards.append(
+                    f'<article class="mode-card mode-card--{esc(item["label"].lower())}" {linked}>'
+                    f'<span class="mode-index">{index:02d}</span><span class="mode-name">{esc(item["label"])}</span>'
+                    f'<strong class="mode-value">{esc(cadence)}</strong><span class="mode-duration">{esc(duration)}</span>'
+                    f'<p>{esc(item.get("detail", ""))}</p><span class="mode-state">مشروط</span></article>'
+                )
+            baseline_html = (
+                f'<div class="effort-baseline"><span>خط الأساس المؤقت</span><strong>{esc(baseline or "120h")}</strong>'
+                f'<small>المعيار ثابت مهما تغيّرت الوتيرة</small></div>'
+            )
+            return f'<div class="structured structured--effort" {attrs}><div class="effort-snapshot">{title}{baseline_html}<div class="mode-grid">{"".join(cards)}</div></div></div>'
+        if section_id == "decision":
+            rows = []
+            for item in block.get("items", []):
+                linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
+                rows.append(
+                    f'<div class="verdict-row" {linked}><span>{esc(localize(item["label"], lang))}</span>'
+                    f'<strong>{esc(localize(item["value"], lang))}</strong></div>'
+                )
+            return f'<div class="structured structured--verdict" {attrs}><div class="verdict-readout">{title}{"".join(rows)}</div></div>'
         rows = []
         for item in block.get("items", []):
             detail = f'<small>{esc(item["detail"])}</small>' if item.get("detail") else ""
             linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
             rows.append(f'<div class="fact" {linked}><dt>{esc(localize(item["label"], lang))}</dt><dd>{esc(item["value"])}{detail}</dd></div>')
         return f'<dl class="structured structured--facts" {attrs}>{title}{"".join(rows)}</dl>'
+    if kind == "timeline":
+        status_classes = {"مُثبت": "verified", "مفتوح": "open", "محجوب": "blocked", "مشروط": "conditional"}
+        steps = []
+        for index, item in enumerate(block.get("items", []), start=1):
+            state = item.get("value", "مفتوح")
+            linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
+            steps.append(
+                f'<li class="timeline-step timeline-step--{status_classes.get(state, "open")}" data-state="{esc(state)}" {linked}>'
+                f'<span class="timeline-marker"><span>{index:02d}</span></span><div class="timeline-content">'
+                f'<div class="timeline-topline"><strong>{esc(localize(item["label"], lang))}</strong><span class="status-indicator">{esc(localize(state, lang))}</span></div>'
+                f'<p>{esc(item.get("detail", ""))}</p></div></li>'
+            )
+        return f'<div class="structured structured--timeline" {attrs}><div class="timeline-track">{title}<ol>{"".join(steps)}</ol></div></div>'
     if kind in {"table", "comparison"}:
         columns = [localize(column, lang) for column in block.get("columns", [])]
         head = "".join(f'<th scope="col">{esc(column)}</th>' for column in columns)
@@ -311,6 +377,79 @@ def hud_stylesheet_overrides():
   .hud-page .section--technical_annex .section-heading h2 {color:var(--ink)}
   .hud-page .section--technical_annex .technical-copy,.hud-page .section--technical_annex .structured--code {border-radius:var(--hud-radius-md);background:#070a0e;border-color:#303b47;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 28px rgba(0,0,0,.22)}
   .hud-page .section--technical_annex .structured--ledger {padding:14px 18px;border:1px solid #303b47;border-radius:var(--hud-radius-md);background:#11171e}
+  .hud-page .section--verdict {border-radius:var(--hud-radius-xl) 10px var(--hud-radius-xl) 10px;min-height:250px}
+  .hud-page .section--verdict .section-heading {padding-inline-end:12px}
+  .hud-page .structured--verdict {height:100%}
+  .verdict-readout {display:grid;gap:0;padding:4px 0;border-top:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));border-bottom:1px solid var(--line)}
+  .verdict-readout .structured-title {margin:0;padding:14px 0 6px}
+  .verdict-row {display:grid;grid-template-columns:minmax(120px,.65fr) minmax(0,1.35fr);gap:18px;padding:15px 0;border-top:1px solid var(--line);align-items:start}
+  .verdict-row span {color:var(--muted);font-size:.78rem}
+  .verdict-row strong {font-size:1rem;line-height:1.55}
+  .hud-page .section--comparison {grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);border-radius:10px var(--hud-radius-xl) 10px var(--hud-radius-xl);background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 7%,var(--surface)),var(--surface));border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+  .hud-page .section--comparison .section-heading h2 {font-size:clamp(1.65rem,2.7vw,2.5rem)}
+  .hud-page .section--comparison .section-body {display:flex;flex-direction:column;gap:18px}
+  .hud-page .section--comparison .structured--effort {height:auto}
+  .effort-snapshot {display:grid;gap:18px;height:auto}
+  .effort-snapshot .structured-title {margin:0}
+  .effort-baseline {display:grid;grid-template-columns:1fr auto;gap:3px 18px;align-items:center;padding:17px 20px;border:1px solid color-mix(in srgb,var(--accent) 48%,var(--line));border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--soft) 78%,var(--surface));box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .effort-baseline span {color:var(--muted);font-size:.75rem}
+  .effort-baseline strong {grid-row:span 2;color:var(--accent);font:700 clamp(1.7rem,3.5vw,2.7rem)/1 Georgia,'Noto Serif Arabic',serif;letter-spacing:-.04em}
+  .effort-baseline small {color:var(--ink);font-size:.82rem}
+  .mode-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .mode-card {position:relative;display:flex;flex-direction:column;min-height:190px;padding:17px 16px 16px;border:1px solid var(--line);border-top:2px solid var(--accent);background:color-mix(in srgb,var(--surface) 88%,transparent);box-shadow:0 12px 24px rgba(0,0,0,.15);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;background-color .25s ease}
+  .mode-card:nth-child(1) {border-radius:var(--hud-radius-md) 8px var(--hud-radius-md) 8px}
+  .mode-card:nth-child(2) {border-radius:8px var(--hud-radius-lg) 8px var(--hud-radius-lg);transform:translateY(-8px)}
+  .mode-card:nth-child(3) {border-radius:8px var(--hud-radius-md) 8px var(--hud-radius-md)}
+  .mode-card:hover,.mode-card:focus-within {transform:translateY(-8px) translateZ(16px);border-color:var(--accent);box-shadow:0 22px 36px rgba(0,0,0,.25);background-color:color-mix(in srgb,var(--surface) 96%,var(--accent) 4%)}
+  .mode-card:nth-child(2):hover {transform:translateY(-14px) translateZ(16px)}
+  .mode-index {color:var(--accent);font:800 .7rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em}
+  .mode-name {margin-top:13px;color:var(--muted);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .mode-value {margin-top:7px;font-size:1.25rem;line-height:1.25}
+  .mode-duration {margin-top:4px;font-size:.9rem;color:var(--ink)}
+  .mode-card p {margin:12px 0 0;color:var(--muted);font-size:.78rem;line-height:1.55}
+  .mode-state {margin-top:auto;padding-top:14px;color:var(--accent);font-size:.7rem;font-weight:800}
+  .hud-page .section--key_fact {border-radius:var(--hud-radius-xl) 12px var(--hud-radius-md) 12px;background:color-mix(in srgb,var(--surface) 92%,var(--accent) 8%)}
+  .hud-page .section--key_fact .section-body {display:grid;gap:18px}
+  .hud-page .structured--metrics {border:0}
+  .metric-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .metric-grid .structured-title {grid-column:1 / -1;margin:0;padding:0 0 7px}
+  .metric-card {position:relative;display:flex;flex-direction:column;min-height:148px;padding:17px 16px 15px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 86%,transparent);box-shadow:0 14px 28px rgba(0,0,0,.14);transition:transform .25s ease,border-color .25s ease,background-color .25s ease}
+  .metric-card:nth-of-type(3n) {border-radius:8px var(--hud-radius-lg) 8px var(--hud-radius-md)}
+  .metric-card:hover {transform:translateY(-6px);border-color:var(--accent);background-color:color-mix(in srgb,var(--surface) 96%,var(--accent) 4%)}
+  .metric-label {color:var(--muted);font-size:.72rem;line-height:1.4}
+  .metric-value {margin-top:auto;color:var(--ink);font:700 clamp(2rem,4vw,3.1rem)/1 Georgia,'Noto Serif Arabic',serif;letter-spacing:-.055em;direction:ltr;text-align:start}
+  .metric-context {margin-top:5px;color:var(--accent);font-size:.76rem;line-height:1.45;min-height:1.4em}
+  .hud-page .section--key_fact .structured--facts {margin:0;grid-template-columns:repeat(2,minmax(0,1fr));padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--surface) 72%,transparent)}
+  .hud-page .section--key_fact .structured--facts .structured-title {grid-column:1 / -1}
+  .hud-page .section--timeline {grid-template-columns:minmax(190px,.58fr) minmax(0,1.42fr);border-radius:12px var(--hud-radius-xl) var(--hud-radius-xl) 12px;background:radial-gradient(circle at 100% 0,color-mix(in srgb,var(--accent) 12%,transparent),transparent 35%),color-mix(in srgb,var(--surface) 92%,var(--bg));border-color:color-mix(in srgb,var(--accent) 42%,var(--line))}
+  .hud-page .section--timeline .section-heading h2 {font-size:clamp(1.6rem,2.8vw,2.6rem)}
+  .structured--timeline {height:100%}
+  .timeline-track {position:relative;padding:3px 0 3px 12px}
+  .timeline-track .structured-title {margin:0 0 13px}
+  .timeline-track ol {list-style:none;margin:0;padding:0}
+  .timeline-step {position:relative;display:grid;grid-template-columns:50px minmax(0,1fr);gap:16px;min-height:76px;padding:0 0 18px}
+  .timeline-step:not(:last-child)::after {content:"";position:absolute;top:37px;bottom:0;inset-inline-start:24px;width:1px;background:linear-gradient(var(--accent),var(--line))}
+  .timeline-marker {position:relative;z-index:1;display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--accent);border-radius:50%;background:var(--surface);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 8%,transparent)}
+  .timeline-marker span {color:var(--accent);font:800 .68rem/1 ui-monospace,SFMono-Regular,Menlo,monospace}
+  .timeline-step--blocked .timeline-marker {border-color:#d68c5e;box-shadow:0 0 0 5px rgba(214,140,94,.1)}
+  .timeline-step--blocked .status-indicator {color:#d68c5e}
+  .timeline-topline {display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+  .timeline-topline strong {font-size:1rem;line-height:1.4}
+  .status-indicator {color:var(--accent);font-size:.72rem;font-weight:800;white-space:nowrap}
+  .timeline-content p {margin:5px 0 0;color:var(--muted);font-size:.84rem;line-height:1.6}
+  .hud-page .section--identity {border-radius:var(--hud-radius-xl) 8px 8px var(--hud-radius-xl)}
+  .hud-page .section--operations {grid-template-columns:minmax(0,1.22fr) minmax(180px,.78fr);border-radius:8px var(--hud-radius-xl) 8px var(--hud-radius-xl);background:color-mix(in srgb,var(--surface) 94%,var(--accent) 6%)}
+  .hud-page .section--operations .section-heading {order:2;align-self:center;padding-inline-start:16px;border-inline-start:2px solid var(--accent)}
+  .hud-page .section--operations .section-body {order:1}
+  .hud-page .section--content {grid-template-columns:minmax(210px,.8fr) minmax(0,1.2fr);border-radius:var(--hud-radius-md) var(--hud-radius-xl) var(--hud-radius-md) var(--hud-radius-xl)}
+  .hud-page .section--content {display:block}
+  .hud-page .section--content .section-heading {display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .hud-page .section--content .section-heading h2 {margin:0;max-width:none}
+  .hud-page .section--content .section-body {max-width:980px;margin-inline-start:auto}
+  .hud-page .section--release {border-inline-start:4px solid var(--accent);border-radius:10px var(--hud-radius-xl) var(--hud-radius-xl) 10px;background:color-mix(in srgb,var(--soft) 62%,var(--surface))}
+  .hud-footer {display:flex;align-items:center;gap:12px;padding:28px 4px 34px;color:var(--muted);font-size:.76rem;border-top:1px solid var(--line)}
+  .footer-mark {display:grid;place-items:center;width:28px;height:28px;color:var(--accent);border:1px solid var(--accent);border-radius:50%;font:700 1rem/1 Georgia,serif}
+  .footer-note {margin-inline-start:auto;color:var(--muted);font-size:.7rem}
 }
 @media screen and (max-width:820px) {
   .hud-topbar {align-items:flex-start;flex-direction:column;gap:8px;margin-top:10px}
@@ -328,6 +467,17 @@ def hud_stylesheet_overrides():
   .hud-page .section-heading {margin-bottom:18px}
   .hud-page .section--verdict .section-heading h2 {font-size:2rem}
   .hud-page .section--sequence .section-heading {margin-bottom:14px}
+  .mode-grid {grid-template-columns:1fr}
+  .mode-card:nth-child(2) {transform:none}
+  .mode-card:nth-child(2):hover {transform:translateY(-8px)}
+  .metric-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .metric-card {min-height:132px}
+  .metric-value {font-size:2.35rem}
+  .verdict-row {grid-template-columns:1fr;gap:5px}
+  .timeline-topline {display:block}
+  .status-indicator {display:block;margin-top:4px}
+  .hud-footer {align-items:flex-start;flex-wrap:wrap}
+  .footer-note {width:100%;margin-inline-start:40px}
 }
 @media print {
   .hud-page::before {display:none}
@@ -368,19 +518,31 @@ def render(bundle, profile=None):
         f'<span>{len(truth.get("sources", []))} {esc(hud_labels["sources"])}</span>'
         f'<span>{len(truth.get("claims", []))} {esc(hud_labels["claims"])}</span></div></div>'
     )
+    visual_treatments = {
+        "decision": "verdict",
+        "effort": "mode-snapshot",
+        "facts": "metrics",
+        "timeline": "timeline",
+        "identity": "matrix",
+        "operations": "matrix",
+        "content": "matrix",
+        "release": "matrix",
+    }
+    baseline = next((claim.get("value", "") for claim in truth.get("claims", []) if claim.get("claim_id") == "AHS.FACT.BASELINE_HOURS"), "")
     sections = []
     for section in composition["sections"]:
         section_intent = section["presentation_intent"]
         section_label = labels.get(section_intent, section_intent)
         copy_html = "".join(render_copy(blocks[ref], section_intent) for ref in section.get("copy_refs", []) if ref in blocks and blocks[ref].get("role") not in {"headline", "subheadline"})
-        structured_html = "".join(render_structured(block, lang) for block in section.get("structured_blocks", []))
-        attrs = f'data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}"'
+        structured_html = "".join(render_structured(block, lang, section["section_id"], baseline) for block in section.get("structured_blocks", []))
+        treatment = visual_treatments.get(section["section_id"], section_intent)
+        attrs = f'data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}" data-visual-treatment="{esc(treatment)}"'
         sections.append(f'<section class="section section--{esc(section_intent)}" {attrs}><div class="section-heading"><div class="section-kicker">{esc(section_label)}</div><h2>{esc(section["purpose"])}</h2></div><div class="section-body">{copy_html}{structured_html}</div></section>')
     footer = "AHS · قراءة تنفيذية مستقلة" if lang == "ar" else "Omega · independent decision brief"
     css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
     css += hud_stylesheet_overrides()
     css += '\n@media screen{.hero-grid{margin-top:clamp(28px,4vw,52px)}h1{font-size:clamp(2.45rem,5.2vw,4.6rem);max-width:21ch}.document-grid--proposal .section-heading,.document-grid--proposal .section-body{padding-block:clamp(28px,4vw,48px)}.document-grid--proposal .section-heading h2{font-size:clamp(1.35rem,2vw,2rem)} } @media screen and (max-width:820px){h1{font-size:clamp(2.1rem,10vw,3.35rem);max-width:19ch}.hero{padding-bottom:32px} } @media print{.document-grid{display:block}.section{display:grid;grid-template-columns:28% 1fr;gap:10%;break-inside:avoid}.section-heading,.section-body{grid-column:auto;grid-row:auto} }'
-    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMwNjBhMGMiLz48dGV4dCB4PSIzMiIgeT0iNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjYzg5NTQ1Ij7OqTwvdGV4dD48L3N2Zz4=" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body><div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer>{esc(footer)}</footer></div></body></html>'''
+    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMwNjBhMGMiLz48dGV4dCB4PSIzMiIgeT0iNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjYzg5NTQ1Ij7OqTwvdGV4dD48L3N2Zz4=" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body><div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>{esc(footer)}</span><span class="footer-note">{esc("قرار مبني على ما أمكن إثباته" if lang == "ar" else "Decision built on what can be proven")}</span></footer></div></body></html>'''
 
 
 def main():

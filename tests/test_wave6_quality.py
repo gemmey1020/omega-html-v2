@@ -254,6 +254,54 @@ class Wave6QualityTest(unittest.TestCase):
         self.assertIn('data-presentation-intent="comparison"', html)
         self.assertIn("ليست موعدًا مضمونًا", html)
 
+    def test_ahs_promotes_effort_snapshot_near_the_top(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        section_ids = re.findall(r'data-section-id="([^"]+)"', html)
+        self.assertEqual(section_ids[0], "decision")
+        self.assertLessEqual(section_ids.index("effort"), 1)
+        self.assertIn('data-visual-treatment="mode-snapshot"', html)
+        self.assertIn('class="effort-snapshot"', html)
+
+    def test_ahs_renders_source_backed_metrics_as_big_number_cards(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('data-visual-treatment="metrics"', html)
+        self.assertIn('class="metric-grid"', html)
+        self.assertGreaterEqual(html.count('class="metric-card"'), 7)
+        for value in ("20,789", "71", "28", "62", "227", "24", "120h"):
+            with self.subTest(value=value):
+                self.assertIn(f'data-metric-value="{value}"', html)
+
+    def test_ahs_has_a_conditional_timeline_with_status_states(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('data-section-id="timeline"', html)
+        self.assertIn('data-presentation-intent="timeline"', html)
+        self.assertIn('class="structured structured--timeline"', html)
+        self.assertGreaterEqual(len(re.findall(r'class="timeline-step(?:\s|\")', html)), 4)
+        for status in ("مُثبت", "مفتوح", "محجوب", "مشروط"):
+            with self.subTest(status=status):
+                self.assertIn(status, html)
+        self.assertNotIn("2026-09-", html)
+
+    def test_ahs_uses_distinct_visual_treatments_and_a_refined_footer(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for treatment in ("verdict", "mode-snapshot", "metrics", "timeline", "matrix"):
+            with self.subTest(treatment=treatment):
+                self.assertIn(f'data-visual-treatment="{treatment}"', html)
+        self.assertIn('class="hud-footer"', html)
+        self.assertIn('class="footer-mark"', html)
+        self.assertIn("AHS · قراءة تنفيذية مستقلة", html)
+
+    def test_effort_snapshot_allows_its_mode_cards_to_fit_the_section(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('.hud-page .section--comparison .structured--effort {height:auto}', html)
+        self.assertIn('.hud-page .section--comparison .section-body {display:flex', html)
+
+    def test_evidence_groups_have_more_than_one_layout_archetype(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('.hud-page .section--operations .section-heading {order:2', html)
+        self.assertIn('.hud-page .section--content {display:block', html)
+        self.assertIn('.hud-page .section--content .section-heading {display:flex', html)
+
 
 if __name__ == "__main__":
     unittest.main()

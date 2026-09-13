@@ -2,7 +2,7 @@
   "sections": [
     {
       "section_id": "decision",
-      "purpose": "ما القرار الممكن اليوم؟",
+      "purpose": "القرار المتاح اليوم",
       "copy_refs": [
         "COPY.AHS.HEADLINE",
         "COPY.AHS.SUBHEAD",
@@ -30,465 +30,6 @@
               "value": "ملاحظة للقراءة فقط ومطابقة للمصادر",
               "claim_refs": [
                 "AHS.FACT.OBSERVATION_BOUNDARY"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "section_id": "facts",
-      "purpose": "أرقام تغيّر حجم قرار الإغلاق",
-      "copy_refs": [
-        "COPY.AHS.FACTS"
-      ],
-      "claim_refs": [],
-      "presentation_intent": "key_fact",
-      "structured_blocks": [
-        {
-          "block_id": "STRUCT.AHS.FACTS",
-          "type": "fact_list",
-          "title": "المشهد التشغيلي",
-          "items": [
-            {
-              "label": "السجل القديم",
-              "value": "20,789 مستخدمًا",
-              "claim_refs": [
-                "AHS.FACT.LEGACY_USERS"
-              ]
-            },
-            {
-              "label": "السجل الحالي",
-              "value": "71 مستخدمًا",
-              "claim_refs": [
-                "AHS.FACT.CURRENT_USERS"
-              ]
-            },
-            {
-              "label": "مرشحو التداخل",
-              "value": "28 في National_ID",
-              "claim_refs": [
-                "AHS.FACT.NATIONAL_ID_OVERLAP"
-              ]
-            },
-            {
-              "label": "النسخ والاستعادة",
-              "value": "2026-04-20؛ restore not proven",
-              "claim_refs": [
-                "AHS.FACT.BACKUP_DATE",
-                "AHS.FACT.RESTORE_STATUS"
-              ]
-            },
-            {
-              "label": "خط الأساس",
-              "value": "120h مؤقت",
-              "claim_refs": [
-                "AHS.FACT.BASELINE_HOURS"
-              ]
-            },
-            {
-              "label": "هوية التطبيق",
-              "value": "remote hash differs",
-              "claim_refs": [
-                "AHS.FACT.APK_BOUNDARY"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "section_id": "identity",
-      "purpose": "الهوية والوصول",
-      "copy_refs": [],
-      "claim_refs": [],
-      "presentation_intent": "evidence_matrix",
-      "structured_blocks": [
-        {
-          "block_id": "STRUCT.AHS.IDENTITY",
-          "type": "table",
-          "title": "ما ثبت في الهوية والدخول",
-          "columns": [
-            "المطلب",
-            "الشرح الحالي",
-            "الحالة للقراءة التنفيذية"
-          ],
-          "rows": [
-            {
-              "cells": [
-                "01 · بحث المستخدمين وصلاحيات لوحة الإدارة",
-                "البحث عن المستخدمين وحقول المعرّفات موجودان في المصدر. ما لم نختبره بعد هو سلوك الأدوار واستجابة 403.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.01"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.01"
-              ]
-            },
-            {
-              "cells": [
-                "04 · دخول الأعضاء الحاليين",
-                "يوجد 20,789 مستخدمًا قديمًا و71 مستخدمًا حاليًا. توافق الدخول والربط بين السجلين لم يُختبر بعد.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.04"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.04"
-              ]
-            },
-            {
-              "cells": [
-                "05 · ثبات التسجيل ورسائل التحقق",
-                "مسارات التسجيل المحلية واختباراتها موجودة. قبول أخطاء الإنتاج والحالات السلبية لم يُحسم بعد.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.05"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.05"
-              ]
-            },
-            {
-              "cells": [
-                "06 · الدخول برقم العضوية أو رقم البطاقة",
-                "عقد الدخول الحالي يعتمد على الهاتف أو البريد أو اسم المستخدم. الدخول برقم العضوية أو رقم البطاقة غير مثبت.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.06"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.06"
-              ]
-            },
-            {
-              "cells": [
-                "13 · تفعيل المستخدم القديم ومنع التكرار",
-                "خدمة تفعيل المستخدم القديم موجودة. إثبات الهوية ومنع إنشاء عضوية مكررة غير مثبتين.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.13"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.13"
-              ]
-            },
-            {
-              "cells": [
-                "15 · رقم العضوية في الملف الشخصي",
-                "حقل Serial ومسار عرضه موجودان. عرض رقم عضو فعلي وعزل بياناته لم يُختبرا.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.15"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.15"
-              ]
-            },
-            {
-              "cells": [
-                "16 · استعادة كلمة المرور",
-                "مسار استعادة كلمة المرور القديم معطّل. لم يظهر مسار بديل مكتمل من التعرف حتى تسجيل الدخول الجديد.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.16"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.16"
-              ]
-            },
-            {
-              "cells": [
-                "17 · القائمة المحظورة",
-                "لم يظهر تنفيذ محلي للقائمة المحظورة. قواعد المطابقة وسجل التغيير يحتاجان اعتمادًا.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.17"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.17"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "section_id": "operations",
-      "purpose": "الطلبات والطوابير",
-      "copy_refs": [],
-      "claim_refs": [],
-      "presentation_intent": "evidence_matrix",
-      "structured_blocks": [
-        {
-          "block_id": "STRUCT.AHS.OPERATIONS",
-          "type": "table",
-          "title": "ما ظهر في الطلبات والطوابير",
-          "columns": [
-            "المطلب",
-            "الشرح الحالي",
-            "الحالة للقراءة التنفيذية"
-          ],
-          "rows": [
-            {
-              "cells": [
-                "02 · تصدير رموز QR",
-                "بيانات QR القديمة والحالية موجودة. لكننا لم نثبت بعد تصدير عنصر واحد أو مجموعة أو كل البيانات.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.02"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.02"
-              ]
-            },
-            {
-              "cells": [
-                "09 · ظهور طلبات الخدمات في لوحة الإدارة",
-                "جداول الطلبات الحديثة موجودة. ظهور كل عائلة طلب في لوحة الإدارة لم يُختبر بعد.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.09"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.09"
-              ]
-            },
-            {
-              "cells": [
-                "10 · سير الطلبات وسبب الرفض",
-                "أدوات القبول والرفض موجودة. سبب الرفض وانعكاس الحالة على التطبيق ما زالان مفتوحين.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.10"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.10"
-              ]
-            },
-            {
-              "cells": [
-                "19 · بطاقات الطوابير والتنقل",
-                "مصادر الطوابير والمسارات موجودة. مصفوفة الأدوار وبطاقات الانتظار لم تُقبل حيًا.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.19"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.19"
-              ]
-            },
-            {
-              "cells": [
-                "20 · تصدير المستخدمين إلى Excel",
-                "تنفيذ تصدير المستخدمين موجود في المصدر. زر لوحة الإدارة والصلاحيات والمرشحات لم تُختبر.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.20"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.20"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "section_id": "content",
-      "purpose": "المحتوى والعلاقات",
-      "copy_refs": [],
-      "claim_refs": [],
-      "presentation_intent": "evidence_matrix",
-      "structured_blocks": [
-        {
-          "block_id": "STRUCT.AHS.CONTENT",
-          "type": "table",
-          "title": "ما نعرفه عن المحتوى والعلاقات",
-          "columns": [
-            "المطلب",
-            "الشرح الحالي",
-            "الحالة للقراءة التنفيذية"
-          ],
-          "rows": [
-            {
-              "cells": [
-                "03 · الأخبار والتحميل المتتابع",
-                "يوجد 62 سجل خبر. اختبار عبور نقطة الفشل والتنقل المتتابع ما زال مفتوحًا.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.03"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.03"
-              ]
-            },
-            {
-              "cells": [
-                "07 · المتجر داخل لوحة الإدارة",
-                "كود المتجر موجود، لكن جداول الإنتاج للمنتجات والبائعين والطلبات فارغة. النطاق يحتاج قرارًا واضحًا.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.07"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.07"
-              ]
-            },
-            {
-              "cells": [
-                "11 · ربط الأكاديمية بالفرع",
-                "يوجد 227 أكاديمية و24 فرعًا، ولم يظهر سجل يتيم في الفحص الموجّه. صحة العلاقة على كل الأسطح لم تُقبل بعد.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.11"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.11"
-              ]
-            },
-            {
-              "cells": [
-                "14 · الشروط والأحكام",
-                "واجهة قبول الشروط موجودة. النص القانوني المعتمد وإصداره وربطه بالإنتاج ما زال مفتوحًا.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.14"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.14"
-              ]
-            },
-            {
-              "cells": [
-                "18 · أصول لوحة الإدارة",
-                "التخزين الثابت والوسائط موجودان، مع تحذير staticfiles.W004. الفحص البصري بصلاحيات فعلية لم يُنفّذ.",
-                "مُثبت"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.18"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.18"
-              ]
-            },
-            {
-              "cells": [
-                "21 · شرائح التسويق والتطبيق",
-                "وحدة التسويق وأصول الشرائح موجودة. جداول الإنتاج فارغة، وتدفق لوحة الإدارة إلى التطبيق غير مثبت.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.21"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.21"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "section_id": "release",
-      "purpose": "التكامل والترحيل والتسليم",
-      "copy_refs": [
-        "COPY.AHS.MIGRATION_BOUNDARY"
-      ],
-      "claim_refs": [],
-      "presentation_intent": "evidence_matrix",
-      "structured_blocks": [
-        {
-          "block_id": "STRUCT.AHS.RELEASE",
-          "type": "table",
-          "title": "ما يلزم قبل التسليم",
-          "columns": [
-            "المطلب",
-            "الشرح الحالي",
-            "الحالة للقراءة التنفيذية"
-          ],
-          "rows": [
-            {
-              "cells": [
-                "08 · الإشعارات ودورة تسليمها",
-                "مسارات قراءة الإشعارات موجودة. مزود الإرسال والأجهزة ودورة الرموز لم تُثبت بعد.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.08"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.08"
-              ]
-            },
-            {
-              "cells": [
-                "12 · النسخ الاحتياطي والترحيل",
-                "ملفات النسخ المؤرخة في 2026-04-20 موجودة. الاستعادة والمطابقة وخطة الرجوع غير مثبتة.",
-                "محجوب"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.12"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.12"
-              ]
-            },
-            {
-              "cells": [
-                "22 · مقارنة لوحة الإدارة القديمة والحالية",
-                "لا توجد قائمة قبول موقعة تقارن الصفحات والأفعال والصلاحيات والاستثناءات بين اللوحتين.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.22"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.22"
-              ]
-            },
-            {
-              "cells": [
-                "23 · مراجعة التطبيق ولوحة الإدارة والـAPI والبنية",
-                "الخادم والمصدر تمت ملاحظتهما. قبول الهاتف والأدوار والإشعارات والترحيل الشامل ما زال مفتوحًا.",
-                "مفتوح"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.23"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.23"
-              ]
-            },
-            {
-              "cells": [
-                "24 · تقرير الإغلاق والتسليم",
-                "حزمة الأدلة والحالات موجودة. توقيع الإغلاق ينتظر عبور بوابات القبول.",
-                "مُثبت جزئيًا"
-              ],
-              "claim_refs": [
-                "AHS.REQUIREMENT.24"
-              ],
-              "copy_refs": [
-                "COPY.AHS.REQUIREMENT.24"
               ]
             }
           ]
@@ -536,6 +77,560 @@
               "detail": "ضغط أعلى؛ أوقات الانتظار لا تختفي.",
               "claim_refs": [
                 "AHS.FACT.EFFORT_MODES"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "facts",
+      "purpose": "أرقام تغيّر حجم قرار الإغلاق",
+      "copy_refs": [
+        "COPY.AHS.FACTS"
+      ],
+      "claim_refs": [],
+      "presentation_intent": "key_fact",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.FACTS",
+          "type": "fact_list",
+          "title": "المشهد التشغيلي",
+          "items": [
+            {
+              "label": "السجل القديم",
+              "value": "20,789 مستخدمًا",
+              "claim_refs": [
+                "AHS.FACT.LEGACY_USERS"
+              ]
+            },
+            {
+              "label": "السجل الحالي",
+              "value": "71 مستخدمًا",
+              "claim_refs": [
+                "AHS.FACT.CURRENT_USERS"
+              ]
+            },
+            {
+              "label": "مرشحو التداخل",
+              "value": "28 في National_ID",
+              "claim_refs": [
+                "AHS.FACT.NATIONAL_ID_OVERLAP"
+              ]
+            },
+            {
+              "label": "سجلات الأخبار",
+              "value": "62 سجلًا",
+              "claim_refs": [
+                "AHS.FACT.NEWS_ROWS"
+              ]
+            },
+            {
+              "label": "الأكاديميات",
+              "value": "227 أكاديمية",
+              "claim_refs": [
+                "AHS.FACT.ACADEMIES_BRANCHES"
+              ]
+            },
+            {
+              "label": "الفروع",
+              "value": "24 فرعًا",
+              "claim_refs": [
+                "AHS.FACT.ACADEMIES_BRANCHES"
+              ]
+            },
+            {
+              "label": "خط الأساس",
+              "value": "120h مؤقت",
+              "claim_refs": [
+                "AHS.FACT.BASELINE_HOURS"
+              ]
+            }
+          ]
+        },
+        {
+          "block_id": "STRUCT.AHS.FACTS.CONTEXT",
+          "type": "fact_list",
+          "title": "حدود القراءة",
+          "items": [
+            {
+              "label": "النسخ والاستعادة",
+              "value": "2026-04-20؛ restore not proven",
+              "claim_refs": [
+                "AHS.FACT.BACKUP_DATE",
+                "AHS.FACT.RESTORE_STATUS"
+              ]
+            },
+            {
+              "label": "هوية التطبيق",
+              "value": "remote hash differs",
+              "claim_refs": [
+                "AHS.FACT.APK_BOUNDARY"
+              ]
+            },
+            {
+              "label": "بيئة القراءة",
+              "value": "/opt/ahs/core · PostgreSQL 16.13 · ahs_prod · manage.py check · staticfiles.W004",
+              "claim_refs": [
+                "AHS.FACT.RUNTIME_PATH",
+                "AHS.FACT.DATABASE",
+                "AHS.FACT.RUNTIME_CHECK"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "timeline",
+      "purpose": "مسار الإغلاق كما تسمح به الأدلة",
+      "copy_refs": [],
+      "claim_refs": [
+        "AHS.FACT.PROJECT_POSTURE",
+        "AHS.REQUIREMENT.12",
+        "AHS.REQUIREMENT.24"
+      ],
+      "presentation_intent": "timeline",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.TIMELINE",
+          "type": "timeline",
+          "title": "لا توجد مواعيد مفترضة؛ كل مرحلة تنتظر دليلها",
+          "claim_refs": [
+            "AHS.FACT.PROJECT_POSTURE"
+          ],
+          "items": [
+            {
+              "label": "المشهد المرصود",
+              "value": "مُثبت",
+              "detail": "الخادم والكود والبيانات قابلون للقراءة والمطابقة.",
+              "claim_refs": [
+                "AHS.FACT.PROJECT_POSTURE",
+                "AHS.FACT.OBSERVATION_BOUNDARY"
+              ]
+            },
+            {
+              "label": "الهوية والدخول",
+              "value": "مفتوح",
+              "detail": "اختبارات الأدوار والربط بين السجلين لم تُقبل بعد.",
+              "claim_refs": [
+                "AHS.REQUIREMENT.01",
+                "AHS.REQUIREMENT.04"
+              ]
+            },
+            {
+              "label": "الاستعادة والترحيل",
+              "value": "محجوب",
+              "detail": "الاستعادة والمطابقة وخطة الرجوع غير مثبتة، ووجهة الخادم الجديد غير معروفة.",
+              "claim_refs": [
+                "AHS.REQUIREMENT.12",
+                "AHS.FACT.MIGRATION_TARGET"
+              ]
+            },
+            {
+              "label": "اعتماد الإغلاق",
+              "value": "مشروط",
+              "detail": "توقيع الإغلاق ينتظر عبور بوابات القبول.",
+              "claim_refs": [
+                "AHS.REQUIREMENT.24"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "identity",
+      "purpose": "الهوية والوصول",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.IDENTITY",
+          "type": "table",
+          "title": "حالة المطالب كما يصفها الدليل",
+          "columns": [
+            "المطلب",
+            "الشرح الحالي",
+            "الحالة للقراءة التنفيذية"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "01 · بحث المستخدمين وصلاحيات لوحة الإدارة",
+                "مسارات البحث وحقول المعرّفات موجودة، لكن اختبار الأدوار وسلوك 403 لم يُنفّذ.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.01"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.01"
+              ]
+            },
+            {
+              "cells": [
+                "04 · دخول الأعضاء الحاليين",
+                "يوجد 20,789 مستخدمًا قديمًا و71 مستخدمًا حاليًا؛ توافق الدخول والربط بينهما غير مختبر.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.04"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.04"
+              ]
+            },
+            {
+              "cells": [
+                "05 · ثبات التسجيل ورسائل التحقق",
+                "مسارات التسجيل المحلية واختباراتها موجودة، بينما قبول أخطاء الإنتاج والحالات السلبية لم يُحسم.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.05"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.05"
+              ]
+            },
+            {
+              "cells": [
+                "06 · الدخول برقم العضوية أو رقم البطاقة",
+                "عقد الدخول الحالي يعتمد على الهاتف أو البريد أو اسم المستخدم؛ رقم العضوية ورقم البطاقة غير مثبتين.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.06"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.06"
+              ]
+            },
+            {
+              "cells": [
+                "13 · تفعيل المستخدم القديم ومنع التكرار",
+                "توجد خدمة تفعيل، لكن إثبات الهوية ومنع إنشاء عضوية مكررة غير مثبتين.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.13"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.13"
+              ]
+            },
+            {
+              "cells": [
+                "15 · رقم العضوية في الملف الشخصي",
+                "الحقل Serial ومسار عرضه موجودان، لكن عرض رقم عضو فعلي وعزل بياناته لم يُختبرا.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.15"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.15"
+              ]
+            },
+            {
+              "cells": [
+                "16 · استعادة كلمة المرور",
+                "مسار الاستعادة القديم معطّل، ولم يظهر مسار بديل مكتمل من التعرف حتى تسجيل الدخول الجديد.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.16"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.16"
+              ]
+            },
+            {
+              "cells": [
+                "17 · القائمة المحظورة",
+                "لم يظهر تنفيذ محلي للقائمة المحظورة؛ قواعد المطابقة وسجل التغيير تحتاج اعتمادًا.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.17"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.17"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "operations",
+      "purpose": "الطلبات والطوابير",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.OPERATIONS",
+          "type": "table",
+          "title": "حالة المطالب كما يصفها الدليل",
+          "columns": [
+            "المطلب",
+            "الشرح الحالي",
+            "الحالة للقراءة التنفيذية"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "02 · تصدير رموز QR",
+                "بيانات QR القديمة والحالية موجودة؛ التصدير لعنصر واحد أو مجموعة أو الكل لم يُثبت.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.02"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.02"
+              ]
+            },
+            {
+              "cells": [
+                "09 · ظهور طلبات الخدمات في لوحة الإدارة",
+                "جداول الطلبات الحديثة موجودة، لكن ظهور كل عائلة طلب في لوحة الإدارة لم يُختبر.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.09"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.09"
+              ]
+            },
+            {
+              "cells": [
+                "10 · سير الطلبات وسبب الرفض",
+                "أدوات القبول والرفض موجودة، بينما سبب الرفض وانعكاس الحالة على التطبيق ما زالا مفتوحين.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.10"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.10"
+              ]
+            },
+            {
+              "cells": [
+                "19 · بطاقات الطوابير والتنقل",
+                "مصادر الطوابير والمسارات موجودة، لكن مصفوفة الأدوار وبطاقات الانتظار لم تُقبل حيًا.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.19"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.19"
+              ]
+            },
+            {
+              "cells": [
+                "20 · تصدير المستخدمين إلى Excel",
+                "تنفيذ تصدير المستخدمين موجود في المصدر، لكن زر لوحة الإدارة والصلاحيات والمرشحات لم تُختبر.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.20"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.20"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "content",
+      "purpose": "المحتوى والعلاقات",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.CONTENT",
+          "type": "table",
+          "title": "حالة المطالب كما يصفها الدليل",
+          "columns": [
+            "المطلب",
+            "الشرح الحالي",
+            "الحالة للقراءة التنفيذية"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "03 · الأخبار والتحميل المتتابع",
+                "يوجد 62 سجل خبر، لكن اختبار تجاوز نقطة الفشل والتصفح المتتابع ما زال مفتوحًا.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.03"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.03"
+              ]
+            },
+            {
+              "cells": [
+                "07 · المتجر داخل لوحة الإدارة",
+                "كود المتجر موجود، لكن جداول الإنتاج للمنتجات والبائعين والطلبات فارغة؛ النطاق يحتاج قرارًا.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.07"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.07"
+              ]
+            },
+            {
+              "cells": [
+                "11 · ربط الأكاديمية بالفرع",
+                "يوجد 227 أكاديمية و24 فرعًا، ولم يظهر يتيم في الفحص الموجّه؛ صحة العلاقة على كل الأسطح لم تُقبل.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.11"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.11"
+              ]
+            },
+            {
+              "cells": [
+                "14 · الشروط والأحكام",
+                "واجهة قبول الشروط موجودة، أما النص القانوني المعتمد وإصداره وربطه بالإنتاج فمفتوح.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.14"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.14"
+              ]
+            },
+            {
+              "cells": [
+                "18 · أصول لوحة الإدارة",
+                "التخزين الثابت والوسائط موجودان، مع تحذير staticfiles.W004؛ فحص بصري بصلاحيات فعلية لم يُنفّذ.",
+                "مُثبت"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.18"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.18"
+              ]
+            },
+            {
+              "cells": [
+                "21 · شرائح التسويق والتطبيق",
+                "وحدة التسويق وأصول الشرائح موجودة، بينما جداول الإنتاج فارغة وتدفق لوحة الإدارة إلى التطبيق غير مثبت.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.21"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.21"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "release",
+      "purpose": "التكامل والترحيل والتسليم",
+      "copy_refs": [
+        "COPY.AHS.MIGRATION_BOUNDARY"
+      ],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.RELEASE",
+          "type": "table",
+          "title": "حالة المطالب كما يصفها الدليل",
+          "columns": [
+            "المطلب",
+            "الشرح الحالي",
+            "الحالة للقراءة التنفيذية"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "08 · الإشعارات ودورة تسليمها",
+                "مسارات قراءة الإشعارات موجودة، أما مزود الإرسال والأجهزة ودورة الرموز فلم تُثبت.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.08"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.08"
+              ]
+            },
+            {
+              "cells": [
+                "12 · النسخ الاحتياطي والترحيل",
+                "ملفات نسخ بتاريخ 2026-04-20 موجودة، لكن الاستعادة والمطابقة وخطة الرجوع غير مثبتة.",
+                "محجوب"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.12"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.12"
+              ]
+            },
+            {
+              "cells": [
+                "22 · مقارنة لوحة الإدارة القديمة والحالية",
+                "لا توجد قائمة قبول موقعة تقارن الصفحات والأفعال والصلاحيات والاستثناءات بين اللوحتين.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.22"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.22"
+              ]
+            },
+            {
+              "cells": [
+                "23 · مراجعة التطبيق ولوحة الإدارة والـAPI والبنية",
+                "تمت ملاحظة الخادم والمصدر، لكن قبول الهاتف والأدوار والإشعارات والترحيل الشامل ما زال مفتوحًا.",
+                "مفتوح"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.23"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.23"
+              ]
+            },
+            {
+              "cells": [
+                "24 · تقرير الإغلاق والتسليم",
+                "حزمة الأدلة والحالات موجودة، لكن توقيع الإغلاق لا يصدر قبل عبور بوابات القبول.",
+                "مُثبت جزئيًا"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.24"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.24"
               ]
             }
           ]

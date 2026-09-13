@@ -7,15 +7,17 @@
   ],
   "secondary_content": [
     "evidence_matrix",
-    "effort_model"
+    "effort_model",
+    "timeline"
   ],
   "annex_content": [],
   "detail_level": "public executive only",
   "uncertainty_policy": "اعرض الفتح والحجب والجزئية بصراحة",
   "reader_journey": [
     "verdict",
-    "facts",
     "effort",
+    "facts",
+    "timeline",
     "evidence"
   ]
 }
