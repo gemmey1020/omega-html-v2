@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render a semantic Omega bundle as a screen-first, human-facing HTML artifact."""
 import argparse
+import base64
 import html
 import json
 import re
@@ -110,6 +111,49 @@ def truthlock(bundle):
 
 def esc(value):
     return html.escape(str(value), quote=True)
+
+
+def favicon_data_uri(theme):
+    icon_svg = (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
+        f'<rect width="64" height="64" rx="16" fill="{theme["bg"]}"/>'
+        f'<text x="32" y="48" text-anchor="middle" font-family="Georgia,serif" '
+        f'font-size="42" font-weight="700" fill="{theme["accent"]}">Ω</text></svg>'
+    )
+    return base64.b64encode(icon_svg.encode("utf-8")).decode("ascii")
+
+
+def preloader_markup():
+    return '''<div id="omega-preloader" class="omega-preloader" role="status" aria-live="polite" aria-label="Loading Omega">
+  <div class="omega-preloader__inner">
+    <div class="omega-preloader__mark" aria-hidden="true"><span>Ω</span></div>
+    <div class="omega-preloader__brand">Ω OMEGA</div>
+    <div class="omega-preloader__name">Jemy</div>
+    <div class="omega-preloader__rule" aria-hidden="true"><span></span></div>
+  </div>
+</div>
+<script>
+(() => {
+  const preloader = document.getElementById("omega-preloader");
+  const startedAt = performance.now();
+  const minimumVisibleMs = 700;
+  const dismiss = () => {
+    document.documentElement.classList.add("omega-ready");
+    if (!preloader) return;
+    preloader.classList.add("omega-preloader--hidden");
+    window.setTimeout(() => preloader.remove(), 520);
+  };
+  const ready = () => {
+    const remaining = Math.max(0, minimumVisibleMs - (performance.now() - startedAt));
+    window.setTimeout(() => window.requestAnimationFrame(dismiss), remaining);
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ready, {once: true});
+  } else {
+    ready();
+  }
+})();
+</script>'''
 
 
 def refs_attrs(claim_refs=None, copy_refs=None):
@@ -305,6 +349,16 @@ def stylesheet(theme):
 def hud_stylesheet_overrides():
     return '''
 :root {--hud-radius-xl:30px;--hud-radius-lg:22px;--hud-radius-md:16px;--hud-shadow:0 26px 70px rgba(0,0,0,.28)}
+.omega-preloader {position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:var(--bg);color:var(--ink);transition:opacity .42s ease,visibility .42s ease}
+.omega-preloader--hidden {opacity:0;visibility:hidden;pointer-events:none}
+.omega-preloader__inner {position:relative;display:grid;justify-items:center;gap:10px;min-width:190px;padding:30px 34px 26px;border:1px solid color-mix(in srgb,var(--accent) 48%,var(--line));border-radius:var(--hud-radius-lg);background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 88%,var(--bg)),var(--surface));box-shadow:0 24px 70px rgba(0,0,0,.32),0 0 70px color-mix(in srgb,var(--accent) 12%,transparent);overflow:hidden;animation:omega-preloader-in .6s cubic-bezier(.2,.75,.25,1) both}
+.omega-preloader__inner::before {content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 0,color-mix(in srgb,var(--accent) 20%,transparent),transparent 58%)}
+.omega-preloader__mark,.omega-preloader__brand,.omega-preloader__name,.omega-preloader__rule {position:relative;z-index:1}
+.omega-preloader__mark {display:grid;place-items:center;width:58px;height:58px;border:1px solid var(--accent);border-radius:50%;color:var(--accent);font:700 2rem/1 Georgia,serif;box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 8%,transparent),0 0 34px color-mix(in srgb,var(--accent) 24%,transparent);animation:omega-preloader-pulse 1.8s ease-in-out infinite}
+.omega-preloader__brand {color:var(--ink);font-size:.78rem;font-weight:900;letter-spacing:.2em}
+.omega-preloader__name {color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.omega-preloader__rule {width:86px;height:2px;margin-top:5px;background:var(--line);overflow:hidden}
+.omega-preloader__rule span {display:block;width:42%;height:100%;background:var(--accent);animation:omega-preloader-progress 1.3s ease-in-out infinite}
 .hud-page {position:relative;isolation:isolate}
 .hud-page::before {content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.16;background:linear-gradient(90deg,transparent 49.9%,var(--accent) 50%,transparent 50.1%),linear-gradient(0deg,transparent 49.9%,var(--accent) 50%,transparent 50.1%);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
 .hud-page .page {position:relative;z-index:1}
@@ -347,6 +401,9 @@ def hud_stylesheet_overrides():
 @keyframes omega-topbar-in {from {opacity:0;transform:translateY(-10px)} to {opacity:1;transform:translateY(0)}}
 @keyframes omega-surface-in {from {opacity:0;transform:translateY(18px) rotateX(1.5deg)} to {opacity:1;transform:translateY(0) rotateX(0)}}
 @keyframes omega-signal-in {from {opacity:0;transform:translateY(12px) scale(.98)} to {opacity:1;transform:translateY(0) scale(1)}}
+@keyframes omega-preloader-in {from {transform:translateY(12px) scale(.96)} to {transform:translateY(0) scale(1)}}
+@keyframes omega-preloader-pulse {0%,100% {transform:scale(1);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 8%,transparent),0 0 34px color-mix(in srgb,var(--accent) 24%,transparent)}50% {transform:scale(1.04);box-shadow:0 0 0 11px color-mix(in srgb,var(--accent) 4%,transparent),0 0 48px color-mix(in srgb,var(--accent) 32%,transparent)}}
+@keyframes omega-preloader-progress {0% {transform:translateX(-140%)}50%,100% {transform:translateX(330%)}}
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after {animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}
   .hud-signal:hover {transform:none}
@@ -480,6 +537,7 @@ def hud_stylesheet_overrides():
   .footer-note {width:100%;margin-inline-start:40px}
 }
 @media print {
+  .omega-preloader {display:none !important}
   .hud-page::before {display:none}
   .hud-topbar {position:static;margin:0 0 5mm;box-shadow:none;border-radius:0;background:#fff;color:#444;backdrop-filter:none;animation:none}
   .hero-surface {padding:5mm;border-radius:0;box-shadow:none;background:#fff;perspective:none;transform:none;animation:none}
@@ -542,7 +600,9 @@ def render(bundle, profile=None):
     css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
     css += hud_stylesheet_overrides()
     css += '\n@media screen{.hero-grid{margin-top:clamp(28px,4vw,52px)}h1{font-size:clamp(2.45rem,5.2vw,4.6rem);max-width:21ch}.document-grid--proposal .section-heading,.document-grid--proposal .section-body{padding-block:clamp(28px,4vw,48px)}.document-grid--proposal .section-heading h2{font-size:clamp(1.35rem,2vw,2rem)} } @media screen and (max-width:820px){h1{font-size:clamp(2.1rem,10vw,3.35rem);max-width:19ch}.hero{padding-bottom:32px} } @media print{.document-grid{display:block}.section{display:grid;grid-template-columns:28% 1fr;gap:10%;break-inside:avoid}.section-heading,.section-body{grid-column:auto;grid-row:auto} }'
-    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMwNjBhMGMiLz48dGV4dCB4PSIzMiIgeT0iNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjYzg5NTQ1Ij7OqTwvdGV4dD48L3N2Zz4=" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body><div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>{esc(footer)}</span><span class="footer-note">{esc("قرار مبني على ما أمكن إثباته" if lang == "ar" else "Decision built on what can be proven")}</span></footer></div></body></html>'''
+    favicon = favicon_data_uri(theme)
+    preloader = preloader_markup()
+    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body>{preloader}<div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>{esc(footer)}</span><span class="footer-note">{esc("قرار مبني على ما أمكن إثباته" if lang == "ar" else "Decision built on what can be proven")}</span></footer></div></body></html>'''
 
 
 def main():

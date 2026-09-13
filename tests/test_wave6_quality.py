@@ -236,6 +236,33 @@ class Wave6QualityTest(unittest.TestCase):
         self.assertIn("Ω", icon_svg)
         self.assertNotIn("M16 32h32M32 16v32", icon_svg)
 
+    def test_favicon_uses_the_active_theme_accent(self):
+        for profile in ("omega-gold", "omega-teal", "omega-cyan"):
+            with self.subTest(profile=profile):
+                html = render(self.bundle("ahs"), profile)
+                match = re.search(r'<link rel="icon" href="data:image/svg\+xml;base64,([^"]+)"', html)
+                self.assertIsNotNone(match)
+                icon_svg = base64.b64decode(match.group(1)).decode("utf-8")
+                self.assertIn(THEMES[profile]["accent"], icon_svg)
+
+    def test_every_surface_has_a_branded_self_dismissing_preloader(self):
+        for name, profile in (("ahs", "omega-gold"), ("proposal", "omega-minimal"), ("technical", "omega-hud")):
+            with self.subTest(name=name):
+                html = render(self.bundle(name), profile)
+                self.assertIn('id="omega-preloader"', html)
+                self.assertIn('class="omega-preloader"', html)
+                self.assertIn("Ω OMEGA", html)
+                self.assertIn("Jemy", html)
+                self.assertIn("omega-preloader--hidden", html)
+                self.assertIn("DOMContentLoaded", html)
+                self.assertIn("minimumVisibleMs", html)
+                self.assertIn("performance.now()", html)
+                self.assertIn("setTimeout", html)
+                self.assertIn("omega-ready", html)
+                self.assertIn("@keyframes omega-preloader-in {from {transform:", html)
+                self.assertIn("@media print", html)
+                self.assertIn(".omega-preloader", html)
+
     def test_ahs_public_artifact_states_unknown_migration_target(self):
         bundle = self.bundle("ahs")
         html = render(bundle, "omega-gold")
