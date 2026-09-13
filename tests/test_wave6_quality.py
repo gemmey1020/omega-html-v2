@@ -1,4 +1,5 @@
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -94,6 +95,41 @@ class Wave6QualityTest(unittest.TestCase):
             ], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(json.loads(result.stdout)["status"], "PASS")
+
+    def test_visual_recovery_uses_document_specific_full_width_layouts(self):
+        ahs = render(self.bundle("ahs"), "omega-editorial")
+        proposal = render(self.bundle("proposal"), "omega-minimal")
+        technical = render(self.bundle("technical"), "omega-hud")
+        self.assertIn('data-document-kind="audit"', ahs)
+        self.assertIn('class="document-grid document-grid--audit"', ahs)
+        self.assertNotIn('class="rail"', ahs)
+        self.assertIn('data-document-kind="proposal"', proposal)
+        self.assertIn('class="document-grid document-grid--proposal"', proposal)
+        self.assertIn('data-document-kind="technical"', technical)
+        self.assertIn('class="document-grid document-grid--technical"', technical)
+        self.assertNotEqual(ahs.split('<main', 1)[1].split('</main>', 1)[0], proposal.split('<main', 1)[1].split('</main>', 1)[0])
+
+    def test_arabic_technical_surface_localizes_generic_labels(self):
+        html = render(self.bundle("technical"), "omega-hud")
+        for label in ("Environment", "Evidence status", "Observed command", "Release caveat", "Technical annex", "Source ledger"):
+            self.assertNotIn(f">{label}<", html)
+
+    def test_proposal_surface_keeps_one_language(self):
+        html = render(self.bundle("proposal"), "omega-minimal")
+        self.assertIsNone(re.search(r"[\u0600-\u06ff]", html))
+
+    def test_hud_colorway_comparisons_preserve_semantic_layout(self):
+        bundle = self.bundle("ahs")
+        base = render(bundle, "omega-editorial")
+        for profile in ("omega-gold", "omega-teal", "omega-cyan"):
+            with self.subTest(profile=profile):
+                html = render(bundle, profile)
+                self.assertIn(f'data-surface-profile="{profile}"', html)
+                self.assertIn(f'<meta name="omega:theme_profile" content="{profile}">', html)
+                self.assertIn('data-document-kind="audit"', html)
+                self.assertIn('class="document-grid document-grid--audit"', html)
+                self.assertIn('data-claim-id="AHS.FACT.RESTORE_STATUS"', html)
+                self.assertNotEqual(html, base)
 
 
 if __name__ == "__main__":

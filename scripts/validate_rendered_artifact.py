@@ -6,7 +6,7 @@ import re
 import sys
 from pathlib import Path
 
-PROFILES = {"omega-editorial", "omega-minimal", "omega-hud", "aion"}
+PROFILES = {"omega-editorial", "omega-minimal", "omega-hud", "aion", "omega-gold", "omega-teal", "omega-cyan"}
 
 
 class ArtifactParser(html.parser.HTMLParser):

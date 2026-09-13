@@ -82,7 +82,7 @@
             {
               "label": "Risk",
               "value": "Spending before learning the loop",
-              "detail": "المراجعة الأسبوعية توقف الطيار إذا لم تثبت الحلقة الأساسية.",
+              "detail": "Review the result weekly. Stop the pilot if the core loop does not hold.",
               "claim_refs": [
                 "PROPOSAL.RISK"
               ]

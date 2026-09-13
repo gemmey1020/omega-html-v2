@@ -40,7 +40,9 @@ blocks. A rail is optional and must be justified by the Reader Brief.
 Choose a surface profile independently from document intent. Keep type scale,
 line length, rhythm, contrast, and whitespace proportional to the document's
 job. Use quiet editorial support for decision documents and restrained HUD
-tokens for technical surfaces. Do not leak machine enums into reader copy,
+tokens for technical surfaces. The optional `omega-gold`, `omega-teal`, and
+`omega-cyan` profiles are comparison colorways that share the same semantic
+layout and traceability contract. Do not leak machine enums into reader copy,
 repeat a generic dashboard layout, or force protected values into headlines.
 
 ## Rendering and validation
