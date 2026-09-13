@@ -676,9 +676,7 @@
         "SOURCE.AHS.OBSERVATION",
         "SOURCE.AHS.AUDIT"
       ],
-      "protected_tokens": [
-        "restore not proven"
-      ],
+      "protected_tokens": [],
       "materiality": "supporting"
     },
     {
@@ -691,9 +689,7 @@
       "source_refs": [
         "SOURCE.AHS.OBSERVATION"
       ],
-      "protected_tokens": [
-        "2026-04-20"
-      ],
+      "protected_tokens": [],
       "materiality": "supporting"
     },
     {
@@ -707,9 +703,7 @@
         "SOURCE.AHS.OBSERVATION",
         "SOURCE.AHS.PRODUCTION"
       ],
-      "protected_tokens": [
-        "/opt/ahs/core"
-      ],
+      "protected_tokens": [],
       "materiality": "supporting"
     },
     {
@@ -722,10 +716,7 @@
       "source_refs": [
         "SOURCE.AHS.OBSERVATION"
       ],
-      "protected_tokens": [
-        "PostgreSQL 16.13",
-        "ahs_prod"
-      ],
+      "protected_tokens": [],
       "materiality": "supporting"
     },
     {
@@ -782,10 +773,7 @@
       "source_refs": [
         "SOURCE.AHS.OBSERVATION"
       ],
-      "protected_tokens": [
-        "manage.py check",
-        "staticfiles.W004"
-      ],
+      "protected_tokens": [],
       "materiality": "supporting"
     },
     {

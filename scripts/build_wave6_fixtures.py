@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build Wave 6 fixtures from the frozen AHS payload and realistic local examples."""
 import argparse
+import copy
 import json
 import re
 import shutil
@@ -28,6 +29,12 @@ AR_TITLES = {
     1: "بحث المستخدمين وصلاحيات لوحة الإدارة", 2: "تصدير رموز QR", 3: "الأخبار والتحميل المتتابع", 4: "دخول الأعضاء الحاليين", 5: "ثبات التسجيل ورسائل التحقق", 6: "الدخول برقم العضوية أو رقم البطاقة", 7: "المتجر داخل لوحة الإدارة", 8: "الإشعارات ودورة تسليمها", 9: "ظهور طلبات الخدمات في لوحة الإدارة", 10: "سير الطلبات وسبب الرفض", 11: "ربط الأكاديمية بالفرع", 12: "النسخ الاحتياطي والترحيل", 13: "تفعيل المستخدم القديم ومنع التكرار", 14: "الشروط والأحكام", 15: "رقم العضوية في الملف الشخصي", 16: "استعادة كلمة المرور", 17: "القائمة المحظورة", 18: "أصول لوحة الإدارة", 19: "بطاقات الطوابير والتنقل", 20: "تصدير المستخدمين إلى Excel", 21: "شرائح التسويق والتطبيق", 22: "مقارنة لوحة الإدارة القديمة والحالية", 23: "مراجعة التطبيق ولوحة الإدارة والـAPI والبنية", 24: "تقرير الإغلاق والتسليم"}
 AR_SUMMARIES = {
     1: "مسارات البحث وحقول المعرّفات موجودة، لكن اختبار الأدوار وسلوك 403 لم يُنفّذ.", 2: "بيانات QR القديمة والحالية موجودة؛ التصدير لعنصر واحد أو مجموعة أو الكل لم يُثبت.", 3: "يوجد 62 سجل خبر، لكن اختبار تجاوز نقطة الفشل والتصفح المتتابع ما زال مفتوحًا.", 4: "يوجد 20,789 مستخدمًا قديمًا و71 مستخدمًا حاليًا؛ توافق الدخول والربط بينهما غير مختبر.", 5: "مسارات التسجيل المحلية واختباراتها موجودة، بينما قبول أخطاء الإنتاج والحالات السلبية لم يُحسم.", 6: "عقد الدخول الحالي يعتمد على الهاتف أو البريد أو اسم المستخدم؛ رقم العضوية ورقم البطاقة غير مثبتين.", 7: "كود المتجر موجود، لكن جداول الإنتاج للمنتجات والبائعين والطلبات فارغة؛ النطاق يحتاج قرارًا.", 8: "مسارات قراءة الإشعارات موجودة، أما مزود الإرسال والأجهزة ودورة الرموز فلم تُثبت.", 9: "جداول الطلبات الحديثة موجودة، لكن ظهور كل عائلة طلب في لوحة الإدارة لم يُختبر.", 10: "أدوات القبول والرفض موجودة، بينما سبب الرفض وانعكاس الحالة على التطبيق ما زالا مفتوحين.", 11: "يوجد 227 أكاديمية و24 فرعًا، ولم يظهر يتيم في الفحص الموجّه؛ صحة العلاقة على كل الأسطح لم تُقبل.", 12: "ملفات نسخ بتاريخ 2026-04-20 موجودة، لكن الاستعادة والمطابقة وخطة الرجوع غير مثبتة.", 13: "توجد خدمة تفعيل، لكن إثبات الهوية ومنع إنشاء عضوية مكررة غير مثبتين.", 14: "واجهة قبول الشروط موجودة، أما النص القانوني المعتمد وإصداره وربطه بالإنتاج فمفتوح.", 15: "الحقل Serial ومسار عرضه موجودان، لكن عرض رقم عضو فعلي وعزل بياناته لم يُختبرا.", 16: "مسار الاستعادة القديم معطّل، ولم يظهر مسار بديل مكتمل من التعرف حتى تسجيل الدخول الجديد.", 17: "لم يظهر تنفيذ محلي للقائمة المحظورة؛ قواعد المطابقة وسجل التغيير تحتاج اعتمادًا.", 18: "التخزين الثابت والوسائط موجودان، مع تحذير staticfiles.W004؛ فحص بصري بصلاحيات فعلية لم يُنفّذ.", 19: "مصادر الطوابير والمسارات موجودة، لكن مصفوفة الأدوار وبطاقات الانتظار لم تُقبل حيًا.", 20: "تنفيذ تصدير المستخدمين موجود في المصدر، لكن زر لوحة الإدارة والصلاحيات والمرشحات لم تُختبر.", 21: "وحدة التسويق وأصول الشرائح موجودة، بينما جداول الإنتاج فارغة وتدفق لوحة الإدارة إلى التطبيق غير مثبت.", 22: "لا توجد قائمة قبول موقعة تقارن الصفحات والأفعال والصلاحيات والاستثناءات بين اللوحتين.", 23: "تمت ملاحظة الخادم والمصدر، لكن قبول الهاتف والأدوار والإشعارات والترحيل الشامل ما زال مفتوحًا.", 24: "حزمة الأدلة والحالات موجودة، لكن توقيع الإغلاق لا يصدر قبل عبور بوابات القبول."}
+
+AR_SUMMARIES.update({
+    12: "النسخ والترحيل جزء من نطاق الإغلاق، لكن الاستعادة والمطابقة وخطة الرجوع غير مثبتة.",
+    18: "الأصول ومسارات التخزين موجودة، لكن قبولها بصلاحيات فعلية لم يُنفّذ.",
+    23: "مراجعة التطبيق ولوحة الإدارة والتكاملات مطلوبة قبل اعتماد الإغلاق.",
+})
 
 
 def claim_state(decision):
@@ -107,14 +114,14 @@ def build_ahs(payload):
         claim("AHS.FACT.CURRENT_USERS", "عدد سجلات CustomUser الحالية المرصودة.", "71", "observed", "verified", "critical", ["SOURCE.AHS.OBSERVATION"], tokens=["71"]),
         claim("AHS.FACT.NATIONAL_ID_OVERLAP", "عدد مرشحي التداخل في National_ID.", "28", "observed", "open", "critical", ["SOURCE.AHS.OBSERVATION"], tokens=["28"]),
         claim("AHS.FACT.BASELINE_HOURS", "خط الأساس الزمني المؤقت.", "120h", "source_backed", "open", "high", ["SOURCE.AHS.PAYLOAD", "SOURCE.AHS.AUDIT"], tokens=["120h"]),
-        claim("AHS.FACT.RESTORE_STATUS", "حالة قابلية الاستعادة.", "restore not proven", "source_backed", "open", "critical", ["SOURCE.AHS.OBSERVATION", "SOURCE.AHS.AUDIT"], tokens=["restore not proven"]),
-        claim("AHS.FACT.BACKUP_DATE", "تاريخ ملفات النسخ المرصودة.", "2026-04-20", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION"], tokens=["2026-04-20"]),
-        claim("AHS.FACT.RUNTIME_PATH", "مسار المشروع المرصود على الخادم.", "/opt/ahs/core", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION", "SOURCE.AHS.PRODUCTION"], tokens=["/opt/ahs/core"]),
-        claim("AHS.FACT.DATABASE", "هوية قاعدة البيانات ومحركها.", "PostgreSQL 16.13 / ahs_prod", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION"], tokens=["PostgreSQL 16.13", "ahs_prod"]),
+        claim("AHS.FACT.RESTORE_STATUS", "حالة قابلية الاستعادة.", "restore not proven", "source_backed", "open", "critical", ["SOURCE.AHS.OBSERVATION", "SOURCE.AHS.AUDIT"]),
+        claim("AHS.FACT.BACKUP_DATE", "تاريخ ملفات النسخ المرصودة.", "2026-04-20", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION"]),
+        claim("AHS.FACT.RUNTIME_PATH", "مسار المشروع المرصود على الخادم.", "/opt/ahs/core", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION", "SOURCE.AHS.PRODUCTION"]),
+        claim("AHS.FACT.DATABASE", "هوية قاعدة البيانات ومحركها.", "PostgreSQL 16.13 / ahs_prod", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION"]),
         claim("AHS.FACT.NEWS_ROWS", "عدد سجلات الأخبار المرصودة.", "62", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION"], tokens=["62"]),
         claim("AHS.FACT.ACADEMIES_BRANCHES", "عدد الأكاديميات والفروع المرصودة.", "227 academies / 24 branches", "observed", "verified", "high", ["SOURCE.AHS.OBSERVATION"], tokens=["227", "24"]),
         claim("AHS.FACT.APK_BOUNDARY", "هوية ملف APK ليست متطابقة بين النسختين المرصودتين.", "remote hash differs from local artifact", "observed", "open", "high", ["SOURCE.AHS.OBSERVATION"]),
-        claim("AHS.FACT.RUNTIME_CHECK", "فحص Django الأساسي اكتمل مع تحذير staticfiles.", "manage.py check / staticfiles.W004", "observed", "partial", "high", ["SOURCE.AHS.OBSERVATION"], tokens=["manage.py check", "staticfiles.W004"]),
+        claim("AHS.FACT.RUNTIME_CHECK", "فحص Django الأساسي اكتمل مع تحذير staticfiles.", "manage.py check / staticfiles.W004", "observed", "partial", "high", ["SOURCE.AHS.OBSERVATION"]),
     ]
     claims.extend(facts)
     claims.extend([
@@ -130,13 +137,13 @@ def build_ahs(payload):
     authored.append({"copy_id": "COPY.AHS.FACTS", "role": "paragraph", "text": "الفارق بين السجلين، مع حجم المحتوى والعلاقات، يحدد عبء التحقق قبل الإغلاق.", "claim_refs": [], "protected_spans": []})
     tech_text = "المسار المرصود /opt/ahs/core يعمل على PostgreSQL 16.13 وقاعدة ahs_prod. فحص manage.py check اكتمل مع staticfiles.W004؛ وملف النسخ يحمل تاريخ 2026-04-20."
     authored.append({"copy_id": "COPY.AHS.TECH", "role": "paragraph", "text": tech_text, "claim_refs": ["AHS.FACT.RUNTIME_PATH", "AHS.FACT.DATABASE", "AHS.FACT.RUNTIME_CHECK", "AHS.FACT.BACKUP_DATE"], "protected_spans": ["/opt/ahs/core", "PostgreSQL 16.13", "ahs_prod", "manage.py check", "staticfiles.W004", "2026-04-20"]})
-    authored.append({"copy_id": "COPY.AHS.CODE", "role": "technical_text", "text": "python manage.py check\n# observed warning: staticfiles.W004", "claim_refs": ["AHS.FACT.RUNTIME_CHECK"], "protected_spans": ["manage.py check", "staticfiles.W004"]})
+    authored.append({"copy_id": "COPY.AHS.CODE", "role": "technical_text", "text": "python manage.py check\n# observed warning: staticfiles.W004", "claim_refs": ["AHS.FACT.RUNTIME_CHECK"], "protected_spans": []})
     authored[0]["text"] = "مشروع AHS: الحقيقة التشغيلية قبل قرار الإغلاق"
     authored[1]["text"] = "الموجود واضح من القراءة المحلية. أمّا الإغلاق الإنتاجي، فما زال ينتظر اختبارات حاسمة."
     authored[2]["text"] = "القرار المتاح اليوم: إبقاء الإغلاق الإنتاجي معلّقًا. الهوية والاستعادة والأدوار والأجهزة لم يكتمل دليلها بعد."
     authored.extend([
         {"copy_id": "COPY.AHS.MIGRATION_BOUNDARY", "role": "callout", "text": "المتطلبات تذكر الترحيل من الخادم القديم إلى خادم إنتاج جديد. الحزمة المتاحة لا تذكر هوية أو مواصفات أو نقطة وصول للخادم الجديد؛ لذلك تظل وجهة الترحيل غير معروفة ولا يمكن اعتمادها الآن.", "claim_refs": ["AHS.REQUIREMENT.12", "AHS.FACT.MIGRATION_TARGET"], "protected_spans": []},
-        {"copy_id": "COPY.AHS.EFFORT", "role": "paragraph", "text": "خط الأساس الحالي 120h. Light نحو 6h/day، وMedium نحو 10h/day، وHard نحو 12h/day peak؛ هذه نماذج تقويمية مشروطة وليست موعدًا مضمونًا.", "claim_refs": ["AHS.FACT.BASELINE_HOURS", "AHS.FACT.EFFORT_MODES"], "protected_spans": ["120h", "6h/day", "10h/day", "12h/day peak"]},
+        {"copy_id": "COPY.AHS.EFFORT", "role": "paragraph", "text": "إجمالي 120h هو أساس تخطيطي لنطاق العمل المكتشف، وليس موعدًا مضمونًا. Light نحو 6h/day، وMedium نحو 10h/day، وHard نحو 12h/day peak؛ أوقات الانتظار الخارجية تُضاف ولا تنضغط.", "claim_refs": ["AHS.FACT.BASELINE_HOURS", "AHS.FACT.EFFORT_MODES"], "protected_spans": ["120h", "6h/day", "10h/day", "12h/day peak"]},
     ])
     for number, category, entry in entries:
         cid = f"AHS.REQUIREMENT.{number:02d}"
@@ -145,7 +152,7 @@ def build_ahs(payload):
         tokens = []
         c = next(item for item in claims if item["claim_id"] == cid)
         authored.append({"copy_id": f"COPY.AHS.REQUIREMENT.{number:02d}", "role": "paragraph", "text": text, "claim_refs": [cid], "protected_spans": tokens, "state_projections": [{"claim_id": cid, "dimension": dimension, "value": c[dimension]} for dimension in ("epistemic_state", "closure_state", "risk")]})
-    sections = [{"section_id": "decision", "purpose": "ما الذي يمكن أن يقرره صاحب المشروع الآن؟", "copy_refs": ["COPY.AHS.HEADLINE", "COPY.AHS.SUBHEAD", "COPY.AHS.CALLOUT"], "claim_refs": ["AHS.FACT.PROJECT_POSTURE"], "presentation_intent": "verdict", "structured_blocks": [{"block_id": "STRUCT.AHS.POSTURE", "type": "fact_list", "title": "الوضع الحالي", "items": [{"label": "الحكم", "value": "المشروع غير مغلق إنتاجيًا", "claim_refs": ["AHS.FACT.PROJECT_POSTURE"]}, {"label": "حدود الدليل", "value": "ملاحظة للقراءة فقط ومطابقة للمصادر", "claim_refs": ["AHS.FACT.OBSERVATION_BOUNDARY"]}]}]}]
+    sections = []
     sections.append({"section_id": "facts", "purpose": "أرقام تغيّر حجم قرار الإغلاق", "copy_refs": ["COPY.AHS.FACTS"], "claim_refs": [], "presentation_intent": "key_fact", "structured_blocks": [{"block_id": "STRUCT.AHS.FACTS", "type": "fact_list", "title": "المشهد التشغيلي", "items": [{"label": "السجل القديم", "value": "20,789 مستخدمًا", "claim_refs": ["AHS.FACT.LEGACY_USERS"]}, {"label": "السجل الحالي", "value": "71 مستخدمًا", "claim_refs": ["AHS.FACT.CURRENT_USERS"]}, {"label": "مرشحو التداخل", "value": "28 في National_ID", "claim_refs": ["AHS.FACT.NATIONAL_ID_OVERLAP"]}, {"label": "النسخ والاستعادة", "value": "2026-04-20؛ restore not proven", "claim_refs": ["AHS.FACT.BACKUP_DATE", "AHS.FACT.RESTORE_STATUS"]}, {"label": "خط الأساس", "value": "120h مؤقت", "claim_refs": ["AHS.FACT.BASELINE_HOURS"]}, {"label": "هوية التطبيق", "value": "remote hash differs", "claim_refs": ["AHS.FACT.APK_BOUNDARY"]}]}]})
     for key, title in (("identity", "الهوية والوصول"), ("operations", "الطلبات والطوابير"), ("content", "المحتوى والعلاقات"), ("release", "التكامل والترحيل والتسليم")):
         selected = [(n, cat, entry) for n, cat, entry in entries if CATEGORIES.get(cat, ("", ""))[1] == key]
@@ -162,17 +169,109 @@ def build_ahs(payload):
     authored[0]["text"] = "مشروع AHS: الحقيقة التشغيلية قبل قرار الإغلاق"
     authored[1]["text"] = "الموجود واضح من القراءة المحلية. أمّا الإغلاق الإنتاجي، فما زال ينتظر اختبارات حاسمة."
     authored[2]["text"] = "القرار المتاح اليوم: إبقاء الإغلاق الإنتاجي معلّقًا. الهوية والاستعادة والأدوار والأجهزة لم يكتمل دليلها بعد."
-    decision = sections[0]
-    decision["purpose"] = "القرار المتاح اليوم"
+    authored = [block for block in authored if block["copy_id"] not in {"COPY.AHS.TECH", "COPY.AHS.CODE"}]
     facts_section = next(section for section in sections if section["section_id"] == "facts")
     effort_section = {"section_id": "effort", "purpose": "المجهود يغيّر المدة ولا يغيّر معيار القبول", "copy_refs": ["COPY.AHS.EFFORT"], "claim_refs": ["AHS.FACT.EFFORT_MODES"], "presentation_intent": "comparison", "structured_blocks": [{"block_id": "STRUCT.AHS.EFFORT", "type": "fact_list", "title": "ثلاثة modes للوقت", "claim_refs": ["AHS.FACT.EFFORT_MODES"], "items": [{"label": "Light", "value": "≈ 6h/day · ≈ 20 يوم عمل", "detail": "وتيرة أخف؛ المعيار نفسه.", "claim_refs": ["AHS.FACT.EFFORT_MODES"]}, {"label": "Medium", "value": "≈ 10h/day · ≈ 12 يوم عمل", "detail": "تنسيق أضيق؛ المعيار نفسه.", "claim_refs": ["AHS.FACT.EFFORT_MODES"]}, {"label": "Hard", "value": "≈ 12h/day peak · ≈ 10 أيام عمل", "detail": "ضغط أعلى؛ أوقات الانتظار لا تختفي.", "claim_refs": ["AHS.FACT.EFFORT_MODES"]}]}]}
-    facts_section["structured_blocks"] = [{"block_id": "STRUCT.AHS.FACTS", "type": "fact_list", "title": "المشهد التشغيلي", "items": [{"label": "السجل القديم", "value": "20,789 مستخدمًا", "claim_refs": ["AHS.FACT.LEGACY_USERS"]}, {"label": "السجل الحالي", "value": "71 مستخدمًا", "claim_refs": ["AHS.FACT.CURRENT_USERS"]}, {"label": "مرشحو التداخل", "value": "28 في National_ID", "claim_refs": ["AHS.FACT.NATIONAL_ID_OVERLAP"]}, {"label": "سجلات الأخبار", "value": "62 سجلًا", "claim_refs": ["AHS.FACT.NEWS_ROWS"]}, {"label": "الأكاديميات", "value": "227 أكاديمية", "claim_refs": ["AHS.FACT.ACADEMIES_BRANCHES"]}, {"label": "الفروع", "value": "24 فرعًا", "claim_refs": ["AHS.FACT.ACADEMIES_BRANCHES"]}, {"label": "خط الأساس", "value": "120h مؤقت", "claim_refs": ["AHS.FACT.BASELINE_HOURS"]}]}, {"block_id": "STRUCT.AHS.FACTS.CONTEXT", "type": "fact_list", "title": "حدود القراءة", "items": [{"label": "النسخ والاستعادة", "value": "2026-04-20؛ restore not proven", "claim_refs": ["AHS.FACT.BACKUP_DATE", "AHS.FACT.RESTORE_STATUS"]}, {"label": "هوية التطبيق", "value": "remote hash differs", "claim_refs": ["AHS.FACT.APK_BOUNDARY"]}, {"label": "بيئة القراءة", "value": "/opt/ahs/core · PostgreSQL 16.13 · ahs_prod · manage.py check · staticfiles.W004", "claim_refs": ["AHS.FACT.RUNTIME_PATH", "AHS.FACT.DATABASE", "AHS.FACT.RUNTIME_CHECK"]}]}]
+    facts_section["structured_blocks"] = [{"block_id": "STRUCT.AHS.FACTS", "type": "fact_list", "title": "المشهد التشغيلي", "items": [{"label": "السجل القديم", "value": "20,789 مستخدمًا", "claim_refs": ["AHS.FACT.LEGACY_USERS"]}, {"label": "السجل الحالي", "value": "71 مستخدمًا", "claim_refs": ["AHS.FACT.CURRENT_USERS"]}, {"label": "مرشحو التداخل", "value": "28 في National_ID", "claim_refs": ["AHS.FACT.NATIONAL_ID_OVERLAP"]}, {"label": "سجلات الأخبار", "value": "62 سجلًا", "claim_refs": ["AHS.FACT.NEWS_ROWS"]}, {"label": "الأكاديميات", "value": "227 أكاديمية", "claim_refs": ["AHS.FACT.ACADEMIES_BRANCHES"]}, {"label": "الفروع", "value": "24 فرعًا", "claim_refs": ["AHS.FACT.ACADEMIES_BRANCHES"]}, {"label": "خط الأساس", "value": "120h مؤقت", "claim_refs": ["AHS.FACT.BASELINE_HOURS"]}]}]
     facts_section["purpose"] = "أرقام تغيّر حجم قرار الإغلاق"
     release_section = next(section for section in sections if section["section_id"] == "release")
     release_section["copy_refs"] = ["COPY.AHS.MIGRATION_BOUNDARY"]
     timeline_section = {"section_id": "timeline", "purpose": "مسار الإغلاق كما تسمح به الأدلة", "copy_refs": [], "claim_refs": ["AHS.FACT.PROJECT_POSTURE", "AHS.REQUIREMENT.12", "AHS.REQUIREMENT.24"], "presentation_intent": "timeline", "structured_blocks": [{"block_id": "STRUCT.AHS.TIMELINE", "type": "timeline", "title": "لا توجد مواعيد مفترضة؛ كل مرحلة تنتظر دليلها", "claim_refs": ["AHS.FACT.PROJECT_POSTURE"], "items": [{"label": "المشهد المرصود", "value": "مُثبت", "detail": "الخادم والكود والبيانات قابلون للقراءة والمطابقة.", "claim_refs": ["AHS.FACT.PROJECT_POSTURE", "AHS.FACT.OBSERVATION_BOUNDARY"]}, {"label": "الهوية والدخول", "value": "مفتوح", "detail": "اختبارات الأدوار والربط بين السجلين لم تُقبل بعد.", "claim_refs": ["AHS.REQUIREMENT.01", "AHS.REQUIREMENT.04"]}, {"label": "الاستعادة والترحيل", "value": "محجوب", "detail": "الاستعادة والمطابقة وخطة الرجوع غير مثبتة، ووجهة الخادم الجديد غير معروفة.", "claim_refs": ["AHS.REQUIREMENT.12", "AHS.FACT.MIGRATION_TARGET"]}, {"label": "اعتماد الإغلاق", "value": "مشروط", "detail": "توقيع الإغلاق ينتظر عبور بوابات القبول.", "claim_refs": ["AHS.REQUIREMENT.24"]}]}]}
-    sections = [decision, effort_section, facts_section, timeline_section] + [section for section in sections if section["section_id"] in {"identity", "operations", "content", "release"}]
-    return {"truth": {"sources": truths, "claims": claims}, "reader": {"audience": "صاحب قرار أو مسؤول تسليم", "document_intent": "audit_report", "surface_profile": "omega-editorial", "primary_question": "ما الذي ثبت، وما الذي يمنع الإغلاق؟", "desired_action": "تحديد بوابة الإغلاق التالية", "technical_depth": "technical annex", "annex_policy": "التفاصيل التقنية في الملحق", "summary_rail": {"enabled": True, "title": "قرار اليوم", "body": "المتابعة ممكنة. إعلان الإغلاق يحتاج دليل الهوية والاستعادة والأدوار والأجهزة."}, "language": {"primary": "ar", "direction": "rtl", "technical_english": "when_earned", "translation_preference": "Arabic prose with exact technical identifiers"}}, "strategy": {"document_intent": "audit_report", "through_line": "فصل ما ثبت عن ما يحتاج إثباتًا قبل قرار الإغلاق.", "must_appear_first": ["verdict", "key_fact"], "secondary_content": ["evidence_matrix", "effort_model", "timeline"], "annex_content": [], "detail_level": "public executive only", "uncertainty_policy": "اعرض الفتح والحجب والجزئية بصراحة", "reader_journey": ["verdict", "effort", "facts", "timeline", "evidence"]}, "authored": {"blocks": authored}, "composition": {"sections": sections}}
+    sections = [effort_section, facts_section, timeline_section] + [section for section in sections if section["section_id"] in {"identity", "operations", "content", "release"}]
+    return {"truth": {"sources": truths, "claims": claims}, "reader": {"audience": "صاحب قرار أو مسؤول تسليم", "document_intent": "audit_report", "surface_profile": "omega-editorial", "primary_question": "ما الذي ثبت، وما الذي يمنع الإغلاق؟", "desired_action": "تحديد بوابة الإغلاق التالية", "technical_depth": "technical annex", "annex_policy": "التفاصيل التقنية في الملحق", "summary_rail": {"enabled": True, "title": "الحالة المعلنة", "body": "المشهد المرصود واضح. إعلان الإغلاق يحتاج عبور بوابات القبول المشروطة."}, "language": {"primary": "ar", "direction": "rtl", "technical_english": "when_earned", "translation_preference": "Arabic prose with exact technical identifiers"}}, "strategy": {"document_intent": "audit_report", "through_line": "فصل ما ثبت عن ما يحتاج إثباتًا قبل قرار الإغلاق.", "must_appear_first": ["comparison", "key_fact"], "secondary_content": ["evidence_matrix", "timeline"], "annex_content": [], "detail_level": "public executive only", "uncertainty_policy": "اعرض الفتح والحجب والجزئية بصراحة", "reader_journey": ["effort", "facts", "timeline", "evidence"]}, "authored": {"blocks": authored}, "composition": {"sections": sections}}
+
+
+EN_TITLES = {
+    1: "User search and admin permissions", 2: "QR code export", 3: "News and pagination", 4: "Current member login", 5: "Registration stability and verification messages", 6: "Login by membership or card number", 7: "Store inside the admin panel", 8: "Notifications and delivery lifecycle", 9: "Service requests in the admin panel", 10: "Request workflow and rejection reason", 11: "Academy-to-branch linking", 12: "Backup and migration", 13: "Legacy-user activation and duplicate prevention", 14: "Terms and conditions", 15: "Membership number in the profile", 16: "Password recovery", 17: "Blocklist", 18: "Admin-panel assets", 19: "Queue cards and navigation", 20: "User export to Excel", 21: "Marketing and app slides", 22: "Old/current admin-panel comparison", 23: "App, admin panel, API, and infrastructure review", 24: "Closure and handover report",
+}
+EN_SUMMARIES = {
+    1: "Search paths and identifier fields are present; role and 403 behavior are not tested.", 2: "Legacy and current QR data are present; single, batch, and full export are not proven.", 3: "62 news rows are present; boundary and pagination behavior remain open.", 4: "The observed populations are 20,789 legacy users and 71 current users; login compatibility is untested.", 5: "Local registration paths and tests exist; production error and negative states remain unresolved.", 6: "The current login contract covers phone, email, or username; membership and card-number login are not proven.", 7: "Store code exists, but production product, seller, and order tables are empty; scope needs a decision.", 8: "Notification read paths exist; provider, device, and token lifecycle are not proven.", 9: "Recent request tables exist; each request family’s admin visibility is not tested.", 10: "Accept/reject tools exist; rejection reason and app state reflection remain open.", 11: "227 academies and 24 branches are observed with no orphan in the focused check; full-surface relationship acceptance is open.", 12: "Backup and migration are in scope, but restore, reconciliation, and rollback acceptance remain open.", 13: "An activation service exists; identity proof and duplicate-membership prevention are not proven.", 14: "Terms acceptance UI exists; approved legal copy, versioning, and production binding remain open.", 15: "The Serial field and display path exist; real-member rendering and data isolation are untested.", 16: "The legacy recovery path is broken; a complete replacement flow is not shown.", 17: "No local blocklist implementation was found; matching rules and change history need approval.", 18: "Storage and media paths exist; permissioned visual acceptance has not been run.", 19: "Queue sources and routes exist; role matrix and waiting cards are not accepted live.", 20: "User export exists in source; admin control, permissions, and filters are untested.", 21: "Marketing module and slide assets exist; production data and panel-to-app flow are not proven.", 22: "No signed acceptance list compares pages, actions, permissions, and exceptions across panels.", 23: "App, admin, API, and infrastructure review remains open for full acceptance.", 24: "The evidence and status package exists; closure sign-off waits for acceptance gates.",
+}
+
+
+def build_ahs_english(payload):
+    bundle = copy.deepcopy(build_ahs(payload))
+    reader = bundle["reader"]
+    reader.update({
+        "audience": "decision maker or delivery owner",
+        "primary_question": "What is proven, and what still blocks closure?",
+        "desired_action": "Identify the next closure gate",
+        "technical_depth": "public executive only",
+        "annex_policy": "Keep internal implementation detail out of the public surface",
+        "summary_rail": {"enabled": True, "title": "Public status", "body": "The observed scene is readable; production closure still depends on conditional acceptance gates."},
+        "language": {"primary": "en", "direction": "ltr", "technical_english": "native", "translation_preference": "Plain English with exact earned identifiers"},
+    })
+    bundle["strategy"].update({
+        "through_line": "Separate what is observed from what still needs proof before closure.",
+        "must_appear_first": ["comparison", "key_fact"],
+        "secondary_content": ["evidence_matrix", "timeline"],
+        "uncertainty_policy": "State open, blocked, partial, and verified conditions plainly.",
+        "reader_journey": ["effort", "facts", "timeline", "evidence"],
+    })
+    blocks = {block["copy_id"]: block for block in bundle["authored"]["blocks"]}
+    copy_text = {
+        "COPY.AHS.HEADLINE": "AHS: the operational truth before closure",
+        "COPY.AHS.SUBHEAD": "The local reading makes the observed state clear. Production closure still waits for decisive acceptance tests.",
+        "COPY.AHS.CALLOUT": "Keep production closure conditional until identity, recovery, roles, and device acceptance are complete.",
+        "COPY.AHS.FACTS": "The gap between the two user records, together with content and relationship volume, sets the verification load before closure.",
+        "COPY.AHS.MIGRATION_BOUNDARY": "The requirements mention migration from the old server to a new production server. The available package does not identify, describe, or provide an access point for that server, so the migration target remains unknown.",
+        "COPY.AHS.EFFORT": "The current 120h total is a planning baseline for the discovered scope, not a guaranteed date. Light is about 6h/day, Medium about 10h/day, and Hard about 12h/day peak; external waiting time is added rather than compressed.",
+    }
+    for copy_id, text in copy_text.items():
+        if copy_id in blocks:
+            blocks[copy_id]["text"] = text
+    for number in EN_TITLES:
+        block = blocks.get(f"COPY.AHS.REQUIREMENT.{number:02d}")
+        if block:
+            block["text"] = f"Requirement {number:02d} — {EN_TITLES[number]}: {EN_SUMMARIES[number]}"
+    status_labels = {"verified": "Passed", "partial": "Passed in part", "open": "Open", "blocked": "Blocked"}
+    section_purposes = {
+        "effort": "Effort changes calendar time, not the acceptance standard",
+        "facts": "Numbers that shape closure scope",
+        "timeline": "The closure path follows evidence, not assumed dates",
+        "identity": "Identity and access",
+        "operations": "Requests, queues, and exports",
+        "content": "Content and relationships",
+        "release": "Integration, migration, and handover",
+    }
+    for section in bundle["composition"]["sections"]:
+        section_id = section["section_id"]
+        section["purpose"] = section_purposes.get(section_id, section["purpose"])
+        for block in section.get("structured_blocks", []):
+            block_id = block.get("block_id")
+            if block_id == "STRUCT.AHS.EFFORT":
+                block["title"] = "Three pace options"
+                for item, label, value, detail in zip(
+                    block["items"],
+                    ("Light", "Medium", "Hard"),
+                    ("≈ 6h/day · ≈ 20 working days", "≈ 10h/day · ≈ 12 working days", "≈ 12h/day peak · ≈ 10 working days"),
+                    ("Lighter pace; the acceptance standard stays fixed.", "Tighter coordination; the acceptance standard stays fixed.", "Higher pressure; waiting time does not disappear."),
+                ):
+                    item.update({"label": label, "value": value, "detail": detail})
+            elif block_id == "STRUCT.AHS.FACTS":
+                block["title"] = "Operational scene"
+                for item, label, value in zip(
+                    block["items"],
+                    ("Legacy record", "Current record", "Overlap candidates", "News records", "Academies", "Branches", "Planning baseline"),
+                    ("20,789 legacy users", "71 current users", "28 in National_ID", "62 records", "227 academies", "24 branches", "120h planning baseline"),
+                ):
+                    item.update({"label": label, "value": value})
+            elif block_id == "STRUCT.AHS.TIMELINE":
+                block["title"] = "No assumed dates; each stage waits for its evidence"
+                items = block["items"]
+                items[0].update({"label": "Observed scene", "value": "Passed", "detail": "Server, code, and data are readable and reconciled."})
+                items[1].update({"label": "Identity and access", "value": "Open", "detail": "Role tests and reconciliation between the two records are not accepted yet."})
+                items[2].update({"label": "Recovery and migration", "value": "Blocked", "detail": "Recovery, reconciliation, and rollback are not proven; the new server target is unknown."})
+                items[3].update({"label": "Closure sign-off", "value": "Conditional", "detail": "Sign-off waits for the acceptance gates to clear."})
+            elif block.get("type") == "table":
+                block["title"] = "Status as described by the evidence"
+                block["columns"] = ["Requirement", "Current reading", "Executive status"]
+                for row in block.get("rows", []):
+                    number = int(row["cells"][0].split("·", 1)[0].strip())
+                    claim_id = row.get("claim_refs", [""])[0]
+                    state = next((claim["closure_state"] for claim in bundle["truth"]["claims"] if claim["claim_id"] == claim_id), "open")
+                    row["cells"] = [f"{number:02d} · {EN_TITLES[number]}", EN_SUMMARIES[number], status_labels.get(state, "Open")]
+    return bundle
 
 
 def build_proposal():
@@ -261,10 +360,11 @@ def main():
     source_copy.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(args.ahs_payload, source_copy)
     write_bundle("ahs", build_ahs(payload))
+    write_bundle("ahs-en", build_ahs_english(payload))
     write_bundle("proposal", build_proposal())
     write_bundle("technical", build_technical())
     (ROOT / "evals" / "human-authoring" / "wave6-execution.md").write_text("""# Wave 6 authoring execution record\n\nThe three final bundles were authored as independent deliverables after reading the pinned `humanize-writing`, `ux-writing`, and conservative `humanizer` instructions in `third_party/writing/`.\n\n- Human-first routing shaped the through-line, audience stance, sentence rhythm, and document-specific prose.\n- UX-writing routing was applied to labels, statuses, facts, table headings, callouts, and next-step language.\n- The conservative humanizer pass removed staged openers, decorative repetition, and context-free token stuffing while preserving source facts and identifiers.\n- The transformation was performed on the final AHS, proposal, and technical copy blocks; the earlier instruction-set inspection reports are not treated as output benchmarks.\n- Truth Lock ran after authoring and before rendering.\n""", encoding="utf-8")
-    print(json.dumps({"status": "PASS", "bundles": ["ahs", "proposal", "technical"], "source": str(source_copy)}, ensure_ascii=False))
+    print(json.dumps({"status": "PASS", "bundles": ["ahs", "ahs-en", "proposal", "technical"], "source": str(source_copy)}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

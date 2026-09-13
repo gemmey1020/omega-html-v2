@@ -2,19 +2,17 @@
   "document_intent": "audit_report",
   "through_line": "فصل ما ثبت عن ما يحتاج إثباتًا قبل قرار الإغلاق.",
   "must_appear_first": [
-    "verdict",
+    "comparison",
     "key_fact"
   ],
   "secondary_content": [
     "evidence_matrix",
-    "effort_model",
     "timeline"
   ],
   "annex_content": [],
   "detail_level": "public executive only",
   "uncertainty_policy": "اعرض الفتح والحجب والجزئية بصراحة",
   "reader_journey": [
-    "verdict",
     "effort",
     "facts",
     "timeline",

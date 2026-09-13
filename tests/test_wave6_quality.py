@@ -129,7 +129,7 @@ class Wave6QualityTest(unittest.TestCase):
                 self.assertIn(f'<meta name="omega:theme_profile" content="{profile}">', html)
                 self.assertIn('data-document-kind="audit"', html)
                 self.assertIn('class="document-grid document-grid--audit"', html)
-                self.assertIn('data-claim-id="AHS.FACT.RESTORE_STATUS"', html)
+                self.assertIn('data-claim-id="AHS.FACT.LEGACY_USERS"', html)
                 self.assertNotEqual(html, base)
 
     def test_executive_hud_shell_adds_traceable_signal_layer(self):
@@ -263,6 +263,44 @@ class Wave6QualityTest(unittest.TestCase):
                 self.assertIn("@media print", html)
                 self.assertIn(".omega-preloader", html)
 
+    def test_ahs_public_surface_removes_decision_and_internal_context(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for token in (
+            'data-section-id="decision"',
+            "القرار المتاح اليوم",
+            'data-structured-id="STRUCT.AHS.FACTS.CONTEXT"',
+            "النسخ والاستعادة",
+            "هوية التطبيق",
+            "بيئة القراءة",
+            "restore not proven",
+            "remote hash differs",
+            "/opt/ahs/core",
+            "PostgreSQL 16.13",
+            "staticfiles.W004",
+        ):
+            with self.subTest(token=token):
+                self.assertNotIn(token, html)
+
+    def test_ahs_marks_observed_scene_as_passed(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('data-state="passed"', html)
+        self.assertIn("✓ مُثبت", html)
+
+    def test_preloader_has_a_longer_minimum_visible_window(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn("const minimumVisibleMs = 1200;", html)
+
+    def test_english_ahs_bundle_is_a_real_ltr_public_surface(self):
+        bundle_path = ROOT / "evals" / "bundles" / "ahs-en"
+        self.assertTrue(bundle_path.exists(), "English AHS bundle must be generated")
+        html = render(load_bundle(bundle_path), "omega-gold")
+        self.assertIn('<html lang="en" dir="ltr"', html)
+        self.assertIn('data-section-id="effort"', html)
+        self.assertIn("Observed scene", html)
+        self.assertIn("✓ Passed", html)
+        self.assertNotIn("القرار المتاح اليوم", html)
+        self.assertIsNone(re.search(r"[\u0600-\u06ff]", html))
+
     def test_ahs_public_artifact_states_unknown_migration_target(self):
         bundle = self.bundle("ahs")
         html = render(bundle, "omega-gold")
@@ -279,13 +317,13 @@ class Wave6QualityTest(unittest.TestCase):
                 self.assertIn(token, html)
         self.assertIn('data-section-id="effort"', html)
         self.assertIn('data-presentation-intent="comparison"', html)
-        self.assertIn("ليست موعدًا مضمونًا", html)
+        self.assertIn("ليس موعدًا مضمونًا", html)
 
     def test_ahs_promotes_effort_snapshot_near_the_top(self):
         html = render(self.bundle("ahs"), "omega-gold")
         section_ids = re.findall(r'data-section-id="([^"]+)"', html)
-        self.assertEqual(section_ids[0], "decision")
-        self.assertLessEqual(section_ids.index("effort"), 1)
+        self.assertEqual(section_ids[0], "effort")
+        self.assertEqual(section_ids.index("effort"), 0)
         self.assertIn('data-visual-treatment="mode-snapshot"', html)
         self.assertIn('class="effort-snapshot"', html)
 
@@ -307,11 +345,13 @@ class Wave6QualityTest(unittest.TestCase):
         for status in ("مُثبت", "مفتوح", "محجوب", "مشروط"):
             with self.subTest(status=status):
                 self.assertIn(status, html)
+        self.assertIn('data-state="passed"', html)
+        self.assertIn("✓ مُثبت", html)
         self.assertNotIn("2026-09-", html)
 
     def test_ahs_uses_distinct_visual_treatments_and_a_refined_footer(self):
         html = render(self.bundle("ahs"), "omega-gold")
-        for treatment in ("verdict", "mode-snapshot", "metrics", "timeline", "matrix"):
+        for treatment in ("mode-snapshot", "metrics", "timeline", "matrix"):
             with self.subTest(treatment=treatment):
                 self.assertIn(f'data-visual-treatment="{treatment}"', html)
         self.assertIn('class="hud-footer"', html)

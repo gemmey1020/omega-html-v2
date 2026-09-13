@@ -143,6 +143,8 @@
   .timeline-marker span {color:var(--accent);font:800 .68rem/1 ui-monospace,SFMono-Regular,Menlo,monospace}
   .timeline-step--blocked .timeline-marker {border-color:#d68c5e;box-shadow:0 0 0 5px rgba(214,140,94,.1)}
   .timeline-step--blocked .status-indicator {color:#d68c5e}
+  .timeline-step--passed .timeline-marker {border-color:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 10%,transparent),0 0 22px color-mix(in srgb,var(--accent) 20%,transparent)}
+  .timeline-step--passed .status-indicator {color:var(--accent)}
   .timeline-topline {display:flex;justify-content:space-between;gap:16px;align-items:baseline}
   .timeline-topline strong {font-size:1rem;line-height:1.4}
   .status-indicator {color:var(--accent);font-size:.72rem;font-weight:800;white-space:nowrap}
@@ -210,7 +212,7 @@
 (() => {
   const preloader = document.getElementById("omega-preloader");
   const startedAt = performance.now();
-  const minimumVisibleMs = 700;
+  const minimumVisibleMs = 1200;
   const dismiss = () => {
     document.documentElement.classList.add("omega-ready");
     if (!preloader) return;

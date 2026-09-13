@@ -136,7 +136,7 @@ def preloader_markup():
 (() => {
   const preloader = document.getElementById("omega-preloader");
   const startedAt = performance.now();
-  const minimumVisibleMs = 700;
+  const minimumVisibleMs = 1200;
   const dismiss = () => {
     document.documentElement.classList.add("omega-ready");
     if (!preloader) return;
@@ -269,11 +269,11 @@ def render_structured(block, lang, section_id=None, baseline=""):
                     f'<article class="mode-card mode-card--{esc(item["label"].lower())}" {linked}>'
                     f'<span class="mode-index">{index:02d}</span><span class="mode-name">{esc(item["label"])}</span>'
                     f'<strong class="mode-value">{esc(cadence)}</strong><span class="mode-duration">{esc(duration)}</span>'
-                    f'<p>{esc(item.get("detail", ""))}</p><span class="mode-state">مشروط</span></article>'
+                    f'<p>{esc(item.get("detail", ""))}</p><span class="mode-state">{esc("مشروط" if lang == "ar" else "Conditional")}</span></article>'
                 )
             baseline_html = (
-                f'<div class="effort-baseline"><span>خط الأساس المؤقت</span><strong>{esc(baseline or "120h")}</strong>'
-                f'<small>المعيار ثابت مهما تغيّرت الوتيرة</small></div>'
+                f'<div class="effort-baseline"><span>{esc("خط الأساس التخطيطي" if lang == "ar" else "Planning baseline")}</span><strong>{esc(baseline or "120h")}</strong>'
+                f'<small>{esc("المعيار ثابت مهما تغيّرت الوتيرة" if lang == "ar" else "The acceptance standard stays fixed as the pace changes")}</small></div>'
             )
             return f'<div class="structured structured--effort" {attrs}><div class="effort-snapshot">{title}{baseline_html}<div class="mode-grid">{"".join(cards)}</div></div></div>'
         if section_id == "decision":
@@ -292,15 +292,17 @@ def render_structured(block, lang, section_id=None, baseline=""):
             rows.append(f'<div class="fact" {linked}><dt>{esc(localize(item["label"], lang))}</dt><dd>{esc(item["value"])}{detail}</dd></div>')
         return f'<dl class="structured structured--facts" {attrs}>{title}{"".join(rows)}</dl>'
     if kind == "timeline":
-        status_classes = {"مُثبت": "verified", "مفتوح": "open", "محجوب": "blocked", "مشروط": "conditional"}
+        status_classes = {"مُثبت": "passed", "مفتوح": "open", "محجوب": "blocked", "مشروط": "conditional", "Passed": "passed", "Open": "open", "Blocked": "blocked", "Conditional": "conditional"}
         steps = []
         for index, item in enumerate(block.get("items", []), start=1):
             state = item.get("value", "مفتوح")
+            data_state = {"مُثبت": "passed", "مفتوح": "open", "محجوب": "blocked", "مشروط": "conditional", "Passed": "passed", "Open": "open", "Blocked": "blocked", "Conditional": "conditional"}.get(state, "open")
+            status_label = "✓ مُثبت" if lang == "ar" and state == "مُثبت" else ("✓ Passed" if lang == "en" and state == "Passed" else localize(state, lang))
             linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
             steps.append(
-                f'<li class="timeline-step timeline-step--{status_classes.get(state, "open")}" data-state="{esc(state)}" {linked}>'
+                f'<li class="timeline-step timeline-step--{status_classes.get(state, "open")}" data-state="{data_state}" {linked}>'
                 f'<span class="timeline-marker"><span>{index:02d}</span></span><div class="timeline-content">'
-                f'<div class="timeline-topline"><strong>{esc(localize(item["label"], lang))}</strong><span class="status-indicator">{esc(localize(state, lang))}</span></div>'
+                f'<div class="timeline-topline"><strong>{esc(localize(item["label"], lang))}</strong><span class="status-indicator">{esc(status_label)}</span></div>'
                 f'<p>{esc(item.get("detail", ""))}</p></div></li>'
             )
         return f'<div class="structured structured--timeline" {attrs}><div class="timeline-track">{title}<ol>{"".join(steps)}</ol></div></div>'
@@ -490,6 +492,8 @@ def hud_stylesheet_overrides():
   .timeline-marker span {color:var(--accent);font:800 .68rem/1 ui-monospace,SFMono-Regular,Menlo,monospace}
   .timeline-step--blocked .timeline-marker {border-color:#d68c5e;box-shadow:0 0 0 5px rgba(214,140,94,.1)}
   .timeline-step--blocked .status-indicator {color:#d68c5e}
+  .timeline-step--passed .timeline-marker {border-color:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 10%,transparent),0 0 22px color-mix(in srgb,var(--accent) 20%,transparent)}
+  .timeline-step--passed .status-indicator {color:var(--accent)}
   .timeline-topline {display:flex;justify-content:space-between;gap:16px;align-items:baseline}
   .timeline-topline strong {font-size:1rem;line-height:1.4}
   .status-indicator {color:var(--accent);font-size:.72rem;font-weight:800;white-space:nowrap}
@@ -596,7 +600,7 @@ def render(bundle, profile=None):
         treatment = visual_treatments.get(section["section_id"], section_intent)
         attrs = f'data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}" data-visual-treatment="{esc(treatment)}"'
         sections.append(f'<section class="section section--{esc(section_intent)}" {attrs}><div class="section-heading"><div class="section-kicker">{esc(section_label)}</div><h2>{esc(section["purpose"])}</h2></div><div class="section-body">{copy_html}{structured_html}</div></section>')
-    footer = "AHS · قراءة تنفيذية مستقلة" if lang == "ar" else "Omega · independent decision brief"
+    footer = "AHS · قراءة تنفيذية مستقلة" if lang == "ar" else ("AHS · independent operational review" if intent == "audit_report" else "Omega · independent decision brief")
     css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
     css += hud_stylesheet_overrides()
     css += '\n@media screen{.hero-grid{margin-top:clamp(28px,4vw,52px)}h1{font-size:clamp(2.45rem,5.2vw,4.6rem);max-width:21ch}.document-grid--proposal .section-heading,.document-grid--proposal .section-body{padding-block:clamp(28px,4vw,48px)}.document-grid--proposal .section-heading h2{font-size:clamp(1.35rem,2vw,2rem)} } @media screen and (max-width:820px){h1{font-size:clamp(2.1rem,10vw,3.35rem);max-width:19ch}.hero{padding-bottom:32px} } @media print{.document-grid{display:block}.section{display:grid;grid-template-columns:28% 1fr;gap:10%;break-inside:avoid}.section-heading,.section-body{grid-column:auto;grid-row:auto} }'

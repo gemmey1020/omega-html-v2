@@ -37,37 +37,6 @@
       "protected_spans": []
     },
     {
-      "copy_id": "COPY.AHS.TECH",
-      "role": "paragraph",
-      "text": "المسار المرصود /opt/ahs/core يعمل على PostgreSQL 16.13 وقاعدة ahs_prod. فحص manage.py check اكتمل مع staticfiles.W004؛ وملف النسخ يحمل تاريخ 2026-04-20.",
-      "claim_refs": [
-        "AHS.FACT.RUNTIME_PATH",
-        "AHS.FACT.DATABASE",
-        "AHS.FACT.RUNTIME_CHECK",
-        "AHS.FACT.BACKUP_DATE"
-      ],
-      "protected_spans": [
-        "/opt/ahs/core",
-        "PostgreSQL 16.13",
-        "ahs_prod",
-        "manage.py check",
-        "staticfiles.W004",
-        "2026-04-20"
-      ]
-    },
-    {
-      "copy_id": "COPY.AHS.CODE",
-      "role": "technical_text",
-      "text": "python manage.py check\n# observed warning: staticfiles.W004",
-      "claim_refs": [
-        "AHS.FACT.RUNTIME_CHECK"
-      ],
-      "protected_spans": [
-        "manage.py check",
-        "staticfiles.W004"
-      ]
-    },
-    {
       "copy_id": "COPY.AHS.MIGRATION_BOUNDARY",
       "role": "callout",
       "text": "المتطلبات تذكر الترحيل من الخادم القديم إلى خادم إنتاج جديد. الحزمة المتاحة لا تذكر هوية أو مواصفات أو نقطة وصول للخادم الجديد؛ لذلك تظل وجهة الترحيل غير معروفة ولا يمكن اعتمادها الآن.",
@@ -80,7 +49,7 @@
     {
       "copy_id": "COPY.AHS.EFFORT",
       "role": "paragraph",
-      "text": "خط الأساس الحالي 120h. Light نحو 6h/day، وMedium نحو 10h/day، وHard نحو 12h/day peak؛ هذه نماذج تقويمية مشروطة وليست موعدًا مضمونًا.",
+      "text": "إجمالي 120h هو أساس تخطيطي لنطاق العمل المكتشف، وليس موعدًا مضمونًا. Light نحو 6h/day، وMedium نحو 10h/day، وHard نحو 12h/day peak؛ أوقات الانتظار الخارجية تُضاف ولا تنضغط.",
       "claim_refs": [
         "AHS.FACT.BASELINE_HOURS",
         "AHS.FACT.EFFORT_MODES"
@@ -381,7 +350,7 @@
     {
       "copy_id": "COPY.AHS.REQUIREMENT.12",
       "role": "paragraph",
-      "text": "المطلب 12 — النسخ الاحتياطي والترحيل: ملفات نسخ بتاريخ 2026-04-20 موجودة، لكن الاستعادة والمطابقة وخطة الرجوع غير مثبتة.",
+      "text": "المطلب 12 — النسخ الاحتياطي والترحيل: النسخ والترحيل جزء من نطاق الإغلاق، لكن الاستعادة والمطابقة وخطة الرجوع غير مثبتة.",
       "claim_refs": [
         "AHS.REQUIREMENT.12"
       ],
@@ -537,7 +506,7 @@
     {
       "copy_id": "COPY.AHS.REQUIREMENT.18",
       "role": "paragraph",
-      "text": "المطلب 18 — أصول لوحة الإدارة: التخزين الثابت والوسائط موجودان، مع تحذير staticfiles.W004؛ فحص بصري بصلاحيات فعلية لم يُنفّذ.",
+      "text": "المطلب 18 — أصول لوحة الإدارة: الأصول ومسارات التخزين موجودة، لكن قبولها بصلاحيات فعلية لم يُنفّذ.",
       "claim_refs": [
         "AHS.REQUIREMENT.18"
       ],
@@ -667,7 +636,7 @@
     {
       "copy_id": "COPY.AHS.REQUIREMENT.23",
       "role": "paragraph",
-      "text": "المطلب 23 — مراجعة التطبيق ولوحة الإدارة والـAPI والبنية: تمت ملاحظة الخادم والمصدر، لكن قبول الهاتف والأدوار والإشعارات والترحيل الشامل ما زال مفتوحًا.",
+      "text": "المطلب 23 — مراجعة التطبيق ولوحة الإدارة والـAPI والبنية: مراجعة التطبيق ولوحة الإدارة والتكاملات مطلوبة قبل اعتماد الإغلاق.",
       "claim_refs": [
         "AHS.REQUIREMENT.23"
       ],
