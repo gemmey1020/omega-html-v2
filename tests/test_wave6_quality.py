@@ -263,6 +263,47 @@ class Wave6QualityTest(unittest.TestCase):
                 self.assertIn("@media print", html)
                 self.assertIn(".omega-preloader", html)
 
+    def test_ahs_is_explicitly_a_screen_first_landing_surface(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('data-page-mode="landing"', html)
+        self.assertIn('<meta name="omega:page_size" content="viewport">', html)
+        self.assertIn('<meta name="omega:page_intent" content="screen_first">', html)
+        self.assertNotIn('content="print_and_pdf"', html)
+
+    def test_ahs_hero_has_public_narrative_cta_and_resolvable_anchor(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertIn('class="hero-cta" href="#timeline"', html)
+        self.assertIn("استعرض مسار الإغلاق", html)
+        self.assertIn('id="timeline"', html)
+
+    def test_ahs_public_hero_does_not_expose_internal_counts(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertNotIn("40 مطالب", html)
+        self.assertNotIn("8 مصادر", html)
+        self.assertNotIn("Decision signals", html)
+        self.assertNotIn("إشارات القرار", html)
+
+    def test_ahs_landing_composition_exposes_editorial_section_variety(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for token in (
+            'class="section section--comparison"',
+            'class="section section--key_fact"',
+            'class="section section--timeline"',
+            'class="section section--evidence_matrix"',
+            "scroll-margin-top:",
+            ".landing-hero",
+            ".hero-cta",
+        ):
+            with self.subTest(token=token):
+                self.assertIn(token, html)
+
+    def test_english_landing_surface_localizes_cta(self):
+        html = render(self.bundle("ahs-en"), "omega-gold")
+        self.assertIn('data-page-mode="landing"', html)
+        self.assertIn('class="hero-cta" href="#timeline"', html)
+        self.assertIn("Review closure path", html)
+        self.assertNotIn("Sources", html.split("<body>", 1)[1].split("</header>", 1)[0])
+
     def test_ahs_public_surface_removes_decision_and_internal_context(self):
         html = render(self.bundle("ahs"), "omega-gold")
         for token in (

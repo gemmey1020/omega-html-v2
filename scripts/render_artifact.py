@@ -573,13 +573,23 @@ def render(bundle, profile=None):
     hud_labels = HUD_LABELS["ar" if lang == "ar" else "en"]
     hud_signals = hud_signal_tiles(bundle, lang)
     hud_profile = HUD_PROFILE_LABELS.get(profile, profile.upper())
-    hud_topbar = (
-        f'<div class="hud-topbar"><div class="hud-brand"><span>Ω OMEGA</span>'
-        f'<small>{esc(hud_profile)} · {esc(hud_labels["surface"])}</small></div>'
-        f'<div class="hud-topbar-meta"><span class="hud-status">{esc(hud_labels["signals"])}</span>'
-        f'<span>{len(truth.get("sources", []))} {esc(hud_labels["sources"])}</span>'
-        f'<span>{len(truth.get("claims", []))} {esc(hud_labels["claims"])}</span></div></div>'
-    )
+    landing_surface = kind == "audit"
+    public_status = "حالة موثقة" if lang == "ar" else "Evidence-led"
+    public_signal_label = "لمحة من الدليل" if lang == "ar" else "Evidence at a glance"
+    if landing_surface:
+        hud_topbar = (
+            f'<div class="hud-topbar"><div class="hud-brand"><span>Ω OMEGA</span>'
+            f'<small>{esc(hud_profile)} · {esc(hud_labels["surface"])}</small></div>'
+            f'<div class="hud-topbar-meta"><span class="hud-status">{esc(public_status)}</span></div></div>'
+        )
+    else:
+        hud_topbar = (
+            f'<div class="hud-topbar"><div class="hud-brand"><span>Ω OMEGA</span>'
+            f'<small>{esc(hud_profile)} · {esc(hud_labels["surface"])}</small></div>'
+            f'<div class="hud-topbar-meta"><span class="hud-status">{esc(hud_labels["signals"])}</span>'
+            f'<span>{len(truth.get("sources", []))} {esc(hud_labels["sources"])}</span>'
+            f'<span>{len(truth.get("claims", []))} {esc(hud_labels["claims"])}</span></div></div>'
+        )
     visual_treatments = {
         "decision": "verdict",
         "effort": "mode-snapshot",
@@ -598,15 +608,53 @@ def render(bundle, profile=None):
         copy_html = "".join(render_copy(blocks[ref], section_intent) for ref in section.get("copy_refs", []) if ref in blocks and blocks[ref].get("role") not in {"headline", "subheadline"})
         structured_html = "".join(render_structured(block, lang, section["section_id"], baseline) for block in section.get("structured_blocks", []))
         treatment = visual_treatments.get(section["section_id"], section_intent)
-        attrs = f'data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}" data-visual-treatment="{esc(treatment)}"'
+        attrs = f'id="{esc(section["section_id"])}" data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}" data-visual-treatment="{esc(treatment)}"'
         sections.append(f'<section class="section section--{esc(section_intent)}" {attrs}><div class="section-heading"><div class="section-kicker">{esc(section_label)}</div><h2>{esc(section["purpose"])}</h2></div><div class="section-body">{copy_html}{structured_html}</div></section>')
     footer = "AHS · قراءة تنفيذية مستقلة" if lang == "ar" else ("AHS · independent operational review" if intent == "audit_report" else "Omega · independent decision brief")
     css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
     css += hud_stylesheet_overrides()
+    css += '''
+@media screen {
+  html {scroll-behavior:smooth}
+  .hud-page .section {scroll-margin-top:104px}
+  .landing-hero {padding-top:clamp(18px,3vw,34px)}
+  .landing-hero .hero-surface {min-height:clamp(520px,63vh,720px);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(30px,5vw,68px);border-radius:36px 36px 14px 36px;background:radial-gradient(circle at 88% 12%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 31%),linear-gradient(145deg,color-mix(in srgb,var(--surface) 95%,var(--bg)),var(--surface));box-shadow:0 30px 90px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.045)}
+  .landing-hero .hero-grid {align-items:center;gap:clamp(34px,8vw,126px)}
+  .landing-hero .hero-copy {max-width:920px}
+  .landing-hero h1 {font-size:clamp(3rem,7.3vw,6.6rem);max-width:11ch;letter-spacing:-.06em}
+  .landing-hero .lede {max-width:58ch;font-size:clamp(1rem,1.3vw,1.18rem);line-height:1.9}
+  .hero-cta {display:inline-flex;align-items:center;gap:12px;margin-top:clamp(26px,4vw,42px);padding:12px 18px 12px 20px;border:1px solid color-mix(in srgb,var(--accent) 68%,var(--line));border-radius:999px;color:var(--ink);background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 19%,var(--surface)),color-mix(in srgb,var(--surface) 88%,transparent));box-shadow:0 12px 28px rgba(0,0,0,.2),0 0 30px color-mix(in srgb,var(--accent) 10%,transparent);font-size:.82rem;font-weight:900;text-decoration:none;transition:transform .25s ease,background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+  .hero-cta span {display:grid;place-items:center;width:25px;height:25px;border:1px solid var(--accent);border-radius:50%;color:var(--accent);font-size:1rem;line-height:1;transition:transform .25s ease}
+  .hero-cta:hover,.hero-cta:focus-visible {transform:translateY(-4px);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 19%,var(--surface));box-shadow:0 18px 34px rgba(0,0,0,.28),0 0 38px color-mix(in srgb,var(--accent) 15%,transparent)}
+  .hero-cta:hover span,.hero-cta:focus-visible span {transform:translate(3px,-2px)}
+  .hero-cta:focus-visible {outline:2px solid var(--accent);outline-offset:4px}
+  .landing-hero .hud-metrics {margin-top:clamp(34px,5vw,66px)}
+  .hud-page .section--key_fact {border-radius:14px 34px 14px 34px;background:linear-gradient(125deg,color-mix(in srgb,var(--surface) 95%,var(--accent) 5%),var(--surface))}
+  .hud-page .section--timeline {border-radius:34px 14px 34px 14px;padding-block:clamp(28px,4vw,44px);background:radial-gradient(circle at 4% 50%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 30%),color-mix(in srgb,var(--surface) 92%,var(--bg))}
+  .hud-page .section--evidence_matrix:nth-of-type(4) {border-radius:14px 34px 14px 14px}
+  .hud-page .section--evidence_matrix:nth-of-type(5) {border-radius:34px 14px 14px 34px;background:color-mix(in srgb,var(--surface) 94%,var(--accent) 6%)}
+  .hud-page .section--evidence_matrix:nth-of-type(6) {border-radius:14px 14px 34px 14px}
+  .hud-page .section--evidence_matrix:nth-of-type(7) {border-radius:14px 34px 34px 14px}
+  .hud-page .section--timeline .timeline-step {transition:transform .25s ease}
+  .hud-page .section--timeline .timeline-step:hover {transform:translateX(-4px)}
+}
+@media screen and (max-width:820px) {
+  .landing-hero .hero-surface {min-height:0;padding:26px 20px;border-radius:26px 26px 12px 26px}
+  .landing-hero h1 {font-size:clamp(2.7rem,12vw,4.5rem);max-width:12ch}
+  .landing-hero .lede {line-height:1.8}
+  .hero-cta {margin-top:26px}
+  .hud-page .section--timeline,.hud-page .section--evidence_matrix {border-radius:var(--hud-radius-lg)}
+}
+'''
     css += '\n@media screen{.hero-grid{margin-top:clamp(28px,4vw,52px)}h1{font-size:clamp(2.45rem,5.2vw,4.6rem);max-width:21ch}.document-grid--proposal .section-heading,.document-grid--proposal .section-body{padding-block:clamp(28px,4vw,48px)}.document-grid--proposal .section-heading h2{font-size:clamp(1.35rem,2vw,2rem)} } @media screen and (max-width:820px){h1{font-size:clamp(2.1rem,10vw,3.35rem);max-width:19ch}.hero{padding-bottom:32px} } @media print{.document-grid{display:block}.section{display:grid;grid-template-columns:28% 1fr;gap:10%;break-inside:avoid}.section-heading,.section-body{grid-column:auto;grid-row:auto} }'
     favicon = favicon_data_uri(theme)
     preloader = preloader_markup()
-    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body>{preloader}<div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>{esc(footer)}</span><span class="footer-note">{esc("قرار مبني على ما أمكن إثباته" if lang == "ar" else "Decision built on what can be proven")}</span></footer></div></body></html>'''
+    hero_cta = ""
+    if landing_surface:
+        cta_label = "استعرض مسار الإغلاق" if lang == "ar" else "Review closure path"
+        hero_cta = f'<a class="hero-cta" href="#timeline">{esc(cta_label)}<span aria-hidden="true">↗</span></a>'
+    page_mode = "landing" if landing_surface else "document"
+    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}" data-page-mode="{page_mode}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="screen"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="viewport"><meta name="omega:page_intent" content="screen_first"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body>{preloader}<div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}{' landing-hero' if landing_surface else ''}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p>{hero_cta}</div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(public_signal_label if landing_surface else hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>{esc(footer)}</span><span class="footer-note">{esc("قرار مبني على ما أمكن إثباته" if lang == "ar" else "Decision built on what can be proven")}</span></footer></div></body></html>'''
 
 
 def main():
