@@ -77,6 +77,21 @@ AR_TECH_LABELS = {
     "Runtime brief": "ملخص التشغيل", "Check result": "نتيجة الفحص",
 }
 
+HUD_LABELS = {
+    "ar": {"sources": "مصادر", "claims": "مطالب", "signals": "إشارات القرار", "surface": "سطح تنفيذي"},
+    "en": {"sources": "Sources", "claims": "Claims", "signals": "Decision signals", "surface": "Executive surface"},
+}
+
+HUD_PROFILE_LABELS = {
+    "omega-editorial": "EDITORIAL",
+    "omega-minimal": "MINIMAL",
+    "omega-hud": "HUD TEAL",
+    "aion": "AION CYAN",
+    "omega-gold": "HUD GOLD",
+    "omega-teal": "HUD TEAL",
+    "omega-cyan": "HUD CYAN",
+}
+
 
 def load_bundle(directory):
     directory = Path(directory)
@@ -112,6 +127,28 @@ def localize(value, lang):
     if lang == "ar":
         return AR_TECH_LABELS.get(value, value)
     return value
+
+
+def hud_signal_tiles(bundle, lang):
+    """Promote existing fact-list values into a traceable executive signal row."""
+    fact_blocks = []
+    for section in bundle["composition"].get("sections", []):
+        for block in section.get("structured_blocks", []):
+            if block.get("type") == "fact_list":
+                fact_blocks.append(block)
+    if fact_blocks:
+        block = max(fact_blocks, key=lambda candidate: len(candidate.get("items", [])))
+        tiles = []
+        for item in block.get("items", [])[:4]:
+            linked = refs_attrs(item.get("claim_refs"), item.get("copy_refs"))
+            detail = f'<small>{esc(item["detail"])}</small>' if item.get("detail") else ""
+            tiles.append(
+                f'<div class="hud-signal" {linked}>'
+                f'<span class="hud-signal-label">{esc(localize(item["label"], lang))}</span>'
+                f'<strong>{esc(item["value"])}</strong>{detail}</div>'
+            )
+        return "".join(tiles)
+    return ""
 
 
 def render_copy(block, intent="narrative"):
@@ -199,6 +236,109 @@ def stylesheet(theme):
 *{{box-sizing:border-box}}html{{background:var(--bg)}}body{{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7}}.page{{max-width:1360px;margin:auto;padding:0 clamp(22px,5vw,86px)}}.hero{{padding:22px 0 clamp(42px,7vw,82px);border-bottom:1px solid var(--line)}}.hero-meta{{display:flex;justify-content:space-between;align-items:center;gap:20px;color:var(--muted);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}}.brandmark{{color:var(--accent);font-weight:800}}.document-label{{font-weight:700}}.hero-grid{{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(220px,.45fr);gap:clamp(30px,7vw,110px);align-items:end;margin-top:clamp(34px,6vw,70px)}}.hero-copy{{min-width:0}}.eyebrow,.section-kicker{{color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}}h1,h2,h3{{font-family:var(--display);line-height:1.14}}h1{{font-size:clamp(2.7rem,6.3vw,5.35rem);letter-spacing:-.045em;max-width:15ch;margin:10px 0 20px}}.lede{{max-width:64ch;color:var(--muted);font-size:1.06rem;margin:0}}.summary-note{{border-top:2px solid var(--accent);padding-top:13px;max-width:280px;color:var(--muted);font-size:.88rem}}.summary-note h2{{font-size:1.08rem;color:var(--ink);margin:0 0 7px}}.summary-note p{{margin:0}}.document-grid{{display:grid;grid-template-columns:minmax(210px,.36fr) minmax(0,1fr);gap:clamp(30px,6vw,96px);padding:0}}.section{{display:contents}}.section-heading,.section-body{{border-bottom:1px solid var(--line);padding:clamp(38px,6vw,72px) 0}}.section-heading{{grid-column:1;grid-row:auto;align-self:start}}.section-body{{grid-column:2;min-width:0}}.section-heading h2{{font-size:clamp(1.5rem,2.45vw,2.35rem);letter-spacing:-.025em;margin:10px 0 0;max-width:18ch}}.copy{{max-width:68ch;margin:0 0 18px}}.copy--callout,.callout{{border-inline-start:3px solid var(--accent);background:var(--soft);padding:16px 20px;margin:0 0 22px;max-width:72ch}}.structured-title{{font-family:var(--body);font-size:.78rem;color:var(--muted);font-weight:800;letter-spacing:.05em;margin:0 0 14px;text-transform:uppercase}}.structured--facts{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--accent);margin:22px 0 0}}.fact{{padding:17px 18px 19px 0;border-bottom:1px solid var(--line);min-width:0}}[dir="ltr"] .fact{{padding-inline:0 18px}}.fact dt{{color:var(--muted);font-size:.78rem;margin-bottom:4px}}.fact dd{{font-size:1.06rem;font-weight:800;margin:0;overflow-wrap:anywhere}}.fact small{{display:block;color:var(--muted);font-size:.78rem;font-weight:400;margin-top:4px}}.table-wrap{{overflow-x:auto}}table{{width:100%;border-collapse:collapse;border-top:2px solid var(--accent);font-size:.94rem}}th,td{{padding:13px 14px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}}th{{color:var(--muted);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}}td:first-child{{font-weight:700}}.structured--comparison table{{border-inline-start:3px solid var(--accent)}}.structured--sequence ol,.structured--checklist ul,.structured--ledger ol{{list-style:none;margin:0;padding:0}}.structured--sequence li,.structured--checklist li{{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;border-bottom:1px solid var(--line);padding:14px 0}}.structured--sequence li::before{{counter-increment:item;content:counter(item,decimal-leading-zero);color:var(--accent);font-size:1.05rem;font-weight:800}}.structured--sequence ol{{counter-reset:item}}.structured--sequence li strong,.structured--checklist li strong{{display:block}}.structured--sequence li span,.structured--checklist li span{{grid-column:2;color:var(--muted);font-size:.9rem}}.structured--checklist li::before{{content:"□";font-size:1.15rem;color:var(--accent)}}.structured--risk{{display:grid;gap:0;border-top:2px solid var(--accent)}}.risk{{display:grid;grid-template-columns:minmax(150px,.35fr) minmax(130px,.28fr) minmax(0,1fr);gap:18px;border-bottom:1px solid var(--line);padding:16px 0;align-items:start}}.risk span{{color:var(--accent);font-size:.84rem;font-weight:800}}.risk p{{color:var(--muted);margin:0}}.structured--code,.technical-copy{{background:var(--surface);border:1px solid var(--line);padding:18px 20px;overflow:auto}}.structured--code{{margin-top:18px}}pre{{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:.86rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;direction:ltr;text-align:left}}.structured--ledger{{border-top:2px solid var(--accent)}}.structured--ledger li{{display:grid;grid-template-columns:minmax(145px,.36fr) minmax(0,1fr);gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}}.structured--ledger span{{color:var(--muted)}}footer{{padding:22px 0 36px;color:var(--muted);font-size:.76rem;border-top:1px solid var(--line)}}[dir="rtl"] .technical-copy,[dir="rtl"] .structured--code{{direction:ltr;text-align:left}}@media(max-width:820px){{body{{font-size:15px}}.page{{padding:0 18px}}.hero{{padding-bottom:38px}}.hero-meta{{align-items:flex-start;font-size:.62rem}}.hero-grid{{display:block;margin-top:34px}}h1{{font-size:clamp(2.45rem,12vw,4rem);max-width:17ch;margin-bottom:16px}}.lede{{font-size:.98rem}}.summary-note{{margin-top:30px;max-width:none}}.document-grid{{display:block}}.section{{display:block}}.section-heading,.section-body{{padding:34px 0}}.section-heading{{border-bottom:0;padding-bottom:9px}}.section-heading h2{{font-size:1.7rem;max-width:none}}.section-body{{padding-top:0}}.structured--facts{{grid-template-columns:repeat(2,minmax(0,1fr))}}.fact{{padding-inline:0 14px}}.fact:nth-child(even){{padding-inline:14px 0;border-inline-start:1px solid var(--line)}}table{{font-size:.88rem}}table thead{{display:none}}table,tbody,tr,td{{display:block;width:100%}}tr{{padding:10px 0;border-bottom:1px solid var(--line)}}td{{display:grid;grid-template-columns:minmax(100px,.34fr) minmax(0,1fr);gap:12px;padding:8px 0;border:0}}td::before{{content:attr(data-label);color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}}.risk{{grid-template-columns:minmax(110px,.35fr) minmax(0,1fr);gap:8px 14px}}.risk p{{grid-column:1 / -1}}.structured--ledger li{{grid-template-columns:1fr;gap:3px}}footer{{padding-bottom:24px}}}}@media print{{@page{{size:A4;margin:15mm}}html,body{{background:#fff;color:#171717}}html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]{{--surface:#fff;--bg:#fff;--ink:#171717;--muted:#555;--accent:#333;--soft:#f1f1f1;--line:#c8c8c8}}.page{{max-width:none;padding:0}}.hero{{padding:5mm 0 9mm}}.hero-grid{{margin-top:8mm}}h1{{font-size:30pt}}.summary-note{{max-width:230px}}.document-grid{{display:grid;grid-template-columns:28% 1fr;gap:10%}}.section-heading,.section-body{{padding:7mm 0}}table{{font-size:9pt}}.table-wrap{{overflow:visible}}.structured--technical_annex{{break-before:page}}.structured--code,.technical-copy{{background:#fff}}footer{{padding-top:6mm}}}}'''
 
 
+def hud_stylesheet_overrides():
+    return '''
+:root {--hud-radius-xl:30px;--hud-radius-lg:22px;--hud-radius-md:16px;--hud-shadow:0 26px 70px rgba(0,0,0,.28)}
+.hud-page {position:relative;isolation:isolate}
+.hud-page::before {content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.16;background:linear-gradient(90deg,transparent 49.9%,var(--accent) 50%,transparent 50.1%),linear-gradient(0deg,transparent 49.9%,var(--accent) 50%,transparent 50.1%);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
+.hud-page .page {position:relative;z-index:1}
+.hud-topbar {position:sticky;top:12px;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:18px;margin:18px 0 8px;padding:12px 16px;border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-radius:var(--hud-radius-lg);background:color-mix(in srgb,var(--surface) 88%,var(--bg));box-shadow:var(--hud-shadow);backdrop-filter:blur(16px);font-size:.72rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;animation:omega-topbar-in .55s cubic-bezier(.2,.75,.25,1) both}
+.hud-brand,.hud-topbar-meta {display:flex;align-items:center;gap:12px}
+.hud-brand > span {color:var(--accent);font-weight:900;letter-spacing:.16em}
+.hud-brand small {font-size:.64rem;color:var(--muted)}
+.hud-topbar-meta > span {padding-inline-start:12px;border-inline-start:1px solid var(--line)}
+.hud-topbar-meta .hud-status {color:var(--accent);font-weight:800}
+.hud-page .hero {padding:20px 0 34px;border:0}
+.hero-surface {position:relative;overflow:hidden;padding:clamp(24px,4vw,52px);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:var(--hud-radius-xl);background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 94%,var(--bg)),var(--surface));box-shadow:var(--hud-shadow);perspective:1200px;transform-style:preserve-3d;animation:omega-surface-in .75s cubic-bezier(.2,.75,.25,1) .08s both}
+.hero-surface::before {content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 82% 0,color-mix(in srgb,var(--accent) 16%,transparent),transparent 38%),linear-gradient(120deg,transparent 0 62%,color-mix(in srgb,var(--accent) 5%,transparent) 62% 62.2%,transparent 62.2%)}
+.hero-surface::after {content:"";position:absolute;top:-28%;inset-inline-end:-9%;width:54%;aspect-ratio:1.8;border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);border-radius:50%;transform:translate3d(0,0,18px) rotate(-14deg);pointer-events:none;opacity:.8;box-shadow:0 0 0 18px color-mix(in srgb,var(--accent) 3%,transparent),0 0 70px color-mix(in srgb,var(--accent) 10%,transparent)}
+.hero-surface > * {position:relative;z-index:1}
+.hud-page .hero-meta {margin-bottom:clamp(28px,4vw,48px)}
+.hud-page .hero-grid {margin-top:0;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:clamp(28px,6vw,88px)}
+.hud-page h1 {font-size:clamp(2.8rem,6.2vw,5.35rem);max-width:14ch;text-wrap:balance}
+.hud-page .summary-note {max-width:none;margin:0;padding:16px 18px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--soft) 74%,var(--surface));box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.hud-metrics {display:grid;grid-template-columns:minmax(130px,.4fr) repeat(4,minmax(0,1fr));gap:12px;margin-top:clamp(28px,5vw,54px);padding-top:18px;border-top:1px solid var(--line)}
+.hud-metrics-label {align-self:center;color:var(--accent);font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.hud-signal {min-height:92px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 78%,transparent);display:flex;flex-direction:column;justify-content:center;gap:3px;transform:translateZ(0);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background-color .25s ease;animation:omega-signal-in .6s cubic-bezier(.2,.75,.25,1) both}
+.hud-signal:nth-child(2) {animation-delay:.18s}
+.hud-signal:nth-child(3) {animation-delay:.26s}
+.hud-signal:nth-child(4) {animation-delay:.34s}
+.hud-signal:nth-child(5) {animation-delay:.42s}
+.hud-signal:hover {transform:translate3d(0,-5px,18px) rotateX(1deg);border-color:var(--accent);background:color-mix(in srgb,var(--surface) 92%,var(--accent) 8%);box-shadow:0 18px 34px rgba(0,0,0,.22)}
+.hud-signal:focus-visible {outline:2px solid var(--accent);outline-offset:3px}
+.hud-signal-label {color:var(--muted);font-size:.7rem}
+.hud-signal strong {font-size:1.15rem;line-height:1.25;overflow-wrap:anywhere}
+.hud-signal small {color:var(--muted);font-size:.72rem}
+.hud-page .document-grid {padding-top:0}
+.hud-page .section--verdict .section-body {padding-top:clamp(30px,4vw,52px)}
+.hud-page .section--verdict .copy--callout {border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:var(--hud-radius-md);box-shadow:0 12px 28px rgba(0,0,0,.1)}
+.hud-page .structured--facts,.hud-page .structured--risk,.hud-page table {border-top-width:2px}
+.structured--facts .structured-title {grid-column:1 / -1;margin:0;padding:0 0 10px;line-height:1.4}
+.hud-page .structured--facts {padding-top:18px}
+.hud-page .fact {padding-block:14px 18px;line-height:1.55}
+.hud-page .fact dt {line-height:1.45}
+.hud-page .fact dd {line-height:1.4}
+@keyframes omega-topbar-in {from {opacity:0;transform:translateY(-10px)} to {opacity:1;transform:translateY(0)}}
+@keyframes omega-surface-in {from {opacity:0;transform:translateY(18px) rotateX(1.5deg)} to {opacity:1;transform:translateY(0) rotateX(0)}}
+@keyframes omega-signal-in {from {opacity:0;transform:translateY(12px) scale(.98)} to {opacity:1;transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}
+  .hud-signal:hover {transform:none}
+}
+@media screen {
+  .hud-page .document-grid {display:block}
+  .hud-page .section {position:relative;display:grid;grid-template-columns:minmax(180px,.34fr) minmax(0,1fr);gap:clamp(22px,4vw,60px);margin:0 0 24px;padding:clamp(22px,3vw,34px);border:1px solid var(--line);border-radius:var(--hud-radius-lg);background:var(--surface);background:color-mix(in srgb,var(--surface) 88%,var(--bg));box-shadow:0 18px 42px rgba(0,0,0,.14);overflow:hidden}
+  .hud-page .section::before {content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.72}
+  .hud-page .section-heading,.hud-page .section-body {border:0;padding:0}
+  .hud-page .section-heading {align-self:start;position:relative;z-index:1}
+  .hud-page .section-body {min-width:0;position:relative;z-index:1}
+  .hud-page .section-heading h2 {margin-top:9px}
+  .hud-page .section--verdict {grid-template-columns:minmax(180px,.72fr) minmax(0,1.28fr);background:var(--soft);background:radial-gradient(circle at 100% 0,color-mix(in srgb,var(--accent) 12%,transparent),transparent 42%),var(--soft);border-color:color-mix(in srgb,var(--accent) 46%,var(--line));box-shadow:0 22px 52px rgba(0,0,0,.2)}
+  .hud-page .section--verdict .section-heading h2 {font-size:clamp(1.7rem,3vw,2.8rem)}
+  .hud-page .section--verdict .copy--callout {margin:0;border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 70%,transparent);box-shadow:0 12px 26px rgba(0,0,0,.14)}
+  .hud-page .section--key_fact {background:color-mix(in srgb,var(--surface) 96%,var(--accent) 4%)}
+  .hud-page .section--key_fact .structured--facts {padding:14px 18px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 78%,transparent);box-shadow:0 10px 24px rgba(0,0,0,.1)}
+  .hud-page .section--evidence_matrix .structured--table,.hud-page .section--evidence_matrix .structured--comparison {padding:16px 18px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 72%,transparent)}
+  .hud-page .section--evidence_matrix .structured--table table {border-top:0}
+  .hud-page .section--sequence {grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr);background:color-mix(in srgb,var(--surface) 80%,var(--accent) 4%)}
+  .hud-page .section--sequence .structured--sequence {padding:8px 18px;border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 82%,transparent)}
+  .hud-page .section--sequence .structured--sequence li {transition:padding-inline .22s ease,background-color .22s ease;border-radius:10px}
+  .hud-page .section--sequence .structured--sequence li:hover {padding-inline:10px;background:color-mix(in srgb,var(--accent) 7%,transparent)}
+  .hud-page .section--risk_register .risk {margin:10px 0 0;padding:14px 16px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 82%,transparent);transition:transform .22s ease,border-color .22s ease}
+  .hud-page .section--risk_register .risk:hover {transform:translateX(-4px);border-color:var(--accent)}
+  .hud-page .section--checklist .structured--checklist {padding:8px 18px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 82%,transparent)}
+  .hud-page .section--technical_annex {background:#0d1116;border-color:#26303a;box-shadow:0 22px 56px rgba(0,0,0,.28)}
+  .hud-page .section--technical_annex .section-heading h2 {color:var(--ink)}
+  .hud-page .section--technical_annex .technical-copy,.hud-page .section--technical_annex .structured--code {border-radius:var(--hud-radius-md);background:#070a0e;border-color:#303b47;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 28px rgba(0,0,0,.22)}
+  .hud-page .section--technical_annex .structured--ledger {padding:14px 18px;border:1px solid #303b47;border-radius:var(--hud-radius-md);background:#11171e}
+}
+@media screen and (max-width:820px) {
+  .hud-topbar {align-items:flex-start;flex-direction:column;gap:8px;margin-top:10px}
+  .hud-topbar-meta {width:100%;justify-content:space-between}
+  .hud-page .hero {padding-top:12px}
+  .hero-surface {padding:22px 18px;border-radius:var(--hud-radius-lg)}
+  .hud-page .hero-meta {margin-bottom:28px}
+  .hud-page .hero-grid {display:block}
+  .hud-page h1 {font-size:clamp(2.45rem,11vw,4rem);max-width:15ch}
+  .hud-page .summary-note {margin-top:26px}
+  .hud-metrics {grid-template-columns:1fr 1fr}
+  .hud-metrics-label {grid-column:1 / -1}
+  .hud-signal {min-height:82px}
+  .hud-page .section {display:block;margin-bottom:16px;padding:20px 18px;border-radius:var(--hud-radius-lg)}
+  .hud-page .section-heading {margin-bottom:18px}
+  .hud-page .section--verdict .section-heading h2 {font-size:2rem}
+  .hud-page .section--sequence .section-heading {margin-bottom:14px}
+}
+@media print {
+  .hud-page::before {display:none}
+  .hud-topbar {position:static;margin:0 0 5mm;box-shadow:none;border-radius:0;background:#fff;color:#444;backdrop-filter:none;animation:none}
+  .hero-surface {padding:5mm;border-radius:0;box-shadow:none;background:#fff;perspective:none;transform:none;animation:none}
+  .hero-surface::after {display:none}
+  .hud-signal {border-radius:0;box-shadow:none;background:#fff}
+}
+'''
+
+
 def render(bundle, profile=None):
     truth, authored, composition, reader = bundle["truth"], bundle["authored"], bundle["composition"], bundle["reader"]
     profile = profile or reader.get("surface_profile", "omega-editorial")
@@ -218,6 +358,16 @@ def render(bundle, profile=None):
     sub_trace = "".join(f'<span class="trace-marker" data-claim-id="{esc(ref)}" aria-hidden="true"></span>' for ref in (subheadline or {}).get("claim_refs", []))
     rail = reader.get("summary_rail", {})
     note = f'<aside class="summary-note"><h2>{esc(localize(rail.get("title", ""), lang))}</h2><p>{esc(rail.get("body", ""))}</p></aside>' if rail.get("enabled") else ""
+    hud_labels = HUD_LABELS["ar" if lang == "ar" else "en"]
+    hud_signals = hud_signal_tiles(bundle, lang)
+    hud_profile = HUD_PROFILE_LABELS.get(profile, profile.upper())
+    hud_topbar = (
+        f'<div class="hud-topbar"><div class="hud-brand"><span>Ω OMEGA</span>'
+        f'<small>{esc(hud_profile)} · {esc(hud_labels["surface"])}</small></div>'
+        f'<div class="hud-topbar-meta"><span class="hud-status">{esc(hud_labels["signals"])}</span>'
+        f'<span>{len(truth.get("sources", []))} {esc(hud_labels["sources"])}</span>'
+        f'<span>{len(truth.get("claims", []))} {esc(hud_labels["claims"])}</span></div></div>'
+    )
     sections = []
     for section in composition["sections"]:
         section_intent = section["presentation_intent"]
@@ -227,9 +377,10 @@ def render(bundle, profile=None):
         attrs = f'data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}"'
         sections.append(f'<section class="section section--{esc(section_intent)}" {attrs}><div class="section-heading"><div class="section-kicker">{esc(section_label)}</div><h2>{esc(section["purpose"])}</h2></div><div class="section-body">{copy_html}{structured_html}</div></section>')
     footer = "مستند مستقل؛ محتواه قابل للتدقيق من خلال سجل المصادر." if lang == "ar" else "Standalone document; content is traceable through the source ledger."
-    css = stylesheet(theme).replace("}}", "}").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
+    css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
+    css += hud_stylesheet_overrides()
     css += '\n@media screen{.hero-grid{margin-top:clamp(28px,4vw,52px)}h1{font-size:clamp(2.45rem,5.2vw,4.6rem);max-width:21ch}.document-grid--proposal .section-heading,.document-grid--proposal .section-body{padding-block:clamp(28px,4vw,48px)}.document-grid--proposal .section-heading h2{font-size:clamp(1.35rem,2vw,2rem)} } @media screen and (max-width:820px){h1{font-size:clamp(2.1rem,10vw,3.35rem);max-width:19ch}.hero{padding-bottom:32px} } @media print{.document-grid{display:block}.section{display:grid;grid-template-columns:28% 1fr;gap:10%;break-inside:avoid}.section-heading,.section-body{grid-column:auto;grid-row:auto} }'
-    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><title>{esc(title)}</title><style>{css}</style></head><body><div class="page"><header class="hero hero--{esc(kind)}"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer>{esc(footer)}</footer></div></body></html>'''
+    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><title>{esc(title)}</title><style>{css}</style></head><body><div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer>{esc(footer)}</footer></div></body></html>'''
 
 
 def main():

@@ -131,6 +131,58 @@ class Wave6QualityTest(unittest.TestCase):
                 self.assertIn('data-claim-id="AHS.FACT.RESTORE_STATUS"', html)
                 self.assertNotEqual(html, base)
 
+    def test_executive_hud_shell_adds_traceable_signal_layer(self):
+        for name, profile in (("ahs", "omega-gold"), ("proposal", "omega-minimal"), ("technical", "omega-hud")):
+            with self.subTest(name=name):
+                html = render(self.bundle(name), profile)
+                self.assertIn('class="hud-topbar"', html)
+                self.assertIn('class="hero-surface"', html)
+                self.assertIn('class="hud-metrics"', html)
+                self.assertGreaterEqual(html.count('class="hud-signal"'), 3)
+                self.assertIn('data-structured-id=', html)
+                self.assertIn('data-copy-ref=', html)
+
+    def test_screen_first_hud_has_depth_motion_and_reduced_motion_guard(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for token in (
+            "perspective:",
+            "transform-style:",
+            "transition:",
+            "@keyframes",
+            ":hover",
+            "prefers-reduced-motion",
+        ):
+            with self.subTest(token=token):
+                self.assertIn(token, html)
+
+    def test_screen_sections_have_varied_card_treatments(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for token in (
+            ".hud-page .section {",
+            ".hud-page .section--verdict",
+            ".hud-page .section--sequence",
+            ".hud-page .section--technical_annex",
+            "border-radius:var(--hud-radius-lg)",
+            "border-radius:var(--hud-radius-md)",
+        ):
+            with self.subTest(token=token):
+                self.assertIn(token, html)
+
+    def test_ahs_hud_promotes_four_traceable_decision_signals(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        self.assertEqual(html.count('class="hud-signal"'), 4)
+
+    def test_fact_cards_reserve_readable_title_and_text_spacing(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for token in (
+            ".structured--facts .structured-title {grid-column:1 / -1",
+            ".hud-page .structured--facts {padding-top:",
+            ".hud-page .fact {padding-block:",
+            ".hud-page .fact dd {line-height:",
+        ):
+            with self.subTest(token=token):
+                self.assertIn(token, html)
+
 
 if __name__ == "__main__":
     unittest.main()

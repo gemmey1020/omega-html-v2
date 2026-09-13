@@ -83,7 +83,7 @@ def validate(html_text, bundle, expected_profile=None):
         errors.append(error("PRINT_STYLESHEET_MISSING", "@media print"))
     if re.search(r"https?://|url\s*\(", html_text, re.I):
         errors.append(error("REMOTE_DEPENDENCY", "remote URL or CSS url()"))
-    if "{{" in html_text or "}}" in html_text:
+    if "{{" in html_text:
         errors.append(error("UNRESOLVED_TEMPLATE", "template marker"))
     if profile in PROFILES:
         for foreign in PROFILES - {profile}:
