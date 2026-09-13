@@ -410,7 +410,9 @@
     {
       "section_id": "release",
       "purpose": "التكامل والترحيل والتسليم",
-      "copy_refs": [],
+      "copy_refs": [
+        "COPY.AHS.MIGRATION_BOUNDARY"
+      ],
       "claim_refs": [],
       "presentation_intent": "evidence_matrix",
       "structured_blocks": [
@@ -487,6 +489,53 @@
               ],
               "copy_refs": [
                 "COPY.AHS.REQUIREMENT.24"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "effort",
+      "purpose": "المجهود يغيّر المدة ولا يغيّر معيار القبول",
+      "copy_refs": [
+        "COPY.AHS.EFFORT"
+      ],
+      "claim_refs": [
+        "AHS.FACT.EFFORT_MODES"
+      ],
+      "presentation_intent": "comparison",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.EFFORT",
+          "type": "fact_list",
+          "title": "ثلاثة modes للوقت",
+          "claim_refs": [
+            "AHS.FACT.EFFORT_MODES"
+          ],
+          "items": [
+            {
+              "label": "Light",
+              "value": "≈ 6h/day · ≈ 20 يوم عمل",
+              "detail": "وتيرة أخف؛ المعيار نفسه.",
+              "claim_refs": [
+                "AHS.FACT.EFFORT_MODES"
+              ]
+            },
+            {
+              "label": "Medium",
+              "value": "≈ 10h/day · ≈ 12 يوم عمل",
+              "detail": "تنسيق أضيق؛ المعيار نفسه.",
+              "claim_refs": [
+                "AHS.FACT.EFFORT_MODES"
+              ]
+            },
+            {
+              "label": "Hard",
+              "value": "≈ 12h/day peak · ≈ 10 أيام عمل",
+              "detail": "ضغط أعلى؛ أوقات الانتظار لا تختفي.",
+              "claim_refs": [
+                "AHS.FACT.EFFORT_MODES"
               ]
             }
           ]

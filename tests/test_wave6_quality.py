@@ -1,3 +1,4 @@
+import base64
 import json
 import re
 import subprocess
@@ -226,6 +227,32 @@ class Wave6QualityTest(unittest.TestCase):
         ):
             with self.subTest(token=token):
                 self.assertNotIn(token, html)
+
+    def test_ahs_favicon_is_the_omega_mark(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        match = re.search(r'<link rel="icon" href="data:image/svg\+xml;base64,([^"]+)"', html)
+        self.assertIsNotNone(match)
+        icon_svg = base64.b64decode(match.group(1)).decode("utf-8")
+        self.assertIn("Ω", icon_svg)
+        self.assertNotIn("M16 32h32M32 16v32", icon_svg)
+
+    def test_ahs_public_artifact_states_unknown_migration_target(self):
+        bundle = self.bundle("ahs")
+        html = render(bundle, "omega-gold")
+        self.assertIn("الخادم القديم", html)
+        self.assertIn("خادم إنتاج جديد", html)
+        self.assertIn("هوية أو مواصفات أو نقطة وصول", html)
+        self.assertIn("وجهة الترحيل غير معروفة", html)
+        self.assertNotIn("srv981087", html)
+
+    def test_ahs_public_artifact_exposes_conditional_effort_modes_and_hours(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for token in ("Light", "Medium", "Hard", "6h/day", "10h/day", "12h/day peak", "120h"):
+            with self.subTest(token=token):
+                self.assertIn(token, html)
+        self.assertIn('data-section-id="effort"', html)
+        self.assertIn('data-presentation-intent="comparison"', html)
+        self.assertIn("ليست موعدًا مضمونًا", html)
 
 
 if __name__ == "__main__":

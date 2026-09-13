@@ -787,6 +787,43 @@
         "staticfiles.W004"
       ],
       "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.MIGRATION_TARGET",
+      "meaning": "حدود معرفة وجهة الترحيل.",
+      "value": "The requirements mention migration from the old server to a new production server, but the available package does not identify or describe the new server.",
+      "epistemic_state": "unknown",
+      "closure_state": "blocked",
+      "risk": "critical",
+      "source_refs": [
+        "SOURCE.AHS.DOCX",
+        "SOURCE.AHS.PAYLOAD"
+      ],
+      "protected_tokens": [],
+      "materiality": "supporting"
+    },
+    {
+      "claim_id": "AHS.FACT.EFFORT_MODES",
+      "meaning": "نماذج توزيع الجهد والزمن المذكورة في الـpayload.",
+      "value": {
+        "baseline": "120h",
+        "light": "6h/day and 20 working days",
+        "medium": "10h/day and 12 working days",
+        "hard": "12h/day peak and 10 working days"
+      },
+      "epistemic_state": "source_backed",
+      "closure_state": "open",
+      "risk": "high",
+      "source_refs": [
+        "SOURCE.AHS.PAYLOAD"
+      ],
+      "protected_tokens": [
+        "120h",
+        "6h/day",
+        "10h/day",
+        "12h/day peak"
+      ],
+      "materiality": "supporting"
     }
   ]
 }

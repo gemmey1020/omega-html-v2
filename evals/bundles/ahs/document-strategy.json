@@ -6,7 +6,8 @@
     "key_fact"
   ],
   "secondary_content": [
-    "evidence_matrix"
+    "evidence_matrix",
+    "effort_model"
   ],
   "annex_content": [],
   "detail_level": "public executive only",
@@ -14,6 +15,7 @@
   "reader_journey": [
     "verdict",
     "facts",
+    "effort",
     "evidence"
   ]
 }
