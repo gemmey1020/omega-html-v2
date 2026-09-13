@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.render_artifact import load_bundle, render
+from scripts.render_artifact import THEMES, load_bundle, render
 
 
 class Wave6QualityTest(unittest.TestCase):
@@ -182,6 +182,50 @@ class Wave6QualityTest(unittest.TestCase):
         ):
             with self.subTest(token=token):
                 self.assertIn(token, html)
+
+    def test_screen_colorways_stay_dark_and_cohesive(self):
+        def luminance(color):
+            rgb = [int(color[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+            return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]
+
+        for profile in ("omega-gold", "omega-teal", "omega-cyan"):
+            with self.subTest(profile=profile):
+                self.assertLess(luminance(THEMES[profile]["surface"]), 0.10)
+                self.assertLess(luminance(THEMES[profile]["soft"]), 0.16)
+                self.assertLess(luminance(THEMES[profile]["line"]), 0.25)
+
+    def test_authored_copy_avoids_template_like_openers(self):
+        banned = (
+            "المصدر يوضح",
+            "هذه المراجعة تلتقط",
+            "A bounded pilot answers",
+            "Before committing to full production",
+        )
+        for name in ("ahs", "proposal", "technical"):
+            bundle = self.bundle(name)
+            texts = [block.get("text", "") for block in bundle["authored"]["blocks"]]
+            rendered = render(bundle, "omega-gold" if name == "ahs" else ("omega-minimal" if name == "proposal" else "omega-hud"))
+            for phrase in banned:
+                with self.subTest(name=name, phrase=phrase):
+                    self.assertFalse(any(phrase in text for text in texts))
+                    self.assertNotIn(phrase, rendered)
+
+    def test_ahs_public_artifact_excludes_internal_execution_sequence(self):
+        html = render(self.bundle("ahs"), "omega-gold")
+        for token in (
+            'class="section section--sequence"',
+            "ترتيب الإغلاق الذي يحمي القرار",
+            "طابق الهوية",
+            'data-copy-id="COPY.AHS.TECH"',
+            'class="section section--technical_annex"',
+            "أمر الفحص المرصود",
+            "سجل المصدر",
+            "سجل المصادر",
+            "الخطوات التالية",
+            "تفعيل الحزمة",
+        ):
+            with self.subTest(token=token):
+                self.assertNotIn(token, html)
 
 
 if __name__ == "__main__":

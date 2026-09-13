@@ -3,7 +3,7 @@
     {
       "copy_id": "COPY.PROPOSAL.HEADLINE",
       "role": "headline",
-      "text": "Test the game before you scale the bet",
+      "text": "Try the core loop before scaling the bet",
       "claim_refs": [
         "PROPOSAL.DECISION",
         "PROPOSAL.CONTEXT"
@@ -13,7 +13,7 @@
     {
       "copy_id": "COPY.PROPOSAL.SUBHEAD",
       "role": "subheadline",
-      "text": "A bounded pilot answers the core play question with a known timebox and budget.",
+      "text": "A six-week pilot gives us a real answer, with a clear cap on time and spend.",
       "claim_refs": [
         "PROPOSAL.CONTEXT",
         "PROPOSAL.PILOT.LENGTH",
@@ -24,7 +24,7 @@
     {
       "copy_id": "COPY.PROPOSAL.CONTEXT",
       "role": "paragraph",
-      "text": "Before committing to full production, the team needs a playable slice that exposes how the core loop holds up. The pilot gives the decision something practical to review.",
+      "text": "Before we commit to full production, let’s put one playable slice in front of the team. It gives us something concrete to review—and a clean point to stop if the loop does not work.",
       "claim_refs": [
         "PROPOSAL.CONTEXT",
         "PROPOSAL.DELIVERABLE"
@@ -34,7 +34,7 @@
     {
       "copy_id": "COPY.PROPOSAL.ACTION",
       "role": "callout",
-      "text": "Decision requested: approve the scoped pilot for 6 weeks with a $12,000 cap.",
+      "text": "Approve the pilot for 6 weeks, capped at $12,000.",
       "claim_refs": [
         "PROPOSAL.DECISION",
         "PROPOSAL.PILOT.LENGTH",
@@ -48,7 +48,7 @@
     {
       "copy_id": "COPY.PROPOSAL.RISK",
       "role": "paragraph",
-      "text": "Review the result weekly. If the core loop does not hold, stop the pilot before making a larger commitment.",
+      "text": "Review it every week. If the core loop fails, stop there—before we make the bigger commitment.",
       "claim_refs": [
         "PROPOSAL.RISK"
       ],

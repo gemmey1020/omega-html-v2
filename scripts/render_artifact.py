@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a semantic Omega bundle as a calm, document-first HTML artifact."""
+"""Render a semantic Omega bundle as a screen-first, human-facing HTML artifact."""
 import argparse
 import html
 import json
@@ -15,8 +15,8 @@ THEMES = {
         "display": "Georgia, 'Noto Serif Arabic', serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
     },
     "omega-minimal": {
-        "bg": "#f4f7f5", "surface": "#ffffff", "ink": "#15221f", "muted": "#61706b",
-        "accent": "#147b70", "soft": "#e2efeb", "line": "#d4e0dc",
+        "bg": "#060a0c", "surface": "#0d1418", "ink": "#edf4f1", "muted": "#8fa3a0",
+        "accent": "#4fb8a7", "soft": "#112624", "line": "#28403d",
         "display": "'Noto Sans Arabic', Arial, sans-serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
     },
     "omega-hud": {
@@ -30,18 +30,18 @@ THEMES = {
         "display": "'Segoe UI', Arial, sans-serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
     },
     "omega-gold": {
-        "bg": "#080b0e", "surface": "#13171c", "ink": "#f5eee3", "muted": "#b8aa98",
-        "accent": "#e3b56a", "soft": "#242018", "line": "#4a3d2b",
+        "bg": "#05080b", "surface": "#0b1015", "ink": "#f3eee5", "muted": "#8f9997",
+        "accent": "#c89545", "soft": "#15130f", "line": "#2e302f",
         "display": "Georgia, 'Noto Serif Arabic', serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
     },
     "omega-teal": {
-        "bg": "#071013", "surface": "#102024", "ink": "#ecf7f5", "muted": "#a6bbb8",
-        "accent": "#59d9c1", "soft": "#153a38", "line": "#2c514c",
+        "bg": "#04090b", "surface": "#091316", "ink": "#e6f0ed", "muted": "#8ea7a2",
+        "accent": "#3aaf9c", "soft": "#0d2625", "line": "#21403d",
         "display": "Georgia, 'Noto Serif Arabic', serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
     },
     "omega-cyan": {
-        "bg": "#061018", "surface": "#0e1b25", "ink": "#effaff", "muted": "#a5c3cc",
-        "accent": "#51d4f2", "soft": "#123441", "line": "#2a5363",
+        "bg": "#04090f", "surface": "#08141b", "ink": "#e7f3f7", "muted": "#8ca9b2",
+        "accent": "#2ea9c5", "soft": "#0b2733", "line": "#1e4251",
         "display": "Georgia, 'Noto Serif Arabic', serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
     },
 }
@@ -64,8 +64,8 @@ INTENT_LABELS = {
 }
 
 DOC_LABELS = {
-    "ar": {"audit_report": "مراجعة حقيقة تشغيلية", "proposal": "مقترح قرار", "technical": "تقرير تقني"},
-    "en": {"audit_report": "Operational truth review", "proposal": "Decision proposal", "technical": "Technical report"},
+    "ar": {"audit_report": "مراجعة تشغيلية", "proposal": "ملخص قرار", "technical": "فحص تقني"},
+    "en": {"audit_report": "Operational review", "proposal": "Decision brief", "technical": "Technical check"},
 }
 
 AR_TECH_LABELS = {
@@ -78,7 +78,7 @@ AR_TECH_LABELS = {
 }
 
 HUD_LABELS = {
-    "ar": {"sources": "مصادر", "claims": "مطالب", "signals": "إشارات القرار", "surface": "سطح تنفيذي"},
+        "ar": {"sources": "مصادر", "claims": "مطالبة", "signals": "إشارات القرار", "surface": "واجهة تنفيذية"},
     "en": {"sources": "Sources", "claims": "Claims", "signals": "Decision signals", "surface": "Executive surface"},
 }
 
@@ -376,11 +376,11 @@ def render(bundle, profile=None):
         structured_html = "".join(render_structured(block, lang) for block in section.get("structured_blocks", []))
         attrs = f'data-section-id="{esc(section["section_id"])}" data-presentation-intent="{esc(section_intent)}"'
         sections.append(f'<section class="section section--{esc(section_intent)}" {attrs}><div class="section-heading"><div class="section-kicker">{esc(section_label)}</div><h2>{esc(section["purpose"])}</h2></div><div class="section-body">{copy_html}{structured_html}</div></section>')
-    footer = "مستند مستقل؛ محتواه قابل للتدقيق من خلال سجل المصادر." if lang == "ar" else "Standalone document; content is traceable through the source ledger."
+    footer = "AHS · قراءة تنفيذية مستقلة" if lang == "ar" else "Omega · independent decision brief"
     css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
     css += hud_stylesheet_overrides()
     css += '\n@media screen{.hero-grid{margin-top:clamp(28px,4vw,52px)}h1{font-size:clamp(2.45rem,5.2vw,4.6rem);max-width:21ch}.document-grid--proposal .section-heading,.document-grid--proposal .section-body{padding-block:clamp(28px,4vw,48px)}.document-grid--proposal .section-heading h2{font-size:clamp(1.35rem,2vw,2rem)} } @media screen and (max-width:820px){h1{font-size:clamp(2.1rem,10vw,3.35rem);max-width:19ch}.hero{padding-bottom:32px} } @media print{.document-grid{display:block}.section{display:grid;grid-template-columns:28% 1fr;gap:10%;break-inside:avoid}.section-heading,.section-body{grid-column:auto;grid-row:auto} }'
-    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><title>{esc(title)}</title><style>{css}</style></head><body><div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer>{esc(footer)}</footer></div></body></html>'''
+    return f'''<!doctype html><html lang="{esc(lang)}" dir="{esc(direction)}" data-surface-profile="{esc(profile)}" data-document-intent="{esc(intent)}" data-document-kind="{esc(kind)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="document"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="A4"><meta name="omega:page_intent" content="print_and_pdf"><meta name="omega:theme_profile" content="{esc(profile)}"><meta name="omega:language" content="{esc(lang)}"><meta name="omega:direction" content="{esc(direction)}"><meta name="omega:source_count" content="{len(truth.get("sources", []))}"><meta name="omega:claim_count" content="{len(truth.get("claims", []))}"><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMwNjBhMGMiLz48cGF0aCBkPSJNMTYgMzJoMzJNMzIgMTZ2MzIiIHN0cm9rZT0iI2M4OTU0NSIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=" type="image/svg+xml"><title>{esc(title)}</title><style>{css}</style></head><body><div class="page hud-page">{hud_topbar}<header class="hero hero--{esc(kind)}"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">{esc(DOC_LABELS.get("ar" if lang == "ar" else "en", {}).get(intent, "Omega document"))}</span></div><div class="hero-grid"><div class="hero-copy"><h1 {hero_attrs}>{hero_trace}{esc(title)}</h1><p class="lede" {sub_attrs}>{sub_trace}{esc(subheadline.get("text", "") if subheadline else "")}</p></div>{note}</div><div class="hud-metrics"><div class="hud-metrics-label">{esc(hud_labels["signals"])}</div>{hud_signals}</div></div></header><main class="document-grid document-grid--{esc(kind)}">{"".join(sections)}</main><footer>{esc(footer)}</footer></div></body></html>'''
 
 
 def main():

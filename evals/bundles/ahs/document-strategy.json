@@ -6,20 +6,14 @@
     "key_fact"
   ],
   "secondary_content": [
-    "evidence_matrix",
-    "sequence"
+    "evidence_matrix"
   ],
-  "annex_content": [
-    "technical_annex",
-    "source_ledger"
-  ],
-  "detail_level": "executive with technical depth later",
+  "annex_content": [],
+  "detail_level": "public executive only",
   "uncertainty_policy": "اعرض الفتح والحجب والجزئية بصراحة",
   "reader_journey": [
     "verdict",
     "facts",
-    "evidence",
-    "sequence",
-    "annex"
+    "evidence"
   ]
 }

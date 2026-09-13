@@ -1,11 +1,11 @@
 {
-  "audience": "صاحب قرار أو مسؤول تسليم",
+  "audience": "وزير أو صاحب قرار",
   "document_intent": "audit_report",
   "surface_profile": "omega-editorial",
   "primary_question": "ما الذي ثبت، وما الذي يمنع الإغلاق؟",
-  "desired_action": "تحديد بوابة الإغلاق التالية",
-  "technical_depth": "technical annex",
-  "annex_policy": "التفاصيل التقنية في الملحق",
+  "desired_action": "اتخاذ قرار بشأن الجاهزية والإغلاق",
+  "technical_depth": "executive evidence only",
+  "annex_policy": "التفاصيل الداخلية لا تظهر في النسخة العامة",
   "summary_rail": {
     "enabled": true,
     "title": "قرار اليوم",
