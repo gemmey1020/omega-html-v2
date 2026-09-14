@@ -54,8 +54,10 @@ job. Use quiet editorial support for decision documents and restrained HUD
 tokens for technical surfaces. The optional `omega-gold`, `omega-teal`, and
 `omega-cyan` profiles preserve the same traceability contract. Use Gold for
 executive luxury, Cyan for operational decisions, Teal for calm operations,
-Silver for internal evidence, Aion for technical operator work, and Hints only
-for Hints-branded material. Profiles must change geometry, density, and hero
+Silver for internal evidence. These three are the primary production profiles,
+with Cyan as the default. Aion and Hints remain experimental and must be chosen
+explicitly; the remaining profiles are supported compatibility surfaces.
+Profiles must change geometry, density, and hero
 treatment as well as palette. Do not leak machine enums into reader copy,
 repeat a generic dashboard layout, or force protected values into headlines.
 
