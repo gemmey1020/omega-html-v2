@@ -1,13 +1,22 @@
 ---
-name: omega-html-v2-candidate
-description: Generate standalone, printable Omega HTML documents from evidence-backed semantic bundles, with human-facing Arabic or English prose, purposeful information architecture, traceable structured content, and responsive RTL/LTR surfaces.
+name: omega-html-v2
+description: Turn a prompt, Markdown source, or evidence-backed semantic bundle into a validated standalone Omega HTML report or HUD brief with human-facing Arabic or English prose, purposeful composition, traceability, and responsive RTL/LTR profiles.
 ---
 
-# Omega HTML v2 Candidate
+# Omega HTML v2
 
-Use for a human-facing Omega report, proposal, audit, or dense technical
-document. The candidate emits one self-contained HTML artifact per input
-bundle. It is not the installed production skill until explicitly promoted.
+Use for a human-facing Omega report, proposal, audit, executive decision,
+commercial framework, or dense technical document. It is not the installed
+production skill until explicitly promoted.
+
+## Input routing
+
+- Use `scripts/build_omega_html_v2.py` for prompt, Markdown, or bundle input.
+- Prompt and Markdown are compiled conservatively into the five-file semantic bundle.
+- Use a prepared bundle when claim-level evidence and composition need explicit control.
+- Resolve the document recipe independently from its visual profile.
+- Read `references/intake-contract.md` for prompt or Markdown compilation.
+- Read `references/output-contract.md` for generated artifacts and receipts.
 
 ## Contract
 
@@ -35,14 +44,19 @@ the reader: facts use definition lists, comparisons and matrices use tables,
 sequences use ordered lists, checklists use lists, and code uses LTR preformatted
 blocks. A rail is optional and must be justified by the Reader Brief.
 
-## Visual composition
+## Recipes and visual composition
 
-Choose a surface profile independently from document intent. Keep type scale,
+Choose a recipe from `config/recipes.json` to shape the reader journey. Choose
+a surface profile independently from document intent through
+`config/profiles.json`. Keep type scale,
 line length, rhythm, contrast, and whitespace proportional to the document's
 job. Use quiet editorial support for decision documents and restrained HUD
 tokens for technical surfaces. The optional `omega-gold`, `omega-teal`, and
-`omega-cyan` profiles are comparison colorways that share the same semantic
-layout and traceability contract. Do not leak machine enums into reader copy,
+`omega-cyan` profiles preserve the same traceability contract. Use Gold for
+executive luxury, Cyan for operational decisions, Teal for calm operations,
+Silver for internal evidence, Aion for technical operator work, and Hints only
+for Hints-branded material. Profiles must change geometry, density, and hero
+treatment as well as palette. Do not leak machine enums into reader copy,
 repeat a generic dashboard layout, or force protected values into headlines.
 
 ## Rendering and validation
@@ -59,12 +73,13 @@ traceability, and protected-token visibility.
 ## Non-goals
 
 This skill does not build websites or application UIs, export or own PDFs,
-modify the live `/home/jemy/.codex/skills/omega-html/` skill, install external
-skills globally, or invent unsupported facts, metrics, evidence, or conclusions.
+modify an installed predecessor, install itself globally, or invent unsupported
+facts, metrics, evidence, or conclusions.
 
 ## Output and definition of done
 
-Return the absolute HTML path and the selected surface profile. Done means the
+Return the absolute artifact paths, selected recipe/profile, and validation
+receipt. Done means the
 bundle passes Truth Lock, the artifact passes structural validation, copy is
 traceable, Arabic/English direction is readable, the document is standalone,
 responsive and print-aware, and the final desktop/mobile screenshots have been

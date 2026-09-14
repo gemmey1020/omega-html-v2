@@ -1,0 +1,10 @@
+{"schema_version":1,"intent_defaults":{"audit_report":"technical-audit","technical":"technical-audit","proposal":"proposal","executive_decision":"executive-decision","report":"executive-decision"},"recipes":[
+{"id":"executive-decision","journey":["verdict","key_fact","comparison","risk_register","checklist","source_ledger"],"density":"spacious"},
+{"id":"technical-audit","journey":["verdict","evidence_matrix","risk_register","timeline","technical_annex","source_ledger"],"density":"dense"},
+{"id":"commercial-framework","journey":["verdict","comparison","key_fact","table","sequence","checklist"],"density":"balanced"},
+{"id":"gap-matrix","journey":["verdict","evidence_matrix","comparison","risk_register","checklist"],"density":"dense"},
+{"id":"timeline-and-delivery","journey":["verdict","timeline","sequence","risk_register","checklist"],"density":"balanced"},
+{"id":"internal-data-report","journey":["key_fact","evidence_matrix","technical_block","risk_register","source_ledger"],"density":"dense"},
+{"id":"proposal","journey":["verdict","narrative","comparison","sequence","checklist"],"density":"balanced"},
+{"id":"incident-risk-brief","journey":["verdict","key_fact","risk_register","timeline","checklist","technical_annex"],"density":"compact"}
+]}

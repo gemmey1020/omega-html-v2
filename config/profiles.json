@@ -1,0 +1,11 @@
+{"schema_version":1,"profiles":[
+{"id":"omega-gold","aliases":["gold"],"audience":"executive","geometry":"framed-editorial","hero":"contained-luxury","density":"spacious","accent_family":"warm-gold"},
+{"id":"omega-cyan","aliases":["cyan"],"audience":"operations","geometry":"decision-grid","hero":"wide-operational","density":"balanced","accent_family":"signal-cyan"},
+{"id":"omega-teal","aliases":["teal"],"audience":"operations","geometry":"calm-rails","hero":"balanced-operational","density":"balanced","accent_family":"calm-teal"},
+{"id":"omega-silver","aliases":["silver"],"audience":"internal-data","geometry":"dense-evidence-atlas","hero":"compact-evidence","density":"dense","accent_family":"steel-silver"},
+{"id":"aion-cyan","aliases":["aion","aion-cyan"],"audience":"technical-operator","geometry":"command-console","hero":"operator-signal","density":"dense","accent_family":"aion-cyan"},
+{"id":"hints-core","aliases":["hints","hints-core"],"audience":"hints-brand","geometry":"reveal-panels","hero":"wordmark-reveal","density":"balanced","accent_family":"electric-blue"},
+{"id":"omega-editorial","aliases":["editorial"],"audience":"formal-decision","geometry":"paper-editorial","hero":"formal-cover","density":"spacious","accent_family":"terracotta"},
+{"id":"omega-minimal","aliases":["minimal"],"audience":"concise-brief","geometry":"minimal-stack","hero":"quiet-brief","density":"compact","accent_family":"soft-teal"},
+{"id":"omega-hud","aliases":["hud"],"audience":"technical","geometry":"technical-hud","hero":"technical-status","density":"dense","accent_family":"mint-signal"}
+]}

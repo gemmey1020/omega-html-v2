@@ -1,0 +1,4 @@
+interface:
+  display_name: "Omega HTML v2"
+  short_description: "Build evidence-backed Omega HTML reports and HUD briefs"
+  default_prompt: "Use omega-html-v2 to turn the supplied prompt, Markdown, or semantic bundle into a validated standalone Omega HTML artifact. Confirm audience, language, recipe, and profile only when they cannot be inferred safely."
