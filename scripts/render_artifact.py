@@ -9,6 +9,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from consolidation_config import resolve_profile
 
 THEMES = {
     "omega-editorial": {
@@ -46,6 +49,18 @@ THEMES = {
         "accent": "#2ea9c5", "soft": "#0b2733", "line": "#1e4251",
         "display": "Georgia, 'Noto Serif Arabic', serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
     },
+    "omega-silver": {
+        "bg": "#07090c", "surface": "#10151a", "ink": "#edf1f3", "muted": "#9aa5ac", "accent": "#aebbc3", "soft": "#182027", "line": "#35414a",
+        "display": "Georgia, 'Noto Serif Arabic', serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
+    },
+    "aion-cyan": {
+        "bg": "#041017", "surface": "#0a1d25", "ink": "#ecfbff", "muted": "#91b8c2", "accent": "#31d9f2", "soft": "#0d303a", "line": "#22515d",
+        "display": "'Segoe UI', Arial, sans-serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
+    },
+    "hints-core": {
+        "bg": "#050712", "surface": "#10152a", "ink": "#f2f5ff", "muted": "#9ca9cf", "accent": "#718cff", "soft": "#161f45", "line": "#344579",
+        "display": "'Segoe UI', Arial, sans-serif", "body": "'Noto Sans Arabic', Arial, sans-serif",
+    },
 }
 
 SEMANTIC_THEME_TOKENS = {
@@ -56,6 +71,9 @@ SEMANTIC_THEME_TOKENS = {
     "omega-gold": ("#12100c", "#765322", "#a87833", "#d1a254", "#a3a9a5", "#d97862", "#d5a955"),
     "omega-teal": ("#0b1b1b", "#17685d", "#278879", "#4bc0aa", "#9bb0ab", "#d77968", "#d0ad62"),
     "omega-cyan": ("#0a1a22", "#155e72", "#217f96", "#45bad3", "#99afb7", "#d97868", "#d4ab60"),
+    "omega-silver": ("#171d22", "#53616b", "#81909a", "#c2ced5", "#9aa5ac", "#d97868", "#d4ab60"),
+    "aion-cyan": ("#0a2832", "#0d7184", "#1eabc2", "#31d9f2", "#91b8c2", "#e27d71", "#d9af65"),
+    "hints-core": ("#151d3c", "#334aa3", "#5974df", "#718cff", "#9ca9cf", "#e27d71", "#d9af65"),
 }
 for _profile, _tokens in SEMANTIC_THEME_TOKENS.items():
     (_elevated, _deep, _glow, _passed, _open, _blocked, _conditional) = _tokens
@@ -115,7 +133,27 @@ HUD_PROFILE_LABELS = {
     "omega-gold": "HUD GOLD",
     "omega-teal": "HUD TEAL",
     "omega-cyan": "HUD CYAN",
+    "omega-silver": "EVIDENCE SILVER",
+    "aion-cyan": "AION CYAN",
+    "hints-core": "HINTS CORE",
 }
+
+
+def profile_geometry_styles(profile):
+    """Return structural, not merely chromatic, treatment for each profile."""
+    geometry = profile["geometry"]
+    rules = {
+        "framed-editorial": ".page{max-width:1240px}.hero-surface{outline:1px solid var(--accent);outline-offset:-10px}.section{grid-template-columns:minmax(230px,.42fr) minmax(0,1fr)}",
+        "decision-grid": ".document-grid{grid-template-columns:minmax(190px,.32fr) minmax(0,1fr)}.section-body{display:grid;gap:18px}.structured--facts{grid-template-columns:repeat(4,minmax(0,1fr))}",
+        "calm-rails": ".page{max-width:1280px}.section{border-inline-start:2px solid var(--accent)}.section-heading{padding-inline:22px}",
+        "dense-evidence-atlas": ".page{max-width:1500px}.section-heading,.section-body{padding-block:30px}table{font-size:.84rem}.structured--facts{grid-template-columns:repeat(4,minmax(0,1fr))}",
+        "command-console": ".page{max-width:1540px}.hero-surface{clip-path:polygon(0 0,96% 0,100% 12%,100% 100%,4% 100%,0 88%)}.section{border-radius:4px!important}.section-kicker,.hud-topbar{font-family:ui-monospace,monospace}",
+        "reveal-panels": ".page{max-width:1320px}.document-grid{display:block}.section{display:grid;grid-template-columns:minmax(240px,.45fr) minmax(0,1fr);margin-bottom:24px}.section:nth-child(even){grid-template-columns:minmax(0,1fr) minmax(240px,.45fr)}.section:nth-child(even) .section-heading{order:2}",
+        "paper-editorial": ".page{max-width:1120px}.section-heading h2{font-style:italic}.hero-surface{box-shadow:none}",
+        "minimal-stack": ".page{max-width:980px}.document-grid{display:block}.section{display:block}.section-heading,.section-body{padding-block:28px}",
+        "technical-hud": ".page{max-width:1480px}.section{border:1px solid var(--line)}.section-kicker{font-family:ui-monospace,monospace}",
+    }
+    return f"/* profile-geometry--{geometry} */\n@media screen{{{rules[geometry]}}}"
 
 
 def load_bundle(directory):
@@ -689,7 +727,8 @@ def landing_experience_script():
 
 def render(bundle, profile=None):
     truth, authored, composition, reader = bundle["truth"], bundle["authored"], bundle["composition"], bundle["reader"]
-    profile = profile or reader.get("surface_profile", "omega-editorial")
+    profile_config = resolve_profile(profile or reader.get("surface_profile", "omega-editorial"))
+    profile = profile_config["id"]
     theme = THEMES[profile]
     lang = reader.get("language", {}).get("primary", "en")
     direction = reader.get("language", {}).get("direction", "ltr")
@@ -762,6 +801,7 @@ def render(bundle, profile=None):
     css = stylesheet(theme).replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"]', ":root").replace('html[data-surface-profile="omega-hud"],html[data-surface-profile="aion"],html[data-surface-profile="omega-gold"],html[data-surface-profile="omega-teal"],html[data-surface-profile="omega-cyan"]', ":root")
     css += hud_stylesheet_overrides()
     css += landing_experience_stylesheet()
+    css += profile_geometry_styles(profile_config)
     css += '''
 @media screen {
   html {scroll-behavior:smooth}
@@ -817,6 +857,11 @@ def render(bundle, profile=None):
         "" if landing_surface else
         f'<meta name="omega:source_count" content="{len(truth.get("sources", []))}">'
         f'<meta name="omega:claim_count" content="{len(truth.get("claims", []))}">'
+    )
+    counter_meta += (
+        f'<meta name="omega:profile_geometry" content="{esc(profile_config["geometry"])}">'
+        f'<meta name="omega:profile_density" content="{esc(profile_config["density"])}">'
+        f'<meta name="omega:profile_hero" content="{esc(profile_config["hero"])}">'
     )
     progress = '<div class="scroll-progress" aria-hidden="true"></div>' if landing_surface else ""
     experience_script = landing_experience_script() if landing_surface else ""

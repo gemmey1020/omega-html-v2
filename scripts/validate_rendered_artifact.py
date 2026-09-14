@@ -6,7 +6,10 @@ import re
 import sys
 from pathlib import Path
 
-PROFILES = {"omega-editorial", "omega-minimal", "omega-hud", "aion", "omega-gold", "omega-teal", "omega-cyan"}
+ROOT = Path(__file__).resolve().parents[1]
+PROFILE_RECORDS = json.loads((ROOT / "config" / "profiles.json").read_text(encoding="utf-8"))["profiles"]
+PROFILES = {profile["id"] for profile in PROFILE_RECORDS}
+PROFILE_METADATA = {profile["id"]: profile for profile in PROFILE_RECORDS}
 
 
 class ArtifactParser(html.parser.HTMLParser):
@@ -77,6 +80,11 @@ def validate(html_text, bundle, expected_profile=None):
         errors.append(error("THEME_PROFILE_MISMATCH", f"expected {expected_profile}, got {profile}"))
     if profile and root_attrs.get("data-surface-profile") != profile:
         errors.append(error("THEME_PROFILE_MISMATCH", "root data-surface-profile differs from metadata"))
+    if profile in PROFILE_METADATA:
+        expected = PROFILE_METADATA[profile]
+        for meta_name, field in (("omega:profile_geometry", "geometry"), ("omega:profile_density", "density"), ("omega:profile_hero", "hero")):
+            if meta.get(meta_name) != expected[field]:
+                errors.append(error("PROFILE_METADATA_MISMATCH", f"{meta_name}: expected {expected[field]}, got {meta.get(meta_name)}"))
     if root_attrs.get("lang") != meta.get("omega:language") or root_attrs.get("dir") != meta.get("omega:direction"):
         errors.append(error("LANGUAGE_DIRECTION_MISMATCH", "html attributes differ from metadata"))
     if "@media print" not in html_text:
