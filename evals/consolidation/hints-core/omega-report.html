@@ -1,0 +1,345 @@
+<!doctype html><html lang="en" dir="ltr" data-surface-profile="hints-core" data-document-intent="audit_report" data-document-kind="audit" data-page-mode="landing"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="omega:surface" content="screen"><meta name="omega:brand_profile" content="omega-default"><meta name="omega:page_size" content="viewport"><meta name="omega:page_intent" content="screen_first"><meta name="omega:theme_profile" content="hints-core"><meta name="omega:language" content="en"><meta name="omega:direction" content="ltr"><meta name="omega:profile_geometry" content="reveal-panels"><meta name="omega:profile_density" content="balanced"><meta name="omega:profile_hero" content="wordmark-reveal"><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTYiIGZpbGw9IiMwNTA3MTIiLz48dGV4dCB4PSIzMiIgeT0iNDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLHNlcmlmIiBmb250LXNpemU9IjQyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjNzE4Y2ZmIj7OqTwvdGV4dD48L3N2Zz4=" type="image/svg+xml"><title>AHS: the operational truth before closure</title><style>
+:root{--bg:#050712;--surface:#10152a;--elevated:#151d3c;--ink:#f2f5ff;--muted:#9ca9cf;--accent:#718cff;--accent-deep:#334aa3;--glow:#5974df;--soft:#161f45;--line:#344579;--status-passed:#718cff;--status-open:#9ca9cf;--status-blocked:#e27d71;--status-conditional:#d9af65;--display:'Segoe UI', Arial, sans-serif;--body:'Noto Sans Arabic', Arial, sans-serif}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7}.page{max-width:1360px;margin:auto;padding:0 clamp(22px,5vw,86px)}.hero{padding:22px 0 clamp(42px,7vw,82px);border-bottom:1px solid var(--line)}.hero-meta{display:flex;justify-content:space-between;align-items:center;gap:20px;color:var(--muted);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}.brandmark{color:var(--accent);font-weight:800}.document-label{font-weight:700}.hero-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(220px,.45fr);gap:clamp(30px,7vw,110px);align-items:end;margin-top:clamp(34px,6vw,70px)}.hero-copy{min-width:0}.eyebrow,.section-kicker{color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}h1,h2,h3{font-family:var(--display);line-height:1.14}h1{font-size:clamp(2.7rem,6.3vw,5.35rem);letter-spacing:-.045em;max-width:15ch;margin:10px 0 20px}.lede{max-width:64ch;color:var(--muted);font-size:1.06rem;margin:0}.summary-note{border-top:2px solid var(--accent);padding-top:13px;max-width:280px;color:var(--muted);font-size:.88rem}.summary-note h2{font-size:1.08rem;color:var(--ink);margin:0 0 7px}.summary-note p{margin:0}.document-grid{display:grid;grid-template-columns:minmax(210px,.36fr) minmax(0,1fr);gap:clamp(30px,6vw,96px);padding:0}.section{display:contents}.section-heading,.section-body{border-bottom:1px solid var(--line);padding:clamp(38px,6vw,72px) 0}.section-heading{grid-column:1;grid-row:auto;align-self:start}.section-body{grid-column:2;min-width:0}.section-heading h2{font-size:clamp(1.5rem,2.45vw,2.35rem);letter-spacing:-.025em;margin:10px 0 0;max-width:18ch}.copy{max-width:68ch;margin:0 0 18px}.copy--callout,.callout{border-inline-start:3px solid var(--accent);background:var(--soft);padding:16px 20px;margin:0 0 22px;max-width:72ch}.structured-title{font-family:var(--body);font-size:.78rem;color:var(--muted);font-weight:800;letter-spacing:.05em;margin:0 0 14px;text-transform:uppercase}.structured--facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--accent);margin:22px 0 0}.fact{padding:17px 18px 19px 0;border-bottom:1px solid var(--line);min-width:0}[dir="ltr"] .fact{padding-inline:0 18px}.fact dt{color:var(--muted);font-size:.78rem;margin-bottom:4px}.fact dd{font-size:1.06rem;font-weight:800;margin:0;overflow-wrap:anywhere}.fact small{display:block;color:var(--muted);font-size:.78rem;font-weight:400;margin-top:4px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;border-top:2px solid var(--accent);font-size:.94rem}th,td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}th{color:var(--muted);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}td:first-child{font-weight:700}.structured--comparison table{border-inline-start:3px solid var(--accent)}.structured--sequence ol,.structured--checklist ul,.structured--ledger ol{list-style:none;margin:0;padding:0}.structured--sequence li,.structured--checklist li{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;border-bottom:1px solid var(--line);padding:14px 0}.structured--sequence li::before{counter-increment:item;content:counter(item,decimal-leading-zero);color:var(--accent);font-size:1.05rem;font-weight:800}.structured--sequence ol{counter-reset:item}.structured--sequence li strong,.structured--checklist li strong{display:block}.structured--sequence li span,.structured--checklist li span{grid-column:2;color:var(--muted);font-size:.9rem}.structured--checklist li::before{content:"□";font-size:1.15rem;color:var(--accent)}.structured--risk{display:grid;gap:0;border-top:2px solid var(--accent)}.risk{display:grid;grid-template-columns:minmax(150px,.35fr) minmax(130px,.28fr) minmax(0,1fr);gap:18px;border-bottom:1px solid var(--line);padding:16px 0;align-items:start}.risk span{color:var(--accent);font-size:.84rem;font-weight:800}.risk p{color:var(--muted);margin:0}.structured--code,.technical-copy{background:var(--surface);border:1px solid var(--line);padding:18px 20px;overflow:auto}.structured--code{margin-top:18px}pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:.86rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;direction:ltr;text-align:left}.structured--ledger{border-top:2px solid var(--accent)}.structured--ledger li{display:grid;grid-template-columns:minmax(145px,.36fr) minmax(0,1fr);gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}.structured--ledger span{color:var(--muted)}footer{padding:22px 0 36px;color:var(--muted);font-size:.76rem;border-top:1px solid var(--line)}[dir="rtl"] .technical-copy,[dir="rtl"] .structured--code{direction:ltr;text-align:left}@media(max-width:820px){body{font-size:15px}.page{padding:0 18px}.hero{padding-bottom:38px}.hero-meta{align-items:flex-start;font-size:.62rem}.hero-grid{display:block;margin-top:34px}h1{font-size:clamp(2.45rem,12vw,4rem);max-width:17ch;margin-bottom:16px}.lede{font-size:.98rem}.summary-note{margin-top:30px;max-width:none}.document-grid{display:block}.section{display:block}.section-heading,.section-body{padding:34px 0}.section-heading{border-bottom:0;padding-bottom:9px}.section-heading h2{font-size:1.7rem;max-width:none}.section-body{padding-top:0}.structured--facts{grid-template-columns:repeat(2,minmax(0,1fr))}.fact{padding-inline:0 14px}.fact:nth-child(even){padding-inline:14px 0;border-inline-start:1px solid var(--line)}table{font-size:.88rem}table thead{display:none}table,tbody,tr,td{display:block;width:100%}tr{padding:10px 0;border-bottom:1px solid var(--line)}td{display:grid;grid-template-columns:minmax(100px,.34fr) minmax(0,1fr);gap:12px;padding:8px 0;border:0}td::before{content:attr(data-label);color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.risk{grid-template-columns:minmax(110px,.35fr) minmax(0,1fr);gap:8px 14px}.risk p{grid-column:1 / -1}.structured--ledger li{grid-template-columns:1fr;gap:3px}footer{padding-bottom:24px}}@media print{@page{size:A4;margin:15mm}html,body{background:#fff;color:#171717}:root{--surface:#fff;--bg:#fff;--ink:#171717;--muted:#555;--accent:#333;--soft:#f1f1f1;--line:#c8c8c8}.page{max-width:none;padding:0}.hero{padding:5mm 0 9mm}.hero-grid{margin-top:8mm}h1{font-size:30pt}.summary-note{max-width:230px}.document-grid{display:grid;grid-template-columns:28% 1fr;gap:10%}.section-heading,.section-body{padding:7mm 0}table{font-size:9pt}.table-wrap{overflow:visible}.structured--technical_annex{break-before:page}.structured--code,.technical-copy{background:#fff}footer{padding-top:6mm}}
+:root {--hud-radius-xl:30px;--hud-radius-lg:22px;--hud-radius-md:16px;--hud-shadow:0 26px 70px rgba(0,0,0,.28)}
+.omega-preloader {position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:var(--bg);color:var(--ink);transition:opacity .42s ease,visibility .42s ease}
+.omega-preloader--hidden {opacity:0;visibility:hidden;pointer-events:none}
+.omega-preloader__inner {position:relative;display:grid;justify-items:center;gap:10px;min-width:190px;padding:30px 34px 26px;border:1px solid color-mix(in srgb,var(--accent) 48%,var(--line));border-radius:var(--hud-radius-lg);background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 88%,var(--bg)),var(--surface));box-shadow:0 24px 70px rgba(0,0,0,.32),0 0 70px color-mix(in srgb,var(--accent) 12%,transparent);overflow:hidden;animation:omega-preloader-in .6s cubic-bezier(.2,.75,.25,1) both}
+.omega-preloader__inner::before {content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 0,color-mix(in srgb,var(--accent) 20%,transparent),transparent 58%)}
+.omega-preloader__mark,.omega-preloader__brand,.omega-preloader__name,.omega-preloader__rule {position:relative;z-index:1}
+.omega-preloader__mark {display:grid;place-items:center;width:58px;height:58px;border:1px solid var(--accent);border-radius:50%;color:var(--accent);font:700 2rem/1 Georgia,serif;box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 8%,transparent),0 0 34px color-mix(in srgb,var(--accent) 24%,transparent);animation:omega-preloader-pulse 1.8s ease-in-out infinite}
+.omega-preloader__brand {color:var(--ink);font-size:.78rem;font-weight:900;letter-spacing:.2em}
+.omega-preloader__name {color:var(--accent);font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.omega-preloader__rule {width:86px;height:2px;margin-top:5px;background:var(--line);overflow:hidden}
+.omega-preloader__rule span {display:block;width:42%;height:100%;background:var(--accent);animation:omega-preloader-progress 1.3s ease-in-out infinite}
+.hud-page {position:relative;isolation:isolate}
+.hud-page::before {content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.16;background:linear-gradient(90deg,transparent 49.9%,var(--accent) 50%,transparent 50.1%),linear-gradient(0deg,transparent 49.9%,var(--accent) 50%,transparent 50.1%);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
+.hud-page .page {position:relative;z-index:1}
+.hud-topbar {position:sticky;top:12px;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:18px;margin:18px 0 8px;padding:12px 16px;border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-radius:var(--hud-radius-lg);background:color-mix(in srgb,var(--surface) 88%,var(--bg));box-shadow:var(--hud-shadow);backdrop-filter:blur(16px);font-size:.72rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;animation:omega-topbar-in .55s cubic-bezier(.2,.75,.25,1) both}
+.hud-brand,.hud-topbar-meta {display:flex;align-items:center;gap:12px}
+.hud-brand > span {color:var(--accent);font-weight:900;letter-spacing:.16em}
+.hud-brand small {font-size:.64rem;color:var(--muted)}
+.hud-topbar-meta > span {padding-inline-start:12px;border-inline-start:1px solid var(--line)}
+.hud-topbar-meta .hud-status {color:var(--accent);font-weight:800}
+.hud-page .hero {padding:20px 0 34px;border:0}
+.hero-surface {position:relative;overflow:hidden;padding:clamp(24px,4vw,52px);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:var(--hud-radius-xl);background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 94%,var(--bg)),var(--surface));box-shadow:var(--hud-shadow);perspective:1200px;transform-style:preserve-3d;animation:omega-surface-in .75s cubic-bezier(.2,.75,.25,1) .08s both}
+.hero-surface::before {content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 82% 0,color-mix(in srgb,var(--accent) 16%,transparent),transparent 38%),linear-gradient(120deg,transparent 0 62%,color-mix(in srgb,var(--accent) 5%,transparent) 62% 62.2%,transparent 62.2%)}
+.hero-surface::after {content:"";position:absolute;top:-28%;inset-inline-end:-9%;width:54%;aspect-ratio:1.8;border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);border-radius:50%;transform:translate3d(0,0,18px) rotate(-14deg);pointer-events:none;opacity:.8;box-shadow:0 0 0 18px color-mix(in srgb,var(--accent) 3%,transparent),0 0 70px color-mix(in srgb,var(--accent) 10%,transparent)}
+.hero-surface > * {position:relative;z-index:1}
+.hud-page .hero-meta {margin-bottom:clamp(28px,4vw,48px)}
+.hud-page .hero-grid {margin-top:0;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:clamp(28px,6vw,88px)}
+.hud-page h1 {font-size:clamp(2.8rem,6.2vw,5.35rem);max-width:14ch;text-wrap:balance}
+.hud-page .summary-note {max-width:none;margin:0;padding:16px 18px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--soft) 74%,var(--surface));box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.hud-metrics {display:grid;grid-template-columns:minmax(130px,.4fr) repeat(4,minmax(0,1fr));gap:12px;margin-top:clamp(28px,5vw,54px);padding-top:18px;border-top:1px solid var(--line)}
+.hud-metrics-label {align-self:center;color:var(--accent);font-size:.68rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.hud-signal {min-height:92px;padding:14px 16px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 78%,transparent);display:flex;flex-direction:column;justify-content:center;gap:3px;transform:translateZ(0);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background-color .25s ease;animation:omega-signal-in .6s cubic-bezier(.2,.75,.25,1) both}
+.hud-signal:nth-child(2) {animation-delay:.18s}
+.hud-signal:nth-child(3) {animation-delay:.26s}
+.hud-signal:nth-child(4) {animation-delay:.34s}
+.hud-signal:nth-child(5) {animation-delay:.42s}
+.hud-signal:hover {transform:translate3d(0,-5px,18px) rotateX(1deg);border-color:var(--accent);background:color-mix(in srgb,var(--surface) 92%,var(--accent) 8%);box-shadow:0 18px 34px rgba(0,0,0,.22)}
+.hud-signal:focus-visible {outline:2px solid var(--accent);outline-offset:3px}
+.hud-signal-label {color:var(--muted);font-size:.7rem}
+.hud-signal strong {font-size:1.15rem;line-height:1.25;overflow-wrap:anywhere}
+.hud-signal small {color:var(--muted);font-size:.72rem}
+.hud-page .document-grid {padding-top:0}
+.hud-page .section--verdict .section-body {padding-top:clamp(30px,4vw,52px)}
+.hud-page .section--verdict .copy--callout {border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:var(--hud-radius-md);box-shadow:0 12px 28px rgba(0,0,0,.1)}
+.hud-page .structured--facts,.hud-page .structured--risk,.hud-page table {border-top-width:2px}
+.structured--facts .structured-title {grid-column:1 / -1;margin:0;padding:0 0 10px;line-height:1.4}
+.hud-page .structured--facts {padding-top:18px}
+.hud-page .fact {padding-block:14px 18px;line-height:1.55}
+.hud-page .fact dt {line-height:1.45}
+.hud-page .fact dd {line-height:1.4}
+@keyframes omega-topbar-in {from {opacity:0;transform:translateY(-10px)} to {opacity:1;transform:translateY(0)}}
+@keyframes omega-surface-in {from {opacity:0;transform:translateY(18px) rotateX(1.5deg)} to {opacity:1;transform:translateY(0) rotateX(0)}}
+@keyframes omega-signal-in {from {opacity:0;transform:translateY(12px) scale(.98)} to {opacity:1;transform:translateY(0) scale(1)}}
+@keyframes omega-preloader-in {from {transform:translateY(12px) scale(.96)} to {transform:translateY(0) scale(1)}}
+@keyframes omega-preloader-pulse {0%,100% {transform:scale(1);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 8%,transparent),0 0 34px color-mix(in srgb,var(--accent) 24%,transparent)}50% {transform:scale(1.04);box-shadow:0 0 0 11px color-mix(in srgb,var(--accent) 4%,transparent),0 0 48px color-mix(in srgb,var(--accent) 32%,transparent)}}
+@keyframes omega-preloader-progress {0% {transform:translateX(-140%)}50%,100% {transform:translateX(330%)}}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.01ms !important}
+  .hud-signal:hover {transform:none}
+}
+@media screen {
+  .hud-page .document-grid {display:block}
+  .hud-page .section {position:relative;display:grid;grid-template-columns:minmax(180px,.34fr) minmax(0,1fr);gap:clamp(22px,4vw,60px);margin:0 0 24px;padding:clamp(22px,3vw,34px);border:1px solid var(--line);border-radius:var(--hud-radius-lg);background:var(--surface);background:color-mix(in srgb,var(--surface) 88%,var(--bg));box-shadow:0 18px 42px rgba(0,0,0,.14);overflow:hidden}
+  .hud-page .section::before {content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.72}
+  .hud-page .section-heading,.hud-page .section-body {border:0;padding:0}
+  .hud-page .section-heading {align-self:start;position:relative;z-index:1}
+  .hud-page .section-body {min-width:0;position:relative;z-index:1}
+  .hud-page .section-heading h2 {margin-top:9px}
+  .hud-page .section--verdict {grid-template-columns:minmax(180px,.72fr) minmax(0,1.28fr);background:var(--soft);background:radial-gradient(circle at 100% 0,color-mix(in srgb,var(--accent) 12%,transparent),transparent 42%),var(--soft);border-color:color-mix(in srgb,var(--accent) 46%,var(--line));box-shadow:0 22px 52px rgba(0,0,0,.2)}
+  .hud-page .section--verdict .section-heading h2 {font-size:clamp(1.7rem,3vw,2.8rem)}
+  .hud-page .section--verdict .copy--callout {margin:0;border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 70%,transparent);box-shadow:0 12px 26px rgba(0,0,0,.14)}
+  .hud-page .section--key_fact {background:color-mix(in srgb,var(--surface) 96%,var(--accent) 4%)}
+  .hud-page .section--key_fact .structured--facts {padding:14px 18px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 78%,transparent);box-shadow:0 10px 24px rgba(0,0,0,.1)}
+  .hud-page .section--evidence_matrix .structured--table,.hud-page .section--evidence_matrix .structured--comparison {padding:16px 18px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 72%,transparent)}
+  .hud-page .section--evidence_matrix .structured--table table {border-top:0}
+  .hud-page .section--sequence {grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr);background:color-mix(in srgb,var(--surface) 80%,var(--accent) 4%)}
+  .hud-page .section--sequence .structured--sequence {padding:8px 18px;border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 82%,transparent)}
+  .hud-page .section--sequence .structured--sequence li {transition:padding-inline .22s ease,background-color .22s ease;border-radius:10px}
+  .hud-page .section--sequence .structured--sequence li:hover {padding-inline:10px;background:color-mix(in srgb,var(--accent) 7%,transparent)}
+  .hud-page .section--risk_register .risk {margin:10px 0 0;padding:14px 16px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 82%,transparent);transition:transform .22s ease,border-color .22s ease}
+  .hud-page .section--risk_register .risk:hover {transform:translateX(-4px);border-color:var(--accent)}
+  .hud-page .section--checklist .structured--checklist {padding:8px 18px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 82%,transparent)}
+  .hud-page .section--technical_annex {background:#0d1116;border-color:#26303a;box-shadow:0 22px 56px rgba(0,0,0,.28)}
+  .hud-page .section--technical_annex .section-heading h2 {color:var(--ink)}
+  .hud-page .section--technical_annex .technical-copy,.hud-page .section--technical_annex .structured--code {border-radius:var(--hud-radius-md);background:#070a0e;border-color:#303b47;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 12px 28px rgba(0,0,0,.22)}
+  .hud-page .section--technical_annex .structured--ledger {padding:14px 18px;border:1px solid #303b47;border-radius:var(--hud-radius-md);background:#11171e}
+  .hud-page .section--verdict {border-radius:var(--hud-radius-xl) 10px var(--hud-radius-xl) 10px;min-height:250px}
+  .hud-page .section--verdict .section-heading {padding-inline-end:12px}
+  .hud-page .structured--verdict {height:100%}
+  .verdict-readout {display:grid;gap:0;padding:4px 0;border-top:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));border-bottom:1px solid var(--line)}
+  .verdict-readout .structured-title {margin:0;padding:14px 0 6px}
+  .verdict-row {display:grid;grid-template-columns:minmax(120px,.65fr) minmax(0,1.35fr);gap:18px;padding:15px 0;border-top:1px solid var(--line);align-items:start}
+  .verdict-row span {color:var(--muted);font-size:.78rem}
+  .verdict-row strong {font-size:1rem;line-height:1.55}
+  .hud-page .section--comparison {grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);border-radius:10px var(--hud-radius-xl) 10px var(--hud-radius-xl);background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 7%,var(--surface)),var(--surface));border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+  .hud-page .section--comparison .section-heading h2 {font-size:clamp(1.65rem,2.7vw,2.5rem)}
+  .hud-page .section--comparison .section-body {display:flex;flex-direction:column;gap:18px}
+  .hud-page .section--comparison .structured--effort {height:auto}
+  .effort-snapshot {display:grid;gap:18px;height:auto}
+  .effort-snapshot .structured-title {margin:0}
+  .effort-baseline {display:grid;grid-template-columns:1fr auto;gap:3px 18px;align-items:center;padding:17px 20px;border:1px solid color-mix(in srgb,var(--accent) 48%,var(--line));border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--soft) 78%,var(--surface));box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .effort-baseline span {color:var(--muted);font-size:.75rem}
+  .effort-baseline strong {grid-row:span 2;color:var(--accent);font:700 clamp(1.7rem,3.5vw,2.7rem)/1 Georgia,'Noto Serif Arabic',serif;letter-spacing:-.04em}
+  .effort-baseline small {color:var(--ink);font-size:.82rem}
+  .mode-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .mode-card {position:relative;display:flex;flex-direction:column;min-height:190px;padding:17px 16px 16px;border:1px solid var(--line);border-top:2px solid var(--accent);background:color-mix(in srgb,var(--surface) 88%,transparent);box-shadow:0 12px 24px rgba(0,0,0,.15);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;background-color .25s ease;font:inherit;color:inherit;text-align:start;cursor:pointer}
+  .mode-card[aria-pressed="true"] {border-color:var(--accent);background:color-mix(in srgb,var(--accent) 11%,var(--elevated));box-shadow:0 18px 38px rgba(0,0,0,.24),0 0 28px color-mix(in srgb,var(--glow) 16%,transparent)}
+  .mode-card:nth-child(1) {border-radius:var(--hud-radius-md) 8px var(--hud-radius-md) 8px}
+  .mode-card:nth-child(2) {border-radius:8px var(--hud-radius-lg) 8px var(--hud-radius-lg);transform:translateY(-8px)}
+  .mode-card:nth-child(3) {border-radius:8px var(--hud-radius-md) 8px var(--hud-radius-md)}
+  .mode-card:hover,.mode-card:focus-within {transform:translateY(-8px) translateZ(16px);border-color:var(--accent);box-shadow:0 22px 36px rgba(0,0,0,.25);background-color:color-mix(in srgb,var(--surface) 96%,var(--accent) 4%)}
+  .mode-card:nth-child(2):hover {transform:translateY(-14px) translateZ(16px)}
+  .mode-index {color:var(--accent);font:800 .7rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em}
+  .mode-name {margin-top:13px;color:var(--muted);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .mode-value {margin-top:7px;font-size:1.25rem;line-height:1.25}
+  .mode-duration {margin-top:4px;font-size:.9rem;color:var(--ink)}
+  .mode-card p {margin:12px 0 0;color:var(--muted);font-size:.78rem;line-height:1.55}
+  .mode-state {margin-top:auto;padding-top:14px;color:var(--accent);font-size:.7rem;font-weight:800}
+  .hud-page .section--key_fact {border-radius:var(--hud-radius-xl) 12px var(--hud-radius-md) 12px;background:color-mix(in srgb,var(--surface) 92%,var(--accent) 8%)}
+  .hud-page .section--key_fact .section-body {display:grid;gap:18px}
+  .hud-page .structured--metrics {border:0}
+  .metric-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .metric-grid .structured-title {grid-column:1 / -1;margin:0;padding:0 0 7px}
+  .metric-card {position:relative;display:flex;flex-direction:column;min-height:148px;padding:17px 16px 15px;border:1px solid var(--line);border-radius:var(--hud-radius-md);background:color-mix(in srgb,var(--surface) 86%,transparent);box-shadow:0 14px 28px rgba(0,0,0,.14);transition:transform .25s ease,border-color .25s ease,background-color .25s ease}
+  .metric-card:nth-of-type(3n) {border-radius:8px var(--hud-radius-lg) 8px var(--hud-radius-md)}
+  .metric-card:hover {transform:translateY(-6px);border-color:var(--accent);background-color:color-mix(in srgb,var(--surface) 96%,var(--accent) 4%)}
+  .metric-label {color:var(--muted);font-size:.72rem;line-height:1.4}
+  .metric-value {margin-top:auto;color:var(--ink);font:700 clamp(2rem,4vw,3.1rem)/1 Georgia,'Noto Serif Arabic',serif;letter-spacing:-.055em;direction:ltr;text-align:start}
+  .metric-context {margin-top:5px;color:var(--accent);font-size:.76rem;line-height:1.45;min-height:1.4em}
+  .hud-page .section--key_fact .structured--facts {margin:0;grid-template-columns:repeat(2,minmax(0,1fr));padding:14px 18px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--surface) 72%,transparent)}
+  .hud-page .section--key_fact .structured--facts .structured-title {grid-column:1 / -1}
+  .hud-page .section--timeline {grid-template-columns:minmax(190px,.58fr) minmax(0,1.42fr);border-radius:12px var(--hud-radius-xl) var(--hud-radius-xl) 12px;background:radial-gradient(circle at 100% 0,color-mix(in srgb,var(--accent) 12%,transparent),transparent 35%),color-mix(in srgb,var(--surface) 92%,var(--bg));border-color:color-mix(in srgb,var(--accent) 42%,var(--line))}
+  .hud-page .section--timeline .section-heading h2 {font-size:clamp(1.6rem,2.8vw,2.6rem)}
+  .structured--timeline {height:100%}
+  .timeline-track {position:relative;padding:3px 0 3px 12px}
+  .timeline-track .structured-title {margin:0 0 13px}
+  .timeline-track ol {list-style:none;margin:0;padding:0}
+  .timeline-step {position:relative;display:grid;grid-template-columns:50px minmax(0,1fr);gap:16px;min-height:76px;padding:0 0 18px}
+  .timeline-step:not(:last-child)::after {content:"";position:absolute;top:37px;bottom:0;inset-inline-start:24px;width:1px;background:linear-gradient(var(--accent),var(--line))}
+  .timeline-marker {position:relative;z-index:1;display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--accent);border-radius:50%;background:var(--surface);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 8%,transparent)}
+  .timeline-marker span {color:var(--accent);font:800 .68rem/1 ui-monospace,SFMono-Regular,Menlo,monospace}
+  .timeline-step--blocked .timeline-marker {border-color:#d68c5e;box-shadow:0 0 0 5px rgba(214,140,94,.1)}
+  .timeline-step--blocked .status-indicator {color:#d68c5e}
+  .timeline-step--passed .timeline-marker {border-color:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 10%,transparent),0 0 22px color-mix(in srgb,var(--accent) 20%,transparent)}
+  .timeline-step--passed .status-indicator {color:var(--accent)}
+  .timeline-topline {display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+  .timeline-topline strong {font-size:1rem;line-height:1.4}
+  .status-indicator {color:var(--accent);font-size:.72rem;font-weight:800;white-space:nowrap}
+  .timeline-content p {margin:5px 0 0;color:var(--muted);font-size:.84rem;line-height:1.6}
+  .hud-page .section--identity {border-radius:var(--hud-radius-xl) 8px 8px var(--hud-radius-xl)}
+  .hud-page .section--operations {grid-template-columns:minmax(0,1.22fr) minmax(180px,.78fr);border-radius:8px var(--hud-radius-xl) 8px var(--hud-radius-xl);background:color-mix(in srgb,var(--surface) 94%,var(--accent) 6%)}
+  .hud-page .section--operations .section-heading {order:2;align-self:center;padding-inline-start:16px;border-inline-start:2px solid var(--accent)}
+  .hud-page .section--operations .section-body {order:1}
+  .hud-page .section--content {grid-template-columns:minmax(210px,.8fr) minmax(0,1.2fr);border-radius:var(--hud-radius-md) var(--hud-radius-xl) var(--hud-radius-md) var(--hud-radius-xl)}
+  .hud-page .section--content {display:block}
+  .hud-page .section--content .section-heading {display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .hud-page .section--content .section-heading h2 {margin:0;max-width:none}
+  .hud-page .section--content .section-body {max-width:980px;margin-inline-start:auto}
+  .hud-page .section--release {border-inline-start:4px solid var(--accent);border-radius:10px var(--hud-radius-xl) var(--hud-radius-xl) 10px;background:color-mix(in srgb,var(--soft) 62%,var(--surface))}
+  .hud-footer {display:flex;align-items:center;gap:12px;padding:28px 4px 34px;color:var(--muted);font-size:.76rem;border-top:1px solid var(--line)}
+  .footer-mark {display:grid;place-items:center;width:28px;height:28px;color:var(--accent);border:1px solid var(--accent);border-radius:50%;font:700 1rem/1 Georgia,serif}
+  .footer-note {margin-inline-start:auto;color:var(--muted);font-size:.7rem}
+}
+@media screen and (max-width:820px) {
+  .hud-topbar {align-items:flex-start;flex-direction:column;gap:8px;margin-top:10px}
+  .hud-topbar-meta {width:100%;justify-content:space-between}
+  .hud-page .hero {padding-top:12px}
+  .hero-surface {padding:22px 18px;border-radius:var(--hud-radius-lg)}
+  .hud-page .hero-meta {margin-bottom:28px}
+  .hud-page .hero-grid {display:block}
+  .hud-page h1 {font-size:clamp(2.45rem,11vw,4rem);max-width:15ch}
+  .hud-page .summary-note {margin-top:26px}
+  .hud-metrics {grid-template-columns:1fr 1fr}
+  .hud-metrics-label {grid-column:1 / -1}
+  .hud-signal {min-height:82px}
+  .hud-page .section {display:block;margin-bottom:16px;padding:20px 18px;border-radius:var(--hud-radius-lg)}
+  .hud-page .section-heading {margin-bottom:18px}
+  .hud-page .section--verdict .section-heading h2 {font-size:2rem}
+  .hud-page .section--sequence .section-heading {margin-bottom:14px}
+  .mode-grid {grid-template-columns:1fr}
+  .mode-card:nth-child(2) {transform:none}
+  .mode-card:nth-child(2):hover {transform:translateY(-8px)}
+  .metric-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .metric-card {min-height:132px}
+  .metric-value {font-size:2.35rem}
+  .verdict-row {grid-template-columns:1fr;gap:5px}
+  .timeline-topline {display:block}
+  .status-indicator {display:block;margin-top:4px}
+  .hud-footer {align-items:flex-start;flex-wrap:wrap}
+  .footer-note {width:100%;margin-inline-start:40px}
+}
+@media print {
+  .omega-preloader {display:none !important}
+  .hud-page::before {display:none}
+  .hud-topbar {position:static;margin:0 0 5mm;box-shadow:none;border-radius:0;background:#fff;color:#444;backdrop-filter:none;animation:none}
+  .hero-surface {padding:5mm;border-radius:0;box-shadow:none;background:#fff;perspective:none;transform:none;animation:none}
+  .hero-surface::after {display:none}
+  .hud-signal {border-radius:0;box-shadow:none;background:#fff}
+}
+
+@media screen {
+  .scroll-progress {position:fixed;inset:0 0 auto;z-index:100;width:100%;height:2px;pointer-events:none;background:linear-gradient(90deg,var(--accent) var(--scroll-progress,0%),transparent 0);box-shadow:0 0 18px var(--glow)}
+  .landing-hero .hero-surface {background:radial-gradient(circle at 86% 8%,color-mix(in srgb,var(--glow) 30%,transparent),transparent 34%),linear-gradient(145deg,color-mix(in srgb,var(--elevated) 82%,var(--surface)),var(--surface));border-color:color-mix(in srgb,var(--accent) 42%,var(--line))}
+  .landing-hero .hero-grid {grid-template-columns:minmax(0,1.4fr) minmax(270px,.6fr);align-items:stretch}
+  .landing-hero .hero-copy {display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+  html[dir="rtl"] .landing-hero .hero-copy {align-items:flex-start}
+  html[lang="ar"] .landing-hero h1 {font-size:clamp(3.15rem,6.6vw,6.15rem);max-width:12ch;line-height:1.06;text-wrap:balance}
+  html[lang="en"] .landing-hero h1 {font-size:clamp(2.9rem,5.7vw,5.55rem);max-width:14ch;line-height:1.02;text-wrap:balance}
+  .hero-status-panel {position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:100%;padding:22px;border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-radius:28px 12px 28px 12px;background:linear-gradient(155deg,color-mix(in srgb,var(--elevated) 92%,var(--accent) 8%),color-mix(in srgb,var(--surface) 90%,transparent));box-shadow:0 22px 52px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.05)}
+  .hero-status-panel::before {content:"";width:46px;height:3px;margin-bottom:36px;border-radius:9px;background:var(--accent);box-shadow:0 0 22px var(--glow)}
+  .hero-status-panel h2 {margin:0 0 10px;font-size:clamp(1.15rem,2vw,1.55rem)}
+  .hero-status-panel p {margin:0;color:var(--muted);font-size:.92rem;line-height:1.8}
+  .hero-status-panel__state {display:inline-flex;align-items:center;gap:8px;margin-top:26px;color:var(--status-conditional);font-size:.72rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+  .hero-status-panel__state::before {content:"◐";display:grid;place-items:center;width:25px;height:25px;border:1px solid currentColor;border-radius:50%}
+  .section-nav {display:flex;align-items:center;gap:6px;margin-top:24px;padding:6px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--surface) 84%,transparent);overflow-x:auto;scrollbar-width:none}
+  .section-nav a {display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;color:var(--muted);font-size:.74rem;font-weight:800;text-decoration:none;white-space:nowrap;transition:color .2s ease,background-color .2s ease,transform .2s ease}
+  .section-nav a:hover,.section-nav a:focus-visible {color:var(--ink);background:color-mix(in srgb,var(--accent) 14%,var(--surface));transform:translateY(-1px)}
+  .section-nav a:focus-visible {outline:2px solid var(--accent);outline-offset:2px}
+  .evidence-chapter {padding:2px}
+  .requirement-list {display:grid;gap:10px}
+  .requirement-row {position:relative;display:grid;grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr);gap:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--elevated) 82%,var(--surface));box-shadow:0 10px 26px rgba(0,0,0,.12);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+  .requirement-row:hover {transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 58%,var(--line));box-shadow:0 18px 34px rgba(0,0,0,.2)}
+  .requirement-row__title {display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+  .requirement-row__title strong {font-size:.94rem;line-height:1.55}
+  .requirement-row p {margin:0;color:var(--muted);font-size:.86rem;line-height:1.75}
+  .status-chip {display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border:1px solid currentColor;border-radius:999px;font-size:.67rem;font-weight:900;line-height:1.2}
+  .status-chip--passed,.timeline-step--passed .status-indicator {color:var(--status-passed)}
+  .status-chip--open,.timeline-step--open .status-indicator {color:var(--status-open)}
+  .status-chip--blocked,.timeline-step--blocked .status-indicator {color:var(--status-blocked)}
+  .status-chip--conditional,.timeline-step--conditional .status-indicator {color:var(--status-conditional)}
+  .timeline-step--passed .timeline-marker {border-color:var(--status-passed)}
+  .timeline-step--open .timeline-marker {border-color:var(--status-open)}
+  .timeline-step--blocked .timeline-marker {border-color:var(--status-blocked)}
+  .timeline-step--conditional .timeline-marker {border-color:var(--status-conditional)}
+  .reveal-enabled [data-reveal] {opacity:.92;transform:translateY(12px);filter:saturate(.88);transition:opacity .65s cubic-bezier(.2,.75,.25,1),transform .65s cubic-bezier(.2,.75,.25,1),filter .65s ease}
+  .reveal-enabled [data-reveal].is-visible {opacity:1;transform:none;filter:none}
+}
+@media screen and (max-width:820px) {
+  .landing-hero .hero-grid {display:grid;grid-template-columns:1fr;gap:22px}
+  html[lang="ar"] .landing-hero h1 {font-size:clamp(2.55rem,11vw,4.1rem);max-width:13ch}
+  html[lang="en"] .landing-hero h1 {font-size:clamp(2.35rem,10vw,3.8rem);max-width:15ch}
+  .hero-status-panel {min-height:0;border-radius:20px 9px 20px 9px}
+  .hero-status-panel::before {margin-bottom:18px}
+  .section-nav {border-radius:16px;justify-content:flex-start}
+  .requirement-row {grid-template-columns:1fr;gap:10px;padding:16px;border-radius:16px}
+}
+@media (prefers-reduced-motion:reduce) {
+  .reveal-enabled [data-reveal] {opacity:1;transform:none;transition:none}
+  .scroll-progress {display:none}
+}
+/* profile-geometry--reveal-panels */
+@media screen{.page{max-width:1320px}.document-grid{display:block}.section{display:block;width:94%;margin:0 0 24px}.section:nth-child(even){margin-inline-start:auto}.section-heading,.section-body{padding-block:26px}.section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:22px;border-bottom:1px solid var(--accent)}.section-heading h2{max-width:none;margin:0}.section-body{padding-inline:clamp(10px,3vw,38px)}}
+@media screen {
+  html {scroll-behavior:smooth}
+  .hud-page .section {scroll-margin-top:104px}
+  .landing-hero {padding-top:clamp(18px,3vw,34px)}
+  .landing-hero .hero-surface {min-height:clamp(520px,63vh,720px);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(30px,5vw,68px);border-radius:36px 36px 14px 36px;background:radial-gradient(circle at 88% 12%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 31%),linear-gradient(145deg,color-mix(in srgb,var(--surface) 95%,var(--bg)),var(--surface));box-shadow:0 30px 90px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.045)}
+  .landing-hero .hero-grid {align-items:center;gap:clamp(34px,8vw,126px)}
+  .landing-hero .hero-copy {max-width:920px}
+  .landing-hero h1 {font-size:clamp(3rem,7.3vw,6.6rem);max-width:11ch;letter-spacing:-.06em}
+  .landing-hero .lede {max-width:58ch;font-size:clamp(1rem,1.3vw,1.18rem);line-height:1.9}
+  .hero-cta {display:inline-flex;align-items:center;gap:12px;margin-top:clamp(26px,4vw,42px);padding:12px 18px 12px 20px;border:1px solid color-mix(in srgb,var(--accent) 68%,var(--line));border-radius:999px;color:var(--ink);background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 19%,var(--surface)),color-mix(in srgb,var(--surface) 88%,transparent));box-shadow:0 12px 28px rgba(0,0,0,.2),0 0 30px color-mix(in srgb,var(--accent) 10%,transparent);font-size:.82rem;font-weight:900;text-decoration:none;transition:transform .25s ease,background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+  .hero-cta span {display:grid;place-items:center;width:25px;height:25px;border:1px solid var(--accent);border-radius:50%;color:var(--accent);font-size:1rem;line-height:1;transition:transform .25s ease}
+  .hero-cta:hover,.hero-cta:focus-visible {transform:translateY(-4px);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 19%,var(--surface));box-shadow:0 18px 34px rgba(0,0,0,.28),0 0 38px color-mix(in srgb,var(--accent) 15%,transparent)}
+  .hero-cta:hover span,.hero-cta:focus-visible span {transform:translate(3px,-2px)}
+  .hero-cta:focus-visible {outline:2px solid var(--accent);outline-offset:4px}
+  .landing-hero .hud-metrics {margin-top:clamp(34px,5vw,66px)}
+  .hud-page .section--key_fact {border-radius:14px 34px 14px 34px;background:linear-gradient(125deg,color-mix(in srgb,var(--surface) 95%,var(--accent) 5%),var(--surface))}
+  .hud-page .section--timeline {border-radius:34px 14px 34px 14px;padding-block:clamp(28px,4vw,44px);background:radial-gradient(circle at 4% 50%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 30%),color-mix(in srgb,var(--surface) 92%,var(--bg))}
+  .hud-page .section--evidence_matrix:nth-of-type(4) {border-radius:14px 34px 14px 14px}
+  .hud-page .section--evidence_matrix:nth-of-type(5) {border-radius:34px 14px 14px 34px;background:color-mix(in srgb,var(--surface) 94%,var(--accent) 6%)}
+  .hud-page .section--evidence_matrix:nth-of-type(6) {border-radius:14px 14px 34px 14px}
+  .hud-page .section--evidence_matrix:nth-of-type(7) {border-radius:14px 34px 34px 14px}
+  .hud-page .section--timeline .timeline-step {transition:transform .25s ease}
+  .hud-page .section--timeline .timeline-step:hover {transform:translateX(-4px)}
+}
+@media screen and (max-width:820px) {
+  .landing-hero .hero-surface {min-height:0;padding:26px 20px;border-radius:26px 26px 12px 26px}
+  .landing-hero h1 {font-size:clamp(2.7rem,12vw,4.5rem);max-width:12ch}
+  .landing-hero .lede {line-height:1.8}
+  .hero-cta {margin-top:26px}
+  .hud-page .section--timeline,.hud-page .section--evidence_matrix {border-radius:var(--hud-radius-lg)}
+}
+
+@media screen{.hero-grid{margin-top:clamp(28px,4vw,52px)}h1{font-size:clamp(2.45rem,5.2vw,4.6rem);max-width:21ch}.document-grid--proposal .section-heading,.document-grid--proposal .section-body{padding-block:clamp(28px,4vw,48px)}.document-grid--proposal .section-heading h2{font-size:clamp(1.35rem,2vw,2rem)} } @media screen and (max-width:820px){h1{font-size:clamp(2.1rem,10vw,3.35rem);max-width:19ch}.hero{padding-bottom:32px} } @media print{.document-grid{display:block}.section{display:grid;grid-template-columns:28% 1fr;gap:10%;break-inside:avoid}.section-heading,.section-body{grid-column:auto;grid-row:auto} }</style></head><body><div class="scroll-progress" aria-hidden="true"></div><div id="omega-preloader" class="omega-preloader" role="status" aria-live="polite" aria-label="Loading Omega">
+  <div class="omega-preloader__inner">
+    <div class="omega-preloader__mark" aria-hidden="true"><span>Ω</span></div>
+    <div class="omega-preloader__brand">Ω OMEGA</div>
+    <div class="omega-preloader__name">Jemy</div>
+    <div class="omega-preloader__rule" aria-hidden="true"><span></span></div>
+  </div>
+</div>
+<script>
+(() => {
+  const preloader = document.getElementById("omega-preloader");
+  const startedAt = performance.now();
+  const minimumVisibleMs = 1200;
+  const dismiss = () => {
+    document.documentElement.classList.add("omega-ready");
+    if (!preloader) return;
+    preloader.classList.add("omega-preloader--hidden");
+    window.setTimeout(() => preloader.remove(), 520);
+  };
+  const ready = () => {
+    const remaining = Math.max(0, minimumVisibleMs - (performance.now() - startedAt));
+    window.setTimeout(() => window.requestAnimationFrame(dismiss), remaining);
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ready, {once: true});
+  } else {
+    ready();
+  }
+})();
+</script><div class="page hud-page"><div class="hud-topbar"><div class="hud-brand"><span>Ω OMEGA</span><small>HINTS CORE · Executive surface</small></div><div class="hud-topbar-meta"><span class="hud-status">Evidence-led</span></div></div><header class="hero hero--audit landing-hero"><div class="hero-surface"><div class="hero-meta"><span class="brandmark">Ω OMEGA</span><span class="document-label">Operational review</span></div><div class="hero-grid"><div class="hero-copy"><h1 data-copy-id="COPY.AHS.HEADLINE" data-claim-id="AHS.FACT.PROJECT_POSTURE" data-copy-ref="COPY.AHS.HEADLINE"><span class="trace-marker" data-claim-id="AHS.FACT.PROJECT_POSTURE" aria-hidden="true"></span>AHS: the operational truth before closure</h1><p class="lede" data-copy-id="COPY.AHS.SUBHEAD" data-claim-id="AHS.FACT.PROJECT_POSTURE AHS.FACT.OBSERVATION_BOUNDARY" data-copy-ref="COPY.AHS.SUBHEAD"><span class="trace-marker" data-claim-id="AHS.FACT.PROJECT_POSTURE" aria-hidden="true"></span><span class="trace-marker" data-claim-id="AHS.FACT.OBSERVATION_BOUNDARY" aria-hidden="true"></span>The local reading makes the observed state clear. Production closure still waits for decisive acceptance tests.</p><a class="hero-cta" href="#timeline">Review closure path<span aria-hidden="true">↗</span></a><nav class="section-nav" aria-label="Page sections"><a href="#effort">Effort</a><a href="#facts">Facts</a><a href="#timeline">Timeline</a><a href="#identity">Evidence</a></nav></div><aside class="hero-status-panel"><div><h2>Public status</h2><p>The observed scene is readable; production closure still depends on conditional acceptance gates.</p></div><span class="hero-status-panel__state">Conditional closure</span></aside></div><div class="hud-metrics"><div class="hud-metrics-label">Evidence at a glance</div><div class="hud-signal" data-claim-id="AHS.FACT.LEGACY_USERS"><span class="hud-signal-label">Legacy record</span><strong>20,789 legacy users</strong></div><div class="hud-signal" data-claim-id="AHS.FACT.CURRENT_USERS"><span class="hud-signal-label">Current record</span><strong>71 current users</strong></div><div class="hud-signal" data-claim-id="AHS.FACT.NATIONAL_ID_OVERLAP"><span class="hud-signal-label">Overlap candidates</span><strong>28 in National_ID</strong></div><div class="hud-signal" data-claim-id="AHS.FACT.NEWS_ROWS"><span class="hud-signal-label">News records</span><strong>62 records</strong></div></div></div></header><main class="document-grid document-grid--audit"><section class="section section--comparison" id="effort" data-section-id="effort" data-presentation-intent="comparison" data-visual-treatment="mode-snapshot" data-reveal="section"><div class="section-heading"><div class="section-kicker">Comparison</div><h2>Effort changes calendar time, not the acceptance standard</h2></div><div class="section-body"><p class="copy copy--paragraph intent--comparison" data-copy-id="COPY.AHS.EFFORT" data-claim-id="AHS.FACT.BASELINE_HOURS AHS.FACT.EFFORT_MODES" data-copy-ref="COPY.AHS.EFFORT"><span class="trace-marker" data-claim-id="AHS.FACT.BASELINE_HOURS" aria-hidden="true"></span><span class="trace-marker" data-claim-id="AHS.FACT.EFFORT_MODES" aria-hidden="true"></span>The current 120h total is a planning baseline for the discovered scope, not a guaranteed date. Light is about 6h/day, Medium about 10h/day, and Hard about 12h/day peak; external waiting time is added rather than compressed.</p><div class="structured structured--effort" data-structured-id="STRUCT.AHS.EFFORT" data-claim-id="AHS.FACT.EFFORT_MODES"><div class="effort-snapshot"><h3 class="structured-title">Three pace options</h3><div class="effort-baseline"><span>Planning baseline</span><strong>120h</strong><small>The acceptance standard stays fixed as the pace changes</small></div><div class="mode-grid"><button type="button" class="mode-card mode-card--light" aria-pressed="false" data-claim-id="AHS.FACT.EFFORT_MODES"><span class="mode-index">01</span><span class="mode-name">Light</span><strong class="mode-value">≈ 6h/day</strong><span class="mode-duration">≈ 20 working days</span><p>Lighter pace; the acceptance standard stays fixed.</p><span class="mode-state">Conditional</span></button><button type="button" class="mode-card mode-card--medium" aria-pressed="true" data-claim-id="AHS.FACT.EFFORT_MODES"><span class="mode-index">02</span><span class="mode-name">Medium</span><strong class="mode-value">≈ 10h/day</strong><span class="mode-duration">≈ 12 working days</span><p>Tighter coordination; the acceptance standard stays fixed.</p><span class="mode-state">Conditional</span></button><button type="button" class="mode-card mode-card--hard" aria-pressed="false" data-claim-id="AHS.FACT.EFFORT_MODES"><span class="mode-index">03</span><span class="mode-name">Hard</span><strong class="mode-value">≈ 12h/day peak</strong><span class="mode-duration">≈ 10 working days</span><p>Higher pressure; waiting time does not disappear.</p><span class="mode-state">Conditional</span></button></div></div></div></div></section><section class="section section--key_fact" id="facts" data-section-id="facts" data-presentation-intent="key_fact" data-visual-treatment="metrics" data-reveal="section"><div class="section-heading"><div class="section-kicker">Key facts</div><h2>Numbers that shape closure scope</h2></div><div class="section-body"><p class="copy copy--paragraph intent--key_fact" data-copy-id="COPY.AHS.FACTS" data-copy-ref="COPY.AHS.FACTS">The gap between the two user records, together with content and relationship volume, sets the verification load before closure.</p><div class="structured structured--metrics" data-structured-id="STRUCT.AHS.FACTS"><div class="metric-grid"><h3 class="structured-title">Operational scene</h3><article class="metric-card" data-metric-value="20,789" data-claim-id="AHS.FACT.LEGACY_USERS"><span class="metric-label">Legacy record</span><strong class="metric-value">20,789</strong><span class="metric-context">legacy users</span></article><article class="metric-card" data-metric-value="71" data-claim-id="AHS.FACT.CURRENT_USERS"><span class="metric-label">Current record</span><strong class="metric-value">71</strong><span class="metric-context">current users</span></article><article class="metric-card" data-metric-value="28" data-claim-id="AHS.FACT.NATIONAL_ID_OVERLAP"><span class="metric-label">Overlap candidates</span><strong class="metric-value">28</strong><span class="metric-context">in National_ID</span></article><article class="metric-card" data-metric-value="62" data-claim-id="AHS.FACT.NEWS_ROWS"><span class="metric-label">News records</span><strong class="metric-value">62</strong><span class="metric-context">records</span></article><article class="metric-card" data-metric-value="227" data-claim-id="AHS.FACT.ACADEMIES_BRANCHES"><span class="metric-label">Academies</span><strong class="metric-value">227</strong><span class="metric-context">academies</span></article><article class="metric-card" data-metric-value="24" data-claim-id="AHS.FACT.ACADEMIES_BRANCHES"><span class="metric-label">Branches</span><strong class="metric-value">24</strong><span class="metric-context">branches</span></article><article class="metric-card" data-metric-value="120h" data-claim-id="AHS.FACT.BASELINE_HOURS"><span class="metric-label">Planning baseline</span><strong class="metric-value">120h</strong><span class="metric-context">planning baseline</span></article></div></div></div></section><section class="section section--timeline" id="timeline" data-section-id="timeline" data-presentation-intent="timeline" data-visual-treatment="timeline" data-reveal="section"><div class="section-heading"><div class="section-kicker">Conditional timeline</div><h2>The closure path follows evidence, not assumed dates</h2></div><div class="section-body"><div class="structured structured--timeline" data-structured-id="STRUCT.AHS.TIMELINE" data-claim-id="AHS.FACT.PROJECT_POSTURE"><div class="timeline-track"><h3 class="structured-title">No assumed dates; each stage waits for its evidence</h3><ol><li class="timeline-step timeline-step--passed" data-state="passed" data-claim-id="AHS.FACT.PROJECT_POSTURE AHS.FACT.OBSERVATION_BOUNDARY"><span class="timeline-marker"><span>01</span></span><div class="timeline-content"><div class="timeline-topline"><strong>Observed scene</strong><span class="status-indicator">✓ Passed</span></div><p>Server, code, and data are readable and reconciled.</p></div></li><li class="timeline-step timeline-step--open" data-state="open" data-claim-id="AHS.REQUIREMENT.01 AHS.REQUIREMENT.04"><span class="timeline-marker"><span>02</span></span><div class="timeline-content"><div class="timeline-topline"><strong>Identity and access</strong><span class="status-indicator">○ Open</span></div><p>Role tests and reconciliation between the two records are not accepted yet.</p></div></li><li class="timeline-step timeline-step--blocked" data-state="blocked" data-claim-id="AHS.REQUIREMENT.12 AHS.FACT.MIGRATION_TARGET"><span class="timeline-marker"><span>03</span></span><div class="timeline-content"><div class="timeline-topline"><strong>Recovery and migration</strong><span class="status-indicator">! Blocked</span></div><p>Recovery, reconciliation, and rollback are not proven; the new server target is unknown.</p></div></li><li class="timeline-step timeline-step--conditional" data-state="conditional" data-claim-id="AHS.REQUIREMENT.24"><span class="timeline-marker"><span>04</span></span><div class="timeline-content"><div class="timeline-topline"><strong>Closure sign-off</strong><span class="status-indicator">◐ Conditional</span></div><p>Sign-off waits for the acceptance gates to clear.</p></div></li></ol></div></div></div></section><section class="section section--evidence_matrix" id="identity" data-section-id="identity" data-presentation-intent="evidence_matrix" data-visual-treatment="matrix" data-reveal="section"><div class="section-heading"><div class="section-kicker">Evidence matrix</div><h2>Identity and access</h2></div><div class="section-body"><div class="evidence-chapter" data-structured-id="STRUCT.AHS.IDENTITY"><h3 class="structured-title">Status as described by the evidence</h3><div class="requirement-list"><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.01" data-copy-ref="COPY.AHS.REQUIREMENT.01"><div class="requirement-row__title"><strong>01 · User search and admin permissions</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>Search paths and identifier fields are present; role and 403 behavior are not tested.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.04" data-copy-ref="COPY.AHS.REQUIREMENT.04"><div class="requirement-row__title"><strong>04 · Current member login</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>The observed populations are 20,789 legacy users and 71 current users; login compatibility is untested.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.05" data-copy-ref="COPY.AHS.REQUIREMENT.05"><div class="requirement-row__title"><strong>05 · Registration stability and verification messages</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>Local registration paths and tests exist; production error and negative states remain unresolved.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.06" data-copy-ref="COPY.AHS.REQUIREMENT.06"><div class="requirement-row__title"><strong>06 · Login by membership or card number</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>The current login contract covers phone, email, or username; membership and card-number login are not proven.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.13" data-copy-ref="COPY.AHS.REQUIREMENT.13"><div class="requirement-row__title"><strong>13 · Legacy-user activation and duplicate prevention</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>An activation service exists; identity proof and duplicate-membership prevention are not proven.</p></article><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.15" data-copy-ref="COPY.AHS.REQUIREMENT.15"><div class="requirement-row__title"><strong>15 · Membership number in the profile</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>The Serial field and display path exist; real-member rendering and data isolation are untested.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.16" data-copy-ref="COPY.AHS.REQUIREMENT.16"><div class="requirement-row__title"><strong>16 · Password recovery</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>The legacy recovery path is broken; a complete replacement flow is not shown.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.17" data-copy-ref="COPY.AHS.REQUIREMENT.17"><div class="requirement-row__title"><strong>17 · Blocklist</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>No local blocklist implementation was found; matching rules and change history need approval.</p></article></div></div></div></section><section class="section section--evidence_matrix" id="operations" data-section-id="operations" data-presentation-intent="evidence_matrix" data-visual-treatment="matrix" data-reveal="section"><div class="section-heading"><div class="section-kicker">Evidence matrix</div><h2>Requests, queues, and exports</h2></div><div class="section-body"><div class="evidence-chapter" data-structured-id="STRUCT.AHS.OPERATIONS"><h3 class="structured-title">Status as described by the evidence</h3><div class="requirement-list"><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.02" data-copy-ref="COPY.AHS.REQUIREMENT.02"><div class="requirement-row__title"><strong>02 · QR code export</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>Legacy and current QR data are present; single, batch, and full export are not proven.</p></article><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.09" data-copy-ref="COPY.AHS.REQUIREMENT.09"><div class="requirement-row__title"><strong>09 · Service requests in the admin panel</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>Recent request tables exist; each request family’s admin visibility is not tested.</p></article><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.10" data-copy-ref="COPY.AHS.REQUIREMENT.10"><div class="requirement-row__title"><strong>10 · Request workflow and rejection reason</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>Accept/reject tools exist; rejection reason and app state reflection remain open.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.19" data-copy-ref="COPY.AHS.REQUIREMENT.19"><div class="requirement-row__title"><strong>19 · Queue cards and navigation</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>Queue sources and routes exist; role matrix and waiting cards are not accepted live.</p></article><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.20" data-copy-ref="COPY.AHS.REQUIREMENT.20"><div class="requirement-row__title"><strong>20 · User export to Excel</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>User export exists in source; admin control, permissions, and filters are untested.</p></article></div></div></div></section><section class="section section--evidence_matrix" id="content" data-section-id="content" data-presentation-intent="evidence_matrix" data-visual-treatment="matrix" data-reveal="section"><div class="section-heading"><div class="section-kicker">Evidence matrix</div><h2>Content and relationships</h2></div><div class="section-body"><div class="evidence-chapter" data-structured-id="STRUCT.AHS.CONTENT"><h3 class="structured-title">Status as described by the evidence</h3><div class="requirement-list"><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.03" data-copy-ref="COPY.AHS.REQUIREMENT.03"><div class="requirement-row__title"><strong>03 · News and pagination</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>62 news rows are present; boundary and pagination behavior remain open.</p></article><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.07" data-copy-ref="COPY.AHS.REQUIREMENT.07"><div class="requirement-row__title"><strong>07 · Store inside the admin panel</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>Store code exists, but production product, seller, and order tables are empty; scope needs a decision.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.11" data-copy-ref="COPY.AHS.REQUIREMENT.11"><div class="requirement-row__title"><strong>11 · Academy-to-branch linking</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>227 academies and 24 branches are observed with no orphan in the focused check; full-surface relationship acceptance is open.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.14" data-copy-ref="COPY.AHS.REQUIREMENT.14"><div class="requirement-row__title"><strong>14 · Terms and conditions</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>Terms acceptance UI exists; approved legal copy, versioning, and production binding remain open.</p></article><article class="requirement-row" data-state="passed" data-claim-id="AHS.REQUIREMENT.18" data-copy-ref="COPY.AHS.REQUIREMENT.18"><div class="requirement-row__title"><strong>18 · Admin-panel assets</strong><span class="status-chip status-chip--passed"><span aria-hidden="true">✓</span> Passed</span></div><p>Storage and media paths exist; permissioned visual acceptance has not been run.</p></article><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.21" data-copy-ref="COPY.AHS.REQUIREMENT.21"><div class="requirement-row__title"><strong>21 · Marketing and app slides</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>Marketing module and slide assets exist; production data and panel-to-app flow are not proven.</p></article></div></div></div></section><section class="section section--evidence_matrix" id="release" data-section-id="release" data-presentation-intent="evidence_matrix" data-visual-treatment="matrix" data-reveal="section"><div class="section-heading"><div class="section-kicker">Evidence matrix</div><h2>Integration, migration, and handover</h2></div><div class="section-body"><div class="copy copy--callout intent--evidence_matrix callout" data-copy-id="COPY.AHS.MIGRATION_BOUNDARY" data-claim-id="AHS.REQUIREMENT.12 AHS.FACT.MIGRATION_TARGET" data-copy-ref="COPY.AHS.MIGRATION_BOUNDARY"><span class="trace-marker" data-claim-id="AHS.REQUIREMENT.12" aria-hidden="true"></span><span class="trace-marker" data-claim-id="AHS.FACT.MIGRATION_TARGET" aria-hidden="true"></span>The requirements mention migration from the old server to a new production server. The available package does not identify, describe, or provide an access point for that server, so the migration target remains unknown.</div><div class="evidence-chapter" data-structured-id="STRUCT.AHS.RELEASE"><h3 class="structured-title">Status as described by the evidence</h3><div class="requirement-list"><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.08" data-copy-ref="COPY.AHS.REQUIREMENT.08"><div class="requirement-row__title"><strong>08 · Notifications and delivery lifecycle</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>Notification read paths exist; provider, device, and token lifecycle are not proven.</p></article><article class="requirement-row" data-state="blocked" data-claim-id="AHS.REQUIREMENT.12" data-copy-ref="COPY.AHS.REQUIREMENT.12"><div class="requirement-row__title"><strong>12 · Backup and migration</strong><span class="status-chip status-chip--blocked"><span aria-hidden="true">!</span> Blocked</span></div><p>Backup and migration are in scope, but restore, reconciliation, and rollback acceptance remain open.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.22" data-copy-ref="COPY.AHS.REQUIREMENT.22"><div class="requirement-row__title"><strong>22 · Old/current admin-panel comparison</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>No signed acceptance list compares pages, actions, permissions, and exceptions across panels.</p></article><article class="requirement-row" data-state="open" data-claim-id="AHS.REQUIREMENT.23" data-copy-ref="COPY.AHS.REQUIREMENT.23"><div class="requirement-row__title"><strong>23 · App, admin panel, API, and infrastructure review</strong><span class="status-chip status-chip--open"><span aria-hidden="true">○</span> Open</span></div><p>App, admin, API, and infrastructure review remains open for full acceptance.</p></article><article class="requirement-row" data-state="conditional" data-claim-id="AHS.REQUIREMENT.24" data-copy-ref="COPY.AHS.REQUIREMENT.24"><div class="requirement-row__title"><strong>24 · Closure and handover report</strong><span class="status-chip status-chip--conditional"><span aria-hidden="true">◐</span> Passed in part</span></div><p>The evidence and status package exists; closure sign-off waits for acceptance gates.</p></article></div></div></div></section></main><footer class="hud-footer"><span class="footer-mark">Ω</span><span>AHS · independent operational review</span><span class="footer-note">Decision built on what can be proven</span></footer></div><script>
+(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nodes = [...document.querySelectorAll('[data-reveal]')];
+  if (!reduced && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('reveal-enabled');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {rootMargin: '0px 0px -8% 0px', threshold: 0.08});
+    nodes.forEach((node) => observer.observe(node));
+  }
+  const updateProgress = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.min(100, Math.max(0, window.scrollY / max * 100)) : 0;
+    document.documentElement.style.setProperty('--scroll-progress', `${progress}%`);
+  };
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, {passive: true});
+  document.querySelectorAll('.mode-card').forEach((card) => card.addEventListener('click', () => {
+    document.querySelectorAll('.mode-card').forEach((item) => item.setAttribute('aria-pressed', 'false'));
+    card.setAttribute('aria-pressed', 'true');
+  }));
+})();
+</script></body></html>

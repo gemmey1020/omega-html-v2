@@ -1,0 +1,20 @@
+{
+  "audience": "decision maker or delivery owner",
+  "document_intent": "audit_report",
+  "surface_profile": "omega-editorial",
+  "primary_question": "What is proven, and what still blocks closure?",
+  "desired_action": "Identify the next closure gate",
+  "technical_depth": "public executive only",
+  "annex_policy": "Keep internal implementation detail out of the public surface",
+  "summary_rail": {
+    "enabled": true,
+    "title": "Public status",
+    "body": "The observed scene is readable; production closure still depends on conditional acceptance gates."
+  },
+  "language": {
+    "primary": "en",
+    "direction": "ltr",
+    "technical_english": "native",
+    "translation_preference": "Plain English with exact earned identifiers"
+  }
+}

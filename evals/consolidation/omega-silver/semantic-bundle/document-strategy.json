@@ -1,0 +1,21 @@
+{
+  "document_intent": "audit_report",
+  "through_line": "Separate what is observed from what still needs proof before closure.",
+  "must_appear_first": [
+    "comparison",
+    "key_fact"
+  ],
+  "secondary_content": [
+    "evidence_matrix",
+    "timeline"
+  ],
+  "annex_content": [],
+  "detail_level": "public executive only",
+  "uncertainty_policy": "State open, blocked, partial, and verified conditions plainly.",
+  "reader_journey": [
+    "effort",
+    "facts",
+    "timeline",
+    "evidence"
+  ]
+}

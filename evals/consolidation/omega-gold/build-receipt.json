@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "input_mode": "bundle",
+  "profile": "omega-gold",
+  "recipe": "technical-audit",
+  "validation": {
+    "semantic": "PASS",
+    "rendered": "PASS"
+  },
+  "artifact_sha256": "3e21843141491996b0aee94ce3694831ef447808aaa52ab5dd80b1edd02dffef",
+  "bundle_sha256": {
+    "truth-model.json": "8d0fe64e3002259da166b7106785e0a53b2baac5c19b64ccb425694c82ccb45e",
+    "reader-brief.json": "35efcf4b9f63d9435aad3efb1a1ff1f59bbd004002f5996c9e09efe1bfac4d99",
+    "document-strategy.json": "3a92501534f535dc44984084e19067fe0cf0e3771f2fd6d124e46549e9d41a48",
+    "authored-content.json": "f111d04f2df61eb5e6721d916247882afdb47798ce0adcd93d818e603dd01842",
+    "composition-model.json": "f37dce1db22b4ebea2d627b8b17733cd6bdee6367adaa9dfd1d13b8adb939af8"
+  },
+  "artifact": "omega-report.html",
+  "bundle": "semantic-bundle"
+}

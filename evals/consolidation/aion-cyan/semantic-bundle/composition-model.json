@@ -1,0 +1,574 @@
+{
+  "sections": [
+    {
+      "section_id": "effort",
+      "purpose": "Effort changes calendar time, not the acceptance standard",
+      "copy_refs": [
+        "COPY.AHS.EFFORT"
+      ],
+      "claim_refs": [
+        "AHS.FACT.EFFORT_MODES"
+      ],
+      "presentation_intent": "comparison",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.EFFORT",
+          "type": "fact_list",
+          "title": "Three pace options",
+          "claim_refs": [
+            "AHS.FACT.EFFORT_MODES"
+          ],
+          "items": [
+            {
+              "label": "Light",
+              "value": "≈ 6h/day · ≈ 20 working days",
+              "detail": "Lighter pace; the acceptance standard stays fixed.",
+              "claim_refs": [
+                "AHS.FACT.EFFORT_MODES"
+              ]
+            },
+            {
+              "label": "Medium",
+              "value": "≈ 10h/day · ≈ 12 working days",
+              "detail": "Tighter coordination; the acceptance standard stays fixed.",
+              "claim_refs": [
+                "AHS.FACT.EFFORT_MODES"
+              ]
+            },
+            {
+              "label": "Hard",
+              "value": "≈ 12h/day peak · ≈ 10 working days",
+              "detail": "Higher pressure; waiting time does not disappear.",
+              "claim_refs": [
+                "AHS.FACT.EFFORT_MODES"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "facts",
+      "purpose": "Numbers that shape closure scope",
+      "copy_refs": [
+        "COPY.AHS.FACTS"
+      ],
+      "claim_refs": [],
+      "presentation_intent": "key_fact",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.FACTS",
+          "type": "fact_list",
+          "title": "Operational scene",
+          "items": [
+            {
+              "label": "Legacy record",
+              "value": "20,789 legacy users",
+              "claim_refs": [
+                "AHS.FACT.LEGACY_USERS"
+              ]
+            },
+            {
+              "label": "Current record",
+              "value": "71 current users",
+              "claim_refs": [
+                "AHS.FACT.CURRENT_USERS"
+              ]
+            },
+            {
+              "label": "Overlap candidates",
+              "value": "28 in National_ID",
+              "claim_refs": [
+                "AHS.FACT.NATIONAL_ID_OVERLAP"
+              ]
+            },
+            {
+              "label": "News records",
+              "value": "62 records",
+              "claim_refs": [
+                "AHS.FACT.NEWS_ROWS"
+              ]
+            },
+            {
+              "label": "Academies",
+              "value": "227 academies",
+              "claim_refs": [
+                "AHS.FACT.ACADEMIES_BRANCHES"
+              ]
+            },
+            {
+              "label": "Branches",
+              "value": "24 branches",
+              "claim_refs": [
+                "AHS.FACT.ACADEMIES_BRANCHES"
+              ]
+            },
+            {
+              "label": "Planning baseline",
+              "value": "120h planning baseline",
+              "claim_refs": [
+                "AHS.FACT.BASELINE_HOURS"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "timeline",
+      "purpose": "The closure path follows evidence, not assumed dates",
+      "copy_refs": [],
+      "claim_refs": [
+        "AHS.FACT.PROJECT_POSTURE",
+        "AHS.REQUIREMENT.12",
+        "AHS.REQUIREMENT.24"
+      ],
+      "presentation_intent": "timeline",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.TIMELINE",
+          "type": "timeline",
+          "title": "No assumed dates; each stage waits for its evidence",
+          "claim_refs": [
+            "AHS.FACT.PROJECT_POSTURE"
+          ],
+          "items": [
+            {
+              "label": "Observed scene",
+              "value": "Passed",
+              "detail": "Server, code, and data are readable and reconciled.",
+              "claim_refs": [
+                "AHS.FACT.PROJECT_POSTURE",
+                "AHS.FACT.OBSERVATION_BOUNDARY"
+              ]
+            },
+            {
+              "label": "Identity and access",
+              "value": "Open",
+              "detail": "Role tests and reconciliation between the two records are not accepted yet.",
+              "claim_refs": [
+                "AHS.REQUIREMENT.01",
+                "AHS.REQUIREMENT.04"
+              ]
+            },
+            {
+              "label": "Recovery and migration",
+              "value": "Blocked",
+              "detail": "Recovery, reconciliation, and rollback are not proven; the new server target is unknown.",
+              "claim_refs": [
+                "AHS.REQUIREMENT.12",
+                "AHS.FACT.MIGRATION_TARGET"
+              ]
+            },
+            {
+              "label": "Closure sign-off",
+              "value": "Conditional",
+              "detail": "Sign-off waits for the acceptance gates to clear.",
+              "claim_refs": [
+                "AHS.REQUIREMENT.24"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "identity",
+      "purpose": "Identity and access",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.IDENTITY",
+          "type": "table",
+          "title": "Status as described by the evidence",
+          "columns": [
+            "Requirement",
+            "Current reading",
+            "Executive status"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "01 · User search and admin permissions",
+                "Search paths and identifier fields are present; role and 403 behavior are not tested.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.01"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.01"
+              ]
+            },
+            {
+              "cells": [
+                "04 · Current member login",
+                "The observed populations are 20,789 legacy users and 71 current users; login compatibility is untested.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.04"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.04"
+              ]
+            },
+            {
+              "cells": [
+                "05 · Registration stability and verification messages",
+                "Local registration paths and tests exist; production error and negative states remain unresolved.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.05"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.05"
+              ]
+            },
+            {
+              "cells": [
+                "06 · Login by membership or card number",
+                "The current login contract covers phone, email, or username; membership and card-number login are not proven.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.06"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.06"
+              ]
+            },
+            {
+              "cells": [
+                "13 · Legacy-user activation and duplicate prevention",
+                "An activation service exists; identity proof and duplicate-membership prevention are not proven.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.13"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.13"
+              ]
+            },
+            {
+              "cells": [
+                "15 · Membership number in the profile",
+                "The Serial field and display path exist; real-member rendering and data isolation are untested.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.15"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.15"
+              ]
+            },
+            {
+              "cells": [
+                "16 · Password recovery",
+                "The legacy recovery path is broken; a complete replacement flow is not shown.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.16"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.16"
+              ]
+            },
+            {
+              "cells": [
+                "17 · Blocklist",
+                "No local blocklist implementation was found; matching rules and change history need approval.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.17"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.17"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "operations",
+      "purpose": "Requests, queues, and exports",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.OPERATIONS",
+          "type": "table",
+          "title": "Status as described by the evidence",
+          "columns": [
+            "Requirement",
+            "Current reading",
+            "Executive status"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "02 · QR code export",
+                "Legacy and current QR data are present; single, batch, and full export are not proven.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.02"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.02"
+              ]
+            },
+            {
+              "cells": [
+                "09 · Service requests in the admin panel",
+                "Recent request tables exist; each request family’s admin visibility is not tested.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.09"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.09"
+              ]
+            },
+            {
+              "cells": [
+                "10 · Request workflow and rejection reason",
+                "Accept/reject tools exist; rejection reason and app state reflection remain open.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.10"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.10"
+              ]
+            },
+            {
+              "cells": [
+                "19 · Queue cards and navigation",
+                "Queue sources and routes exist; role matrix and waiting cards are not accepted live.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.19"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.19"
+              ]
+            },
+            {
+              "cells": [
+                "20 · User export to Excel",
+                "User export exists in source; admin control, permissions, and filters are untested.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.20"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.20"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "content",
+      "purpose": "Content and relationships",
+      "copy_refs": [],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.CONTENT",
+          "type": "table",
+          "title": "Status as described by the evidence",
+          "columns": [
+            "Requirement",
+            "Current reading",
+            "Executive status"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "03 · News and pagination",
+                "62 news rows are present; boundary and pagination behavior remain open.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.03"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.03"
+              ]
+            },
+            {
+              "cells": [
+                "07 · Store inside the admin panel",
+                "Store code exists, but production product, seller, and order tables are empty; scope needs a decision.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.07"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.07"
+              ]
+            },
+            {
+              "cells": [
+                "11 · Academy-to-branch linking",
+                "227 academies and 24 branches are observed with no orphan in the focused check; full-surface relationship acceptance is open.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.11"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.11"
+              ]
+            },
+            {
+              "cells": [
+                "14 · Terms and conditions",
+                "Terms acceptance UI exists; approved legal copy, versioning, and production binding remain open.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.14"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.14"
+              ]
+            },
+            {
+              "cells": [
+                "18 · Admin-panel assets",
+                "Storage and media paths exist; permissioned visual acceptance has not been run.",
+                "Passed"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.18"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.18"
+              ]
+            },
+            {
+              "cells": [
+                "21 · Marketing and app slides",
+                "Marketing module and slide assets exist; production data and panel-to-app flow are not proven.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.21"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.21"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "release",
+      "purpose": "Integration, migration, and handover",
+      "copy_refs": [
+        "COPY.AHS.MIGRATION_BOUNDARY"
+      ],
+      "claim_refs": [],
+      "presentation_intent": "evidence_matrix",
+      "structured_blocks": [
+        {
+          "block_id": "STRUCT.AHS.RELEASE",
+          "type": "table",
+          "title": "Status as described by the evidence",
+          "columns": [
+            "Requirement",
+            "Current reading",
+            "Executive status"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "08 · Notifications and delivery lifecycle",
+                "Notification read paths exist; provider, device, and token lifecycle are not proven.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.08"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.08"
+              ]
+            },
+            {
+              "cells": [
+                "12 · Backup and migration",
+                "Backup and migration are in scope, but restore, reconciliation, and rollback acceptance remain open.",
+                "Blocked"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.12"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.12"
+              ]
+            },
+            {
+              "cells": [
+                "22 · Old/current admin-panel comparison",
+                "No signed acceptance list compares pages, actions, permissions, and exceptions across panels.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.22"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.22"
+              ]
+            },
+            {
+              "cells": [
+                "23 · App, admin panel, API, and infrastructure review",
+                "App, admin, API, and infrastructure review remains open for full acceptance.",
+                "Open"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.23"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.23"
+              ]
+            },
+            {
+              "cells": [
+                "24 · Closure and handover report",
+                "The evidence and status package exists; closure sign-off waits for acceptance gates.",
+                "Passed in part"
+              ],
+              "claim_refs": [
+                "AHS.REQUIREMENT.24"
+              ],
+              "copy_refs": [
+                "COPY.AHS.REQUIREMENT.24"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

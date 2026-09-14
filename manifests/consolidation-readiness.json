@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-09-14",
+  "status": "READY_FOR_PROMOTION_REVIEW",
+  "promotion_performed": false,
+  "installed_v1_modified": false,
+  "verification": {
+    "unit_tests": {"status": "PASS", "count": 97},
+    "skill_validation": "PASS",
+    "installed_v1_manifest": {"status": "PASS", "checked": 14, "mismatches": 0},
+    "ahs_regression_manifest": {"status": "PASS", "checked": 4, "mismatches": 0},
+    "rendered_profiles": {"status": "PASS", "count": 5},
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "horizontal_overflow": 0,
+    "browser_console_errors": 0,
+    "browser_console_warnings": 0,
+    "visual_review": "PASS_WITH_KNOWN_LIMITS"
+  },
+  "artifacts": {
+    "omega-gold": {
+      "html_sha256": "3e21843141491996b0aee94ce3694831ef447808aaa52ab5dd80b1edd02dffef",
+      "desktop_sha256": "09bf3f092d87379985210237d9662779dbe93852123edacab54a52de49cb41a0",
+      "mobile_sha256": "aaed5851edb5867b10f5693b4c4b0f4de55a3cad0389db1a1c9e72decba08d86"
+    },
+    "omega-cyan": {
+      "html_sha256": "79d42ad40769ad4a36b245dab034630a93cc2a1516674f44db728203a036f4c1",
+      "desktop_sha256": "a971fae0562e11b39534c4bd59968cec3f716d2db6561264c67086d337f69f09",
+      "mobile_sha256": "a618888fe9c4e4e3824d1d35753c6f27dc2b2283cca6fa7b133fd63dc344d28f"
+    },
+    "omega-silver": {
+      "html_sha256": "602b79073f7eaaf4d00f86668b71cf29a614d214cc6793486fa514855dd45fbb",
+      "desktop_sha256": "4e01f749af3a2619d1c0fc30a22434a9fce79470f9f0729e1b186c2a35b1d178",
+      "mobile_sha256": "7e659fe5b12e33b598ece572b12e481dabb12faa53431278ce53b47041d80a94"
+    },
+    "aion-cyan": {
+      "html_sha256": "1cabcae8dae85abf514f05072cebb6c6a486c0390641551ba6fe33a4da40bd1a",
+      "desktop_sha256": "e57f65f1aadc027e563f445d7d3d89daed05650ad227bffb14b39fae6dd71e78",
+      "mobile_sha256": "6a56a86454fecdd02a1d7d42cee13349f1e453663bbe60ae03e9450cfb184257"
+    },
+    "hints-core": {
+      "html_sha256": "7557a83bcb0d4cf5382ec2c9cf6907bbff16645f2aebbae5ad8389d078f4406e",
+      "desktop_sha256": "48352277e42f76b446c91440296f616201b153757026f430528d37576b7654e7",
+      "mobile_sha256": "bdd405f1bfe16dab864f3a78385c489175e1dc6cb9fe97d82c49c6e7fd04b0c9"
+    }
+  },
+  "known_limits": [
+    "Prompt and Markdown compilation is deterministic and conservative; it does not perform external research or replace claim-level human authoring judgment.",
+    "Visual QA was performed by the primary Codex session, not an independent reviewer.",
+    "PDF export remains a downstream handoff and is not claimed by the HTML build receipt.",
+    "Global installation and replacement of the existing omega-html skill require separate explicit approval."
+  ]
+}
