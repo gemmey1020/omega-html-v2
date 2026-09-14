@@ -158,6 +158,9 @@ def compile_text(source: str, output_dir: Path, *, source_type: str, audience: s
                          "claim_refs": section_claims, "presentation_intent": "table" if any(x["type"] == "table" for x in structured) else "narrative",
                          "structured_blocks": structured})
 
+    blocks.insert(0, {"copy_id": _stable_id("COPY.INTAKE.HEADLINE", document_title, 0),
+                      "role": "headline", "text": document_title,
+                      "claim_refs": [], "protected_spans": []})
     truth = {"sources": [{"source_id": source_id, "description": f"{source_type} intake", "locator": source_locator}], "claims": claims}
     document_intent = selected_recipe["id"].replace("-", "_")
     journey = selected_recipe.get("journey", ["verdict", "evidence_matrix", "checklist"])
@@ -196,7 +199,7 @@ def main() -> int:
     parser.add_argument("--audience", default="executive leadership")
     parser.add_argument("--language", default="en")
     parser.add_argument("--recipe")
-    parser.add_argument("--profile", default="cyan")
+    parser.add_argument("--profile", required=True)
     parser.add_argument("--title")
     args = parser.parse_args()
     text = args.text if args.text is not None else args.input.read_text(encoding="utf-8")

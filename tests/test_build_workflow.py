@@ -29,6 +29,9 @@ class BuildWorkflowTest(unittest.TestCase):
             self.assertEqual(receipt["validation"]["rendered"], "PASS")
             self.assertEqual(len(receipt["artifact_sha256"]), 64)
             self.assertTrue(Path(result["html"]).is_file())
+            html = Path(result["html"]).read_text(encoding="utf-8")
+            self.assertIn("Release brief", html)
+            self.assertNotIn("<title>Omega document</title>", html)
 
     def test_bundle_build_does_not_reauthor_payload(self):
         with tempfile.TemporaryDirectory() as directory:

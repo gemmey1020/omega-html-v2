@@ -90,7 +90,7 @@ def parse_args():
     inputs.add_argument("--bundle", type=Path)
     parser.add_argument("--source-type", choices=("prompt", "markdown"), default="markdown")
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--profile", default="cyan")
+    parser.add_argument("--profile", required=True)
     parser.add_argument("--recipe")
     parser.add_argument("--audience", default="executive leadership")
     parser.add_argument("--language", default="en")

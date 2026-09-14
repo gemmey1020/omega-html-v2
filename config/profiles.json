@@ -1,4 +1,4 @@
-{"schema_version":2,"default_profile":"omega-cyan","profiles":[
+{"schema_version":3,"default_profile":null,"interactive_selection":"ask_if_unspecified","profiles":[
 {"id":"omega-gold","aliases":["gold"],"tier":"primary","audience":"executive","geometry":"framed-editorial","hero":"contained-luxury","density":"spacious","accent_family":"warm-gold"},
 {"id":"omega-cyan","aliases":["cyan"],"tier":"primary","audience":"operations","geometry":"decision-grid","hero":"wide-operational","density":"balanced","accent_family":"signal-cyan"},
 {"id":"omega-teal","aliases":["teal"],"tier":"supported","audience":"operations","geometry":"calm-rails","hero":"balanced-operational","density":"balanced","accent_family":"calm-teal"},
